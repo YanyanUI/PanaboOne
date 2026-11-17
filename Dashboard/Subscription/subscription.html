@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Subscription</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.cur2{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+.cur2 .ic{width:46px;height:46px;border-radius:12px;background:#ebe7fb;color:#5b3fd4;display:grid;place-items:center;flex:none}
+.cur2 .ic svg{width:22px;height:22px}
+.cur2 small{display:block;color:#6b6a95;font-size:13px}
+.cur2 b{font-size:20px;color:#1f1b4d;line-height:1.2}
+.cur2 .sp{flex:1}
+.cur2 .note2{color:#6b6a95;font-size:13px}
+
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;align-items:stretch;padding:56px 0 10px}
+.plan{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fff;border-radius:22px;padding:42px 24px 26px;
+  background:linear-gradient(180deg,#17133a,#0b0a1c);border:1px solid rgba(255,255,255,.08);box-shadow:0 26px 40px -24px rgba(36,21,90,.85);transition:transform .2s,box-shadow .2s}
+.plan:hover{transform:translateY(-4px)}
+.plan.hot{transform:scale(1.04);box-shadow:0 0 0 2px #7b58eb,0 30px 50px -24px rgba(91,63,212,.95)}
+.plan.hot:hover{transform:scale(1.04) translateY(-4px)}
+.plan.cur{box-shadow:0 0 0 2px #17a34a,0 26px 40px -24px rgba(36,21,90,.85)}
+.plan .num{position:absolute;top:-28px;left:50%;transform:translateX(-50%);width:56px;height:56px;border-radius:50%;background:#0b0a1c;border:4px solid #8a63ee;color:#fff;font-weight:700;font-size:24px;display:grid;place-items:center;box-shadow:0 0 0 5px #eceafb}
+.plan .tier{margin-top:4px;border:1.5px solid #a78bfa;border-radius:999px;padding:4px 22px;font-size:13px;font-weight:600;color:#e9e2ff}
+.plan .price{margin:20px 0 2px;font-size:32px;font-weight:700;line-height:1.1}
+.plan .price small{font-size:14px;font-weight:500;color:#b9b3e6;margin-left:2px}
+.plan .for{font-size:12.5px;color:#b9b3e6;min-height:36px;display:flex;align-items:center}
+.plan hr{width:100%;border:0;border-top:1px solid rgba(255,255,255,.14);margin:14px 0 16px}
+.plan ul{list-style:none;margin:0 0 24px;padding:0 4px;width:100%;display:grid;gap:13px;text-align:left}
+.plan li{display:flex;gap:11px;align-items:center;font-size:14px;font-weight:600}
+.plan li svg{width:20px;height:20px;flex:none;color:#6f8cff}
+.plan .go{margin-top:auto;width:100%;min-height:46px;border:0;border-radius:12px;font-weight:600;font-size:15px;color:#fff;background:linear-gradient(90deg,#4c5fd8,#7b58eb);box-shadow:0 12px 22px -12px rgba(91,63,212,.9)}
+.plan .go:hover{filter:brightness(1.1)}
+.plan .go:focus-visible{outline:3px solid #cfc6f6;outline-offset:2px}
+.plan .go[disabled]{background:rgba(255,255,255,.12);color:#d8d2f7;box-shadow:none;cursor:default;filter:none}
+.plan .here{position:absolute;top:14px;right:14px;background:#17a34a;color:#fff;font-size:11px;font-weight:600;border-radius:99px;padding:3px 10px}
+.nt2{background:#ebe7fb;color:#4c34c0;border-radius:12px;padding:10px 14px;font-size:13px;margin:12px 0 4px}
+.mbox .macts{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+/* ---- Tier 3: Diamond card ---- */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes dring{to{--ang:360deg}}
+@keyframes dfloat{50%{transform:translateY(-8px) rotate(4deg)}}
+@keyframes dshine{0%{transform:translateX(-130%) skewX(-18deg)}55%,100%{transform:translateX(230%) skewX(-18deg)}}
+@keyframes dtw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1.15) rotate(90deg)}}
+@keyframes dglow{50%{opacity:.9}}
+@keyframes dbg{to{background-position:200% 0}}
+.plan.dia{transform:scale(1.07);isolation:isolate;overflow:visible;border:0;background:radial-gradient(120% 90% at 50% 0%,#3a2406 0%,#150d1f 45%,#07050d 100%);
+  box-shadow:0 0 60px -10px rgba(255,190,70,.55),0 34px 60px -26px rgba(0,0,0,.9)}
+.plan.dia:hover{transform:scale(1.07) translateY(-6px)}
+.plan.dia::before{content:"";position:absolute;inset:-3px;border-radius:25px;z-index:-1;background:conic-gradient(from var(--ang),#ffd978,#ff8ab8,#b78cff,#6ee7b7,#ffd978);animation:dring 5s linear infinite}
+.plan.dia::after{content:"";position:absolute;inset:0;border-radius:22px;background:linear-gradient(180deg,#1b1020,#09060f);z-index:-1}
+.plan.dia .shine{display:none}
+.plan.dia .dgem{position:absolute;top:-62px;left:50%;margin-left:-34px;width:68px;height:68px;filter:drop-shadow(0 0 16px #ffc24a);animation:dfloat 3.4s ease-in-out infinite;z-index:3}
+.plan.dia .dgem svg{width:100%;height:100%;display:block}
+.plan.dia .num{top:-6px;left:18px;transform:none;width:44px;height:44px;font-size:19px;border-color:#ffd978;box-shadow:0 0 0 4px #150d1f;background:#150d1f;color:#ffd978}
+.plan.dia .dsp{position:absolute;inset:0;border-radius:22px;overflow:hidden;pointer-events:none;z-index:0}
+.plan.dia .dsp::before{content:"";position:absolute;top:0;bottom:0;width:38%;background:linear-gradient(90deg,transparent,rgba(255,236,180,.22),transparent);animation:dshine 4.2s ease-in-out infinite}
+.plan.dia .spk{position:absolute;font-style:normal;font-size:14px;color:#ffe29a;text-shadow:0 0 10px #ffb02e;opacity:0;animation:dtw 2.8s ease-in-out infinite}
+.plan.dia > *:not(.dgem):not(.dsp):not(.dtag):not(.num):not(.here){position:relative;z-index:1}
+.plan.dia .dtag{position:absolute;top:14px;right:14px;font-size:10px;font-weight:700;letter-spacing:.16em;color:#2a1700;border-radius:99px;padding:4px 10px;background:linear-gradient(90deg,#ffe29a,#ffb02e,#ffe29a);background-size:200% 100%;animation:dbg 3s linear infinite;z-index:2}
+.plan.dia .here{top:44px}
+.plan.dia .tier{border-color:#ffd978;color:#ffe9b0;margin-top:14px}
+.plan.dia .price{background:linear-gradient(90deg,#ffe29a,#fff,#ff9ec4,#fff,#ffe29a);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:dbg 5s linear infinite}
+.plan.dia .price small{-webkit-text-fill-color:#d9c79a}
+.plan.dia li svg{color:#ffc24a}
+.plan.dia .go{background:linear-gradient(90deg,#ffd978,#ff9ec4,#b78cff,#ffd978);background-size:200% 100%;color:#1b1020;animation:dbg 4s linear infinite;box-shadow:0 14px 28px -12px rgba(255,190,70,.9)}
+.plan.dia .go[disabled]{background:rgba(255,255,255,.12);color:#d8d2f7;animation:none;box-shadow:none}
+.plan.cur.dia{box-shadow:0 0 0 2px #17a34a,0 0 60px -10px rgba(255,190,70,.55)}
+@media(max-width:1000px){.plans{grid-template-columns:1fr;gap:44px;max-width:420px;margin:0 auto}.plan.hot,.plan.hot:hover,.plan.dia,.plan.dia:hover{transform:none}.plan.dia{margin-top:30px}}
+@media(prefers-reduced-motion:reduce){.plan.dia *,.plan.dia::before,.plan.dia .dsp::before{animation:none!important}.plan.dia .spk{opacity:.8}}
+@media(prefers-reduced-motion:reduce){.plan,.plan:hover,.plan.hot:hover{transition:none}}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Subscription</h1><p class="sub">Choose the plan that fits your business. You can change it anytime.</p></div></div>
+  <div class="card cur2" id="cur"></div>
+  <div class="plans" id="plans"></div>
+</div>
+
+<div class="modal" id="modal"><div class="mbox" style="max-width:420px">
+  <h2 id="mt"></h2><p class="sub" id="mp" style="margin:0"></p>
+  <div class="nt2">Online payment is not connected yet. Your plan change is saved on this device for now.</div>
+  <div class="macts"><button class="btn" id="cancel">Cancel</button><button class="btn pri" id="ok">Confirm</button></div>
+</div></div>
+
+<script src="../shared/store.js"></script>
+<script>
+PO.shell('subscription');
+const D = PO.data, $ = PO.$;
+const PLANS = [
+  {id: 'tier1', n: 1, name: 'Tier 1', price: 0, for: 'Best for new established business', feats: ['Default Layout', 'Primary Color theme', 'Basic Customization', 'Minimal ads benefits', 'Publish up to 3 posters']},
+  {id: 'tier2', n: 2, name: 'Tier 2', price: 300, hot: true, for: 'Most Popular plan', feats: ['Premium Layouts (4 styles)', 'Animation color picker', 'Featured Listings Unlock', 'Premium Badge', 'Publish up to 5 posters', 'Animated Poster templates']},
+  {id: 'tier3', n: 3, name: 'Tier 3', price: 500, dia: true, for: 'Exclusive for Medium Enterprises', feats: ['Diamond Layouts (4 ultra-animated)', 'Diamond theme colors', 'All Premium Layouts included', 'Featured Listings Unlock', 'Legitimacy Badge', 'Top Search Ads', 'Publish up to 10 posters', 'Animated Poster templates']}];
+const CHECK = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="m7.5 12.5 3 3 6-6.5" stroke="#0b0a1c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const WALLET = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>';
+const GEM = '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6,3 18,3 23,9 1,9" fill="#ffd978"/><polygon points="1,9 23,9 12,22" fill="#e0922a"/><polygon points="6,3 9,9 12,3" fill="#fff6d6"/><polygon points="12,3 15,9 18,3" fill="#fff6d6" opacity=".8"/><polygon points="9,9 15,9 12,22" fill="#fff6d6" opacity=".35"/></svg>';
+const SPARK = [[8, 22, 0], [90, 14, .6], [16, 62, 1.1], [86, 52, 1.7], [50, 6, 2.2], [72, 84, .3], [24, 90, 1.4]].map(([x, y, d]) => `<i class="spk" style="left:${x}%;top:${y}%;animation-delay:${d}s">✦</i>`).join('');
+const priceTxt = p => p.price ? `₱${p.price}<small>/month</small>` : 'Free/Unlimited';
+const current = () => PLANS.find(p => p.id === D.plan) || PLANS[0];
+let pick = null;
+
+function render() {
+  const c = current();
+  $('cur').innerHTML = `<div class="ic">${WALLET}</div><div><small>Your current plan</small><b>${c.name} · ${c.price ? '₱' + c.price + '/month' : 'Free'}</b></div><span class="sp"></span><span class="note2">${c.for}</span>`;
+  $('plans').innerHTML = PLANS.map(p => {
+    const on = p.id === c.id, label = on ? 'Current Plan' : p.price ? 'Get Started' : 'Switch to Free';
+    return `<div class="plan ${p.hot ? 'hot' : ''} ${p.dia ? 'dia' : ''} ${on ? 'cur' : ''}">${p.dia ? `<span class="dgem">${GEM}</span><span class="dsp">${SPARK}</span><span class="dtag">ULTIMATE</span>` : ''}
+      <span class="num">${p.n}</span>${on ? '<span class="here">Current</span>' : ''}
+      <span class="tier">${p.name}</span>
+      <div class="price">${priceTxt(p)}</div>
+      <div class="for">${p.for}</div><hr>
+      <ul>${p.feats.map(f => `<li>${CHECK}${f}</li>`).join('')}</ul>
+      <button class="go" data-p="${p.id}" ${on ? 'disabled' : ''}>${label}</button></div>`;
+  }).join('');
+}
+const close = () => $('modal').classList.remove('show');
+$('plans').onclick = e => {
+  const b = e.target.closest('[data-p]'); if (!b || b.disabled) return;
+  pick = PLANS.find(p => p.id === b.dataset.p);
+  $('mt').textContent = 'Switch to ' + pick.name + '?';
+  $('mp').textContent = pick.price ? `You will be on the ${pick.name} plan at ₱${pick.price} per month.` : 'You will go back to the free plan.';
+  $('modal').classList.add('show'); $('ok').focus();
+};
+$('cancel').onclick = close;
+$('modal').onmousedown = e => { if (e.target === $('modal')) close(); };
+addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+$('ok').onclick = () => {
+  if (!pick) return;
+  D.plan = pick.id;
+  PO.log('Subscription Updated', 'Plan: ' + pick.name);
+  if (PO.save()) { close(); render(); PO.toast(pick.name + ' plan saved ✓'); }
+};
+render();
+</script></body></html>

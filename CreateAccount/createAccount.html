@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PanaboOne — Create Account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../Dashboard/shared/auth.css">
+</head><body>
+<svg class="bgw" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+<defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a77bff"/><stop offset="1" stop-color="#6b45e0"/></linearGradient>
+<linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a63ee"/><stop offset="1" stop-color="#5b3fd4"/></linearGradient>
+<linearGradient id="bgl" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f1eeff"/><stop offset="1" stop-color="#e3defa"/></linearGradient></defs>
+<rect width="1440" height="900" fill="url(#bgl)"/>
+<path d="M0,0 H600 C520,70 380,120 250,140 C140,156 60,150 0,170 Z" fill="#d9d0fb" opacity=".6"/>
+<path d="M0,0 H420 C340,60 220,120 0,138 Z" fill="url(#pg1)"/>
+<path d="M0,520 C260,470 520,640 860,640 C1100,640 1300,560 1440,520 V900 H0 Z" fill="#e4defa" opacity=".7"/>
+<path d="M1440,610 C1250,660 1120,800 930,900 H1440 Z" fill="#8a63ee" opacity=".55"/>
+<path d="M1440,690 C1320,740 1230,830 1110,900 H1440 Z" fill="url(#pg2)"/>
+<circle cx="1310" cy="70" r="3.2" fill="#cfc6f6"/><circle cx="1336" cy="70" r="3.2" fill="#cfc6f6"/><circle cx="1362" cy="70" r="3.2" fill="#cfc6f6"/><circle cx="1388" cy="70" r="3.2" fill="#cfc6f6"/><circle cx="1414" cy="70" r="3.2" fill="#cfc6f6"/><circle cx="1310" cy="96" r="3.2" fill="#cfc6f6"/><circle cx="1336" cy="96" r="3.2" fill="#cfc6f6"/><circle cx="1362" cy="96" r="3.2" fill="#cfc6f6"/><circle cx="1388" cy="96" r="3.2" fill="#cfc6f6"/><circle cx="1414" cy="96" r="3.2" fill="#cfc6f6"/><circle cx="1310" cy="122" r="3.2" fill="#cfc6f6"/><circle cx="1336" cy="122" r="3.2" fill="#cfc6f6"/><circle cx="1362" cy="122" r="3.2" fill="#cfc6f6"/><circle cx="1388" cy="122" r="3.2" fill="#cfc6f6"/><circle cx="1414" cy="122" r="3.2" fill="#cfc6f6"/><circle cx="1310" cy="148" r="3.2" fill="#cfc6f6"/><circle cx="1336" cy="148" r="3.2" fill="#cfc6f6"/><circle cx="1362" cy="148" r="3.2" fill="#cfc6f6"/><circle cx="1388" cy="148" r="3.2" fill="#cfc6f6"/><circle cx="1414" cy="148" r="3.2" fill="#cfc6f6"/></svg>
+<main class="au">
+  <section class="ac">
+    <h1>Create Account</h1>
+    <p class="sub">Join PanaboOne and manage your business online store.</p>
+    <span class="rl"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>Business Owner</span>
+    <form id="signupForm" novalidate>
+      <label class="lb" for="business_name">Business Name</label>
+      <div class="fi"><input id="business_name" name="business_name" type="text" placeholder="Enter your business name" autocomplete="organization"></div>
+      <label class="lb" for="full_name">Full Name</label>
+      <div class="fi"><input id="full_name" name="full_name" type="text" placeholder="Enter your full name" autocomplete="name"></div>
+      <label class="lb" for="username">Username</label>
+      <div class="fi"><input id="username" name="username" type="text" placeholder="Enter your username" autocomplete="username" autocapitalize="none"></div>
+      <label class="lb" for="password">Password</label>
+      <div class="fi pw"><input id="password" name="password" type="password" placeholder="Create a password" autocomplete="new-password">
+        <button type="button" class="eye" onclick="togglePw(this)" aria-label="Show password"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.04 12.32C3.42 7.51 7.36 4.5 12 4.5s8.58 3.01 9.96 7.82a.75.75 0 0 1 0 .36C20.58 16.49 16.64 19.5 12 19.5s-8.58-3.01-9.96-7.82a.75.75 0 0 1 0-.36Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+      <span class="lb">What does your business offer?</span>
+      <div class="bt" id="bt">
+        <button type="button" data-t="product" class="on">🛍️ Product Only<small>Physical items</small></button>
+        <button type="button" data-t="service">🛎️ Service Only<small>Services offered</small></button>
+        <button type="button" data-t="both">✨ Both<small>Products &amp; Services</small></button>
+      </div>
+      <div style="height:18px"></div>
+      <p id="err" class="er" role="alert"></p>
+      <button type="submit" class="go"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h3a3 3 0 0 1 3 3v12a3 3 0 0 1-3 3h-3M10 17l5-5-5-5M15 12H3"/></svg>Create Account</button>
+    </form>
+    <p class="alt">Already have an account? <a href="../index.html">Login</a></p>
+  </section>
+  <aside class="br"><svg class="mk" viewBox="0 0 64 64" fill="none" aria-hidden="true"><g stroke-width="3.6" fill="none"><circle cx="32" cy="18" r="12" stroke="#a33fa8"/><circle cx="46" cy="32" r="12" stroke="#3aa7dd"/><circle cx="32" cy="46" r="12" stroke="#3b5bd6"/><circle cx="18" cy="32" r="12" stroke="#7a3fb8"/></g><circle cx="32" cy="32" r="3.6" fill="#5b3fd4"/></svg><h2 class="wm">Panabo<b>One</b></h2><p class="tg">Discover Local. Support Local.</p><svg class="bru" viewBox="0 0 230 16" fill="none" aria-hidden="true"><path d="M4 10 C60 3 130 5 226 2" stroke="#5b3fd4" stroke-width="3.2" stroke-linecap="round"/><path d="M60 14 C110 8 150 9 190 6" stroke="#7b58eb" stroke-width="2.4" stroke-linecap="round"/></svg><svg class="ill" viewBox="0 0 520 340" fill="none" aria-hidden="true">
+<ellipse cx="85" cy="70" rx="38" ry="14" fill="#fff" opacity=".7"/><ellipse cx="110" cy="62" rx="26" ry="16" fill="#fff" opacity=".7"/>
+<ellipse cx="445" cy="40" rx="36" ry="12" fill="#fff" opacity=".6"/><ellipse cx="465" cy="34" rx="22" ry="14" fill="#fff" opacity=".6"/>
+<rect x="40" y="150" width="46" height="150" rx="3" fill="#d6d0f5" opacity=".75"/><rect x="96" y="190" width="36" height="110" rx="3" fill="#d6d0f5" opacity=".75"/><rect x="430" y="120" width="44" height="180" rx="3" fill="#d6d0f5" opacity=".75"/><rect x="484" y="170" width="38" height="130" rx="3" fill="#d6d0f5" opacity=".75"/><rect x="-4" y="210" width="34" height="90" rx="3" fill="#d6d0f5" opacity=".75"/><rect x="50" y="170" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="50" y="194" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="50" y="218" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="50" y="242" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="50" y="266" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="64" y="170" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="64" y="194" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="64" y="218" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="64" y="242" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="64" y="266" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="140" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="164" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="188" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="212" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="236" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="440" y="260" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="140" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="164" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="188" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="212" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="236" width="7" height="9" rx="1.5" fill="#efecfd"/><rect x="456" y="260" width="7" height="9" rx="1.5" fill="#efecfd"/>
+<ellipse cx="260" cy="314" rx="215" ry="20" fill="#dcd5f7"/><ellipse cx="260" cy="308" rx="190" ry="15" fill="#f4f2ff"/>
+<rect x="170" y="176" width="180" height="128" rx="4" fill="#efecfc"/>
+<rect x="160" y="130" width="200" height="26" rx="9" fill="#6b4ee0"/><rect x="160" y="130" width="200" height="8" rx="4" fill="#8a6ff0"/>
+<path d="M160 154 h40 v22 a20 20 0 0 1 -40 0 Z" fill="#6b4ee0"/><path d="M200 154 h40 v22 a20 20 0 0 1 -40 0 Z" fill="#ffffff"/><path d="M240 154 h40 v22 a20 20 0 0 1 -40 0 Z" fill="#6b4ee0"/><path d="M280 154 h40 v22 a20 20 0 0 1 -40 0 Z" fill="#ffffff"/><path d="M320 154 h40 v22 a20 20 0 0 1 -40 0 Z" fill="#6b4ee0"/>
+<rect x="203" y="202" width="46" height="102" rx="3" fill="#8f8ae0"/><rect x="209" y="208" width="34" height="90" rx="2" fill="#aaa6ee"/><circle cx="238" cy="258" r="2.6" fill="#fff"/>
+<rect x="262" y="200" width="76" height="58" rx="4" fill="#5b3fd4"/><rect x="258" y="256" width="84" height="7" rx="2" fill="#fff"/>
+<path d="M290 200 l8-16 8 16" stroke="#3d27b5" stroke-width="2" fill="none"/>
+<rect x="268" y="212" width="64" height="26" rx="5" fill="#4c34c0" stroke="#fff" stroke-width="2"/>
+<text x="300" y="231" text-anchor="middle" font-family="Poppins,Arial,sans-serif" font-weight="700" font-size="15" fill="#fff">OPEN</text>
+<rect x="104" y="236" width="48" height="66" rx="9" fill="#f0558f"/><rect x="104" y="236" width="48" height="14" rx="7" fill="#f77aa9"/>
+<path d="M116 238 v-12 a12 12 0 0 1 24 0 v12" stroke="#d63d78" stroke-width="5" fill="none" stroke-linecap="round"/>
+<g fill="#3fae6a"><circle cx="160" cy="294" r="14"/><circle cx="176" cy="298" r="12" fill="#2f9a5a"/><circle cx="350" cy="296" r="13"/><circle cx="366" cy="298" r="11" fill="#2f9a5a"/><circle cx="436" cy="290" r="14"/><circle cx="452" cy="296" r="12" fill="#2f9a5a"/></g>
+<g transform="translate(386 196)"><path d="M20 0C9 0 0 9 0 20c0 14 20 36 20 36s20-22 20-36C40 9 31 0 20 0Z" fill="#6b4ee0"/><circle cx="20" cy="20" r="8" fill="#fff"/></g>
+<ellipse cx="406" cy="296" rx="18" ry="6" fill="#cfc9ee"/><rect x="396" y="284" width="20" height="12" rx="3" fill="#bdb6ea"/>
+<g><rect x="56" y="92" width="68" height="68" rx="20" fill="#fff" opacity=".95"/><path d="M92 160 l-10 12 -4 -12" fill="#fff" opacity=".95"/>
+<g transform="translate(72 108)" stroke="#6b4ee0" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0 2h5l4 16h16l4-12H8"/><circle cx="12" cy="26" r="2" fill="#6b4ee0"/><circle cx="24" cy="26" r="2" fill="#6b4ee0"/></g></g>
+<g><rect x="400" y="84" width="64" height="64" rx="20" fill="#fff" opacity=".95"/><path d="M440 148 l8 12 4 -12" fill="#fff" opacity=".95"/>
+<g transform="translate(416 100)" stroke="#6b4ee0" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M2 8l4-6h20l4 6v4H2z"/><path d="M4 12v16h24V12M13 28v-8h6v8"/></g></g>
+</svg></aside>
+</main>
+<script src="../Dashboard/shared/footer.js"></script>
+<script src="../Dashboard/shared/seed.js"></script>
+<script src="../Dashboard/shared/auth.js"></script>
+<script>
+function showErr(m){const e=document.getElementById('err');e.textContent=m;e.classList.add('show');}
+function togglePw(btn){const i=btn.parentElement.querySelector('input');i.type=i.type==='password'?'text':'password';btn.setAttribute('aria-label',i.type==='password'?'Show password':'Hide password');}
+let bt = 'product';
+document.getElementById('bt').onclick = e => { const b = e.target.closest('[data-t]'); if (!b) return; bt = b.dataset.t;
+  document.querySelectorAll('#bt button').forEach(x => x.classList.toggle('on', x === b)); };
+document.getElementById('signupForm').onsubmit = async e => {
+  e.preventDefault();
+  await POSeed.ready;
+  const v = id => document.getElementById(id).value;
+  const r = await POAuth.register({business: v('business_name'), fullName: v('full_name'), username: v('username'), password: v('password'), bizType: bt});
+  if (r.ok) location.href = '../Dashboard/dashboard.html'; else showErr(r.error);
+};
+</script>
+</body></html>

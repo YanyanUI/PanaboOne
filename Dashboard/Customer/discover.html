@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Discover Local</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+body{background:#eceafb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 900' preserveAspectRatio='none'%3E%3Cpath d='M0,120 C260,40 520,180 780,110 C1040,40 1240,150 1440,80 L1440,0 L0,0 Z' fill='%23f4f3fd'/%3E%3Cpath d='M0,760 C240,700 480,820 760,770 C1040,720 1240,810 1440,750 L1440,900 L0,900 Z' fill='%23e2dff8'/%3E%3Cpath d='M0,830 C300,780 600,880 900,830 C1140,790 1300,860 1440,820 L1440,900 L0,900 Z' fill='%23f4f3fd'/%3E%3C/svg%3E") repeat-y top center/100% 900px;overflow-x:hidden}
+.in{max-width:1180px;margin:0 auto;padding:0 32px}
+
+/* ---------- header ---------- */
+.dh{background:#fff;box-shadow:0 2px 14px -8px rgba(76,60,180,.5);position:sticky;top:0;z-index:50}
+.dh .in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.lg{display:flex;gap:8px;align-items:center;font-weight:700;font-size:21px;color:#1f1b4d;text-decoration:none;flex:none}
+.lg b{color:#5b3fd4}
+.nv{display:flex;align-items:center;gap:6px}
+.nv a,.nv .ddb{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:999px;color:#2d2a63;font-weight:600;font-size:14px;text-decoration:none;background:none;border:0}
+.nv a:hover,.nv .ddb:hover{background:#f1ecff}
+.nv a.on{background:#ebe7fb;color:#4c34c0}
+.nv svg,.ic svg{width:18px;height:18px;flex:none}
+.dd{position:relative}
+.dm{display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:230px;max-height:60vh;overflow:auto;background:#fff;border-radius:14px;padding:8px;box-shadow:0 18px 40px -14px rgba(60,40,160,.45);border:1px solid #eeecfa}
+.dd.open .dm{display:block}
+.nv .dm a{display:block;border-radius:8px;padding:9px 12px;font-weight:500;width:100%}
+.lgn{border:2px solid #4c34c0;color:#4c34c0;border-radius:12px;padding:8px 18px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;gap:8px;align-items:center;background:#fff;flex:none}
+.lgn:hover{background:#f3f0ff}.lgn svg{width:18px;height:18px}
+.bg2{display:none;border:0;background:#f1ecff;color:#4c34c0;width:42px;height:42px;border-radius:10px;place-items:center}
+.bg2 svg{width:22px;height:22px}
+.mn,.mbd{display:none}
+.mn a,.mn summary{display:flex;align-items:center;gap:10px;padding:12px 10px;border-radius:10px;color:#2d2a63;font-weight:600;text-decoration:none;list-style:none;cursor:pointer}
+.mn summary::-webkit-details-marker{display:none}
+.mn a:hover,.mn summary:hover{background:#f1ecff}
+.mn details a{padding-left:38px;font-weight:500;font-size:14px}
+.mn svg{width:18px;height:18px}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;color:#fff;background:#3d27b5}
+.hero .bgi{position:absolute;inset:0;background:url('../../assets/PanabOnebanner.jpg') 60% center/cover no-repeat}
+.hero .ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,28,140,.94) 0%,rgba(61,39,181,.82) 36%,rgba(61,39,181,.38) 62%,rgba(20,12,70,.10) 100%),linear-gradient(180deg,rgba(20,12,60,.28) 0%,rgba(20,12,60,0) 38%,rgba(20,12,60,.38) 100%)}
+.hero .in{position:relative;padding:26px 32px 64px}
+.hero .tag{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.16);backdrop-filter:blur(4px);border-radius:999px;padding:9px 18px;font-size:14px;font-weight:600}
+.hero .tag svg{width:18px;height:18px}.hero .tag i{width:1px;height:16px;background:rgba(255,255,255,.5)}
+.hero h1{font-size:clamp(28px,4.4vw,48px);line-height:1.08;font-weight:800;margin:14px 0 8px;letter-spacing:-.02em}
+.hero h1 span{display:block;background:linear-gradient(90deg,#c9a6ff,#a77bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{margin:0;font-size:clamp(14px,1.6vw,16px);max-width:460px;opacity:.95;text-shadow:0 2px 12px rgba(20,12,70,.5)}
+.hero h1{filter:drop-shadow(0 3px 12px rgba(20,12,70,.45))}
+.sbar{display:flex;margin-top:18px;max-width:600px;background:#fff;border-radius:999px;padding:4px;box-shadow:0 14px 34px -14px rgba(0,0,0,.5)}
+.sbar .si{display:grid;place-items:center;padding:0 6px 0 18px;color:#4c34c0}.sbar .si svg{width:22px;height:22px}
+.sbar input{flex:1;min-width:0;border:0;padding:11px 10px;outline:none;font-size:15px;color:#1f1b4d;background:none}
+.sbar button{border:0;background:#3d27b5;color:#fff;border-radius:999px;padding:0 30px;font-weight:700;font-size:16px;display:inline-flex;align-items:center;gap:8px}
+.sbar button:hover{background:#2d1f8a}
+.wave{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:40px;display:block}
+
+/* ---------- pills + sections ---------- */
+.pls{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0 4px}
+.cc{display:inline-flex;align-items:center;gap:9px;border:1px solid #e1def5;border-radius:999px;padding:11px 24px;background:#fff;color:#2d2a63;font-weight:600;font-size:15px;box-shadow:0 4px 12px -8px rgba(76,60,180,.5)}
+.cc svg{width:18px;height:18px}
+.cc.on{background:#3d27b5;border-color:#3d27b5;color:#fff}
+.sh2{display:flex;justify-content:space-between;align-items:center;margin:26px 0 16px;gap:10px}
+.sh2 h2{margin:0;font-size:26px;color:#2d1f8a;font-weight:700;position:relative;padding-bottom:8px}
+.sh2 h2::after{content:"";position:absolute;left:0;bottom:0;width:38px;height:4px;border-radius:99px;background:#5b3fd4}
+.vm{color:#3d27b5;font-weight:700;font-size:15px;background:none;border:0;text-decoration:none;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:22px;padding-bottom:24px}
+#out{padding-bottom:20px}
+.pcd{background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:inherit;box-shadow:0 10px 26px -18px rgba(76,60,180,.5);transition:.15s;display:block}
+.pcd:hover{transform:translateY(-3px)}
+.pcd .im{aspect-ratio:1/1;background:#f1ecff;display:grid;place-items:center;font-size:52px;position:relative;overflow:hidden}
+.pcd .im img,.big img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
+.pcd .im img.bk,.big img.bk{object-fit:cover;filter:blur(18px) brightness(.97);transform:scale(1.2)}
+.big{position:relative}
+.pcd .bd{padding:12px 14px}
+.pcd .nm{font-weight:600}
+.by{display:flex;align-items:center;gap:6px;color:#6b6a95;font-size:12px;margin:2px 0 6px}
+.by img,.by i{width:18px;height:18px;border-radius:50%;object-fit:cover;background:#5b3fd4;color:#fff;font-size:10px;display:grid;place-items:center;font-style:normal;flex:none}
+.pcd .p{font-weight:700;color:#5b3fd4}
+.so2{position:absolute;top:10px;left:10px;background:#000a;color:#fff;font-size:11px;padding:2px 8px;border-radius:99px}
+.bdg{position:absolute;top:10px;right:10px;background:#3d27b5;color:#fff;font-size:12px;font-weight:600;padding:5px 12px;border-radius:999px;display:inline-flex;gap:5px;align-items:center}
+.bdg svg{width:13px;height:13px}
+.vs{display:inline-grid;place-items:center;width:16px;height:16px;flex:none;margin-left:1px;cursor:help;filter:drop-shadow(0 1px 1px rgba(20,12,60,.18))}
+.vs svg{width:100%;height:100%;display:block}
+.vp{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;border-radius:99px;padding:3px 12px 3px 4px;margin-left:10px;vertical-align:middle;white-space:nowrap;font-family:inherit;letter-spacing:.1px}
+.vp svg{width:20px;height:20px;flex:none}
+.vp.t3{background:#eaf3ff;color:#1558b0;border:1px solid #cfe2fb}.vp.t2{background:#fff6dc;color:#8a5a00;border:1px solid #f6e3a8}
+h1 .vp{font-size:12px;position:relative;top:-3px}
+.by .bn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pvi .vs{margin-left:4px;width:18px;height:18px}
+.empty2{text-align:center;padding:50px 20px;color:#8b8aa8;background:#fff;border-radius:14px}
+.clr{color:#5b3fd4;font-weight:600;text-decoration:none;font-size:14px}
+
+/* ---------- stores ---------- */
+.scd{background:#fff;border-radius:16px;padding:18px;text-decoration:none;color:inherit;box-shadow:0 10px 26px -18px rgba(76,60,180,.5);display:flex;gap:14px;align-items:flex-start;transition:.15s}
+.scd:hover{transform:translateY(-3px)}
+.scd .lo{width:54px;height:54px;border-radius:14px;background:#5b3fd4;color:#fff;display:grid;place-items:center;font-size:22px;font-weight:700;overflow:hidden;flex:none;font-style:normal}
+.scd .lo img{width:100%;height:100%;object-fit:cover}
+.scd b{display:block;color:#2d1f8a}.scd small{display:block;color:#6b6a95;font-size:12px;margin-top:2px}
+.scd .n{color:#5b3fd4;font-weight:600;font-size:12px;margin-top:6px}
+.shd{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:#fff;border-radius:18px;padding:20px;margin:22px 0 4px}
+.shd .lo{width:64px;height:64px;border-radius:16px;background:#5b3fd4;color:#fff;display:grid;place-items:center;font-size:26px;font-weight:700;overflow:hidden;font-style:normal}
+.shd .lo img{width:100%;height:100%;object-fit:cover}
+.shd h1{margin:0;font-size:24px;color:#2d1f8a}.shd p{margin:2px 0 0;color:#6b6a95;font-size:13px}
+.shd>div:nth-child(2){flex:1;min-width:180px}
+
+/* ---------- about ---------- */
+.ab{background:linear-gradient(120deg,#4c34c0,#7b58eb);color:#fff;border-radius:22px;padding:34px 36px;margin:10px 0 50px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.ab h2{margin:0 0 6px;font-size:26px}.ab p{margin:0;max-width:560px;opacity:.92}
+.ab a{background:#fff;color:#3d27b5;font-weight:700;border-radius:12px;padding:12px 22px;text-decoration:none}
+
+/* ---------- product detail ---------- */
+.back{display:inline-block;margin:22px 0 14px;color:#5b3fd4;font-weight:600;text-decoration:none;cursor:pointer}
+.dt{display:grid;grid-template-columns:1fr 1fr;gap:36px;background:#fff;border-radius:18px;padding:28px;margin-bottom:50px}
+.big{aspect-ratio:1;background:#f1ecff;border-radius:14px;overflow:hidden;display:grid;place-items:center;font-size:110px}
+.dt h1{margin:0 0 4px;font-size:30px;color:#2d1f8a}
+.dt .price{font-size:28px;font-weight:700;color:#5b3fd4;margin:6px 0}
+.tg2{display:inline-block;font-size:12px;border-radius:99px;padding:4px 12px;font-weight:600}
+.tg2.y{background:#d8f5e3;color:#17703f}.tg2.n{background:#ffe0e0;color:#a02525}
+.bz{display:flex;align-items:center;gap:8px;margin:10px 0;font-weight:500}
+.bz img,.bz i{width:30px;height:30px;border-radius:50%;object-fit:cover;background:#5b3fd4;color:#fff;display:grid;place-items:center;font-style:normal}
+.cb{display:flex;width:100%;justify-content:center;padding:13px;margin-top:10px;font-size:15px}
+.cinfo{display:none;background:#faf9ff;border:1px solid #e1def5;border-radius:12px;padding:14px 16px;margin-top:10px;line-height:1.9}
+.cinfo.show{display:block}
+.shr{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eeecfa;margin-top:20px;padding-top:14px;color:#6b6a95;font-size:14px}
+
+.gp{grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:16px}
+.gp .pcd .im{font-size:44px}
+.gp .pcd .bd{padding:10px 12px}
+.gp .pcd .nm{font-size:14px}
+.gp .pcd .p{font-size:14px}
+.cdh{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.cdh .lo{width:48px;height:48px;border-radius:12px;background:#5b3fd4;color:#fff;display:grid;place-items:center;font-weight:700;font-size:20px;overflow:hidden;flex:none}
+.cdh .lo img{width:100%;height:100%;object-fit:cover}
+.cdh small{color:#8b8aa8;font-size:12px}.cdh h2{margin:0;font-size:19px}
+.cdi{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-top:1px solid #f1f0fb}
+.cdi>span{font-size:18px;width:24px;text-align:center;flex:none}
+.cdi small{display:block;color:#8b8aa8;font-size:12px}.cdi b{font-weight:600;font-size:14px;word-break:break-word}
+.cdi a{color:#5b3fd4;text-decoration:none}
+.gs{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px;padding-bottom:24px}
+.gs .pcd .im{aspect-ratio:1/1;font-size:44px}
+.gs .pcd .bd{padding:10px 12px}.gs .pcd .nm{font-size:14px}.gs .pcd .p{font-size:14px}
+/* gallery sa product detail */
+.gal2{min-width:0}
+.big .gn{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:38px;height:38px;border-radius:50%;border:0;background:rgba(20,12,60,.55);color:#fff;font-size:22px;line-height:1;padding:0 0 3px;cursor:pointer}
+.big .gn.l{left:10px}.big .gn.r{right:10px}
+.big video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:2}
+.gth{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.gth button{flex:none;width:64px;height:64px;border-radius:10px;border:2px solid transparent;padding:0;overflow:hidden;background:#1f1b4d;color:#fff;font-size:22px;cursor:pointer;opacity:.75}
+.gth button.on{border-color:#5b3fd4;opacity:1}
+.gth img{width:100%;height:100%;object-fit:cover;display:block}
+/* ---------- business posters ---------- */
+.pzh{display:flex;justify-content:space-between;align-items:center;margin:26px 0 12px;gap:10px}
+.pzh h2{margin:0;font-size:22px;color:#2d1f8a;font-weight:700;display:flex;align-items:center;gap:10px}
+.pzh h2 svg{width:26px;height:26px;color:#5b3fd4;flex:none}
+.pzr{display:flex;align-items:center;gap:14px}
+.pza{display:flex;gap:6px}
+.pza button{width:34px;height:34px;border-radius:50%;border:1px solid #e1def5;background:#fff;color:#4c34c0;font-size:20px;font-weight:700;line-height:1;padding:0 0 3px}
+.pza button:hover{background:#f1ecff}
+.pzv{overflow:hidden;padding:4px 2px 10px;touch-action:pan-y}
+.pzt{display:flex;gap:14px;transition:transform .7s cubic-bezier(.4,0,.2,1);will-change:transform}
+.pzd{display:flex;justify-content:center;gap:7px;padding:2px 0 14px}
+.pzd i{width:7px;height:7px;border-radius:99px;background:#cfc8f3;transition:.3s}
+.pzd i.on{width:20px;background:#5b3fd4}
+@media(max-width:560px){.pz{width:160px}}
+@media(prefers-reduced-motion:reduce){.pzt{transition:none}}
+.pz{position:relative;display:block;flex:none;width:210px;aspect-ratio:4/5;border:0;padding:0;border-radius:16px;overflow:hidden;background:#ebe7fb;box-shadow:0 12px 26px -16px rgba(76,60,180,.6);transition:transform .15s}
+.pz:hover{transform:translateY(-3px)}
+.pz img,.pz video{width:100%;height:100%;object-fit:cover;display:block}
+.pz .an{position:absolute;top:8px;left:8px;background:rgba(20,12,60,.7);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:7px}
+.pz .ad{position:absolute;top:8px;right:8px;background:#5b3fd4;color:#fff;font-size:11px;font-weight:700;padding:2px 9px;border-radius:7px}
+.pz .nm3{position:absolute;left:0;right:0;bottom:0;padding:28px 10px 9px;background:linear-gradient(transparent,rgba(20,12,60,.78));color:#fff;font-size:12px;font-weight:600;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pg2{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px;padding-bottom:40px}
+.pl{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 10px 26px -18px rgba(76,60,180,.5)}
+.pl .pz{width:100% !important;border-radius:0;box-shadow:none}
+.pl .pz:hover{transform:none}
+.pl .bd{padding:12px 14px 14px}
+.pl .nm{font-weight:600;margin-bottom:2px}
+.pl .btn{width:100%;justify-content:center;margin-top:10px}
+
+/* ---------- welcome pop-up ---------- */
+.wlc{position:fixed;inset:0;z-index:400;background:rgba(20,12,60,.62);display:none;align-items:center;justify-content:center;padding:16px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.wlc.show{display:flex;animation:wfade .25s ease}
+.wb{position:relative;width:min(100%,500px);max-height:calc(100dvh - 32px);overflow-x:hidden;overflow-y:auto;border-radius:30px;padding:26px 18px 22px;text-align:center;color:#fff;background:radial-gradient(circle at 50% 38%,#b99bff 0%,#7b58eb 45%,#4c34c0 100%);box-shadow:0 30px 80px -20px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.25);animation:wpop .45s cubic-bezier(.2,1.3,.4,1)}
+.wb:before,.wb:after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.12);pointer-events:none}
+.wb:before{width:260px;height:260px;left:-90px;top:-90px}.wb:after{width:200px;height:200px;right:-70px;bottom:60px}
+.wx{position:absolute;top:10px;right:10px;z-index:3;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#4c34c0;font-size:26px;line-height:1;padding:0 0 3px;cursor:pointer;box-shadow:0 6px 14px -6px rgba(0,0,0,.5)}
+.wb h2{position:relative;margin:6px 0 12px;font-size:clamp(30px,8vw,42px);line-height:1.02;font-weight:800;letter-spacing:-.01em;color:#fff;text-shadow:0 3px 0 #3d27b5,0 6px 16px rgba(30,10,100,.45);-webkit-text-stroke:1px #3d27b5}
+.wb h2 span{display:block;color:#ffe27a}
+.wpill{position:relative;display:inline-flex;align-items:center;gap:12px;background:#1f1b4d;border-radius:99px;padding:9px 18px;font-size:13px;font-weight:700;box-shadow:0 8px 18px -8px rgba(0,0,0,.6),inset 0 0 0 2px rgba(255,255,255,.18)}
+.wpill i{width:1px;height:16px;background:rgba(255,255,255,.4)}
+.wprods{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px;margin:22px 0 0;padding:0 8px}
+.wp{position:relative;display:block;color:#fff;text-decoration:none;animation:wbob 2.6s ease-in-out infinite}
+.wp{min-width:0}.wp:nth-child(2){animation-delay:-.6s}.wp:nth-child(3){animation-delay:-1.2s}.wp:nth-child(4){animation-delay:-1.8s}.wp:nth-child(5){animation-delay:-2.2s}.wp:nth-child(6){animation-delay:-.3s}
+.wp .wi{position:relative;aspect-ratio:1;border-radius:16px;background:#fff;display:grid;place-items:center;font-size:40px;overflow:hidden;box-shadow:0 12px 20px -10px rgba(20,10,80,.7);border:3px solid #fff}
+.wp .wi img{width:100%;height:100%;object-fit:cover;display:block}
+.wp .wt{position:absolute;left:-6px;bottom:30px;z-index:2;background:#ffd54a;color:#4a2a00;font-weight:800;font-size:13px;padding:3px 9px;border-radius:8px;transform:rotate(-5deg);box-shadow:0 5px 10px -4px rgba(0,0,0,.5)}
+.wp .wn{display:block;margin-top:8px;font-size:12px;font-weight:600;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wpod{position:relative;height:26px;margin:2px 8px 0;border-radius:50%;background:radial-gradient(ellipse at center,#ffa24a,#f0652a 70%);box-shadow:0 10px 0 -2px #c9481a,0 14px 24px -6px rgba(0,0,0,.5)}
+.wgo{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;margin-top:22px;min-height:54px;padding:0 38px;border:0;border-radius:99px;background:#fff;color:#4c34c0;font:800 20px 'Poppins',sans-serif;letter-spacing:.02em;cursor:pointer;box-shadow:0 12px 24px -10px rgba(0,0,0,.6),inset 0 0 0 3px #ffd54a;animation:wpulse 1.8s ease-in-out infinite}
+.wgo b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#5b3fd4;color:#fff;font-size:12px}
+@keyframes wpop{from{opacity:0;transform:scale(.8) translateY(20px)}to{opacity:1;transform:none}}
+@keyframes wfade{from{opacity:0}to{opacity:1}}
+@keyframes wbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes wpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@media(max-width:440px){.wprods{gap:16px 8px;padding:0 4px}.wp .wi{font-size:30px;border-radius:12px;border-width:2px}.wp .wt{font-size:11px;padding:2px 7px;bottom:26px;left:-4px}.wp .wn{font-size:11px}.wb{padding:24px 12px 20px}.wpill{font-size:12px;padding:8px 14px;gap:8px}.wgo{width:100%}}
+@media(prefers-reduced-motion:reduce){.wp,.wgo,.wb,.wlc.show{animation:none}}
+
+/* TikTok-style viewer */
+.pv{position:fixed;inset:0;z-index:300;background:#0d0926;display:none}
+.pv.show{display:block}
+.pvs{position:absolute;inset:0;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;scrollbar-width:none}
+.pvs::-webkit-scrollbar{display:none}
+.pvl{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;overflow:hidden}
+.pvb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(34px) brightness(.4);transform:scale(1.25)}
+.pvf{position:relative;height:100%;width:min(100%,480px);margin:0 auto;display:flex;flex-direction:column}
+.pvm{position:relative;flex:1;min-height:0}
+.pvm video{position:absolute;left:14px;right:14px;top:64px;bottom:10px;width:calc(100% - 28px);height:calc(100% - 74px);object-fit:contain;border-radius:12px;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+.pvm img{position:absolute;left:14px;right:14px;top:64px;bottom:10px;width:calc(100% - 28px);height:calc(100% - 74px);object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55))}
+.pvi{padding:6px 18px calc(22px + env(safe-area-inset-bottom,0px));color:#fff}
+.pvi .by2{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.pvi .lo2{width:36px;height:36px;border-radius:50%;background:#5b3fd4;overflow:hidden;display:grid;place-items:center;font-weight:700;flex:none}
+.pvi .lo2 img{width:100%;height:100%;object-fit:cover}
+.pvi p{margin:6px 0 12px;opacity:.9;font-size:14px}
+.pvi .btn{width:100%;justify-content:center;padding:13px;font-size:15px}
+.pvx{position:absolute;top:14px;right:14px;z-index:5;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:26px;line-height:1;padding:0 0 3px}
+.pvc{position:absolute;top:22px;left:50%;transform:translateX(-50%);z-index:5;color:#fff;font-size:13px;font-weight:600;background:rgba(255,255,255,.18);padding:4px 12px;border-radius:99px}
+.pvn{position:absolute;right:26px;top:50%;transform:translateY(-50%);z-index:5;display:flex;flex-direction:column;gap:10px}
+.pvn button{width:46px;height:46px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:22px;padding:0}
+.pvn button:hover,.pvx:hover{background:rgba(255,255,255,.35)}
+
+/* ---------- mobile ---------- */
+@media(max-width:900px){
+  .nv,.dh .lgn{display:none}
+  .bg2{display:grid}
+}
+@media(max-width:760px){
+  .in{padding:0 16px}
+  .dh .in{height:60px}
+  .lg{font-size:19px}
+  .hero .bgi{background-position:65% center}
+  .hero .ov{background:linear-gradient(180deg,rgba(61,39,181,.94) 0%,rgba(74,49,196,.82) 60%,rgba(74,49,196,.7) 100%)}
+  .hero .in{padding:16px 16px 52px}
+  .hero .tag{font-size:12px;padding:7px 13px}
+  .sbar button{padding:0 18px;font-size:14px}
+  .sbar input{padding:12px 6px;font-size:14px}
+  .sbar .si{padding-left:12px}
+  .cc{padding:9px 16px;font-size:14px}
+  .pls{gap:8px}
+  .sh2 h2{font-size:21px}
+  .g{grid-template-columns:repeat(2,1fr);gap:12px}
+  .pcd .bd{padding:10px}
+  .pcd .im{font-size:40px}
+  .bdg{font-size:11px;padding:4px 9px;top:8px;right:8px}
+  .dt{grid-template-columns:1fr;gap:18px;padding:16px;margin-bottom:30px}
+  .dt h1{font-size:24px}.big{font-size:80px}
+  .ab{padding:24px 20px}.ab h2{font-size:22px}
+  .scd{padding:14px}
+  .pz{width:150px;border-radius:14px}
+  .gs{gap:12px;grid-template-columns:repeat(2,1fr)}
+  .pza{display:none}
+  .pzh h2{font-size:19px}
+  .pg2{grid-template-columns:repeat(2,1fr);gap:12px}
+  .pl .bd{padding:10px}
+  .pvn{display:none}
+}
+@media(max-width:380px){.sbar button span{display:none}}
+
+/* ---------- zoom / touch polish ---------- */
+@media(min-width:1600px){.in{max-width:1380px}.g{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}}
+@media(pointer:coarse){
+  .bg2{width:46px;height:46px}.cc{min-height:46px}.vm{min-height:44px}.btn{min-height:46px}
+  .pza button{width:44px;height:44px}.gth button{width:68px;height:68px}
+  .big .gn{width:46px;height:46px}.pvx{width:48px;height:48px}.pvn button{width:52px;height:52px}
+  .mn a,.mn summary{min-height:48px}.sbar button{min-height:46px}.nv a,.nv .ddb{min-height:44px}.dm a{padding:12px}
+  .lgn{min-height:44px}.sbar input{font-size:16px}
+}
+@media(max-width:340px){.g,.gp,.gs,.pg2{grid-template-columns:1fr}}
+
+/* ---------- phone / tablet navigation: slide-in drawer from the left (same as the business side) ---------- */
+@media(max-width:900px){
+ .mn{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:290px;max-width:86vw;background:#fff;z-index:120;padding:0;border:0;overflow:hidden;
+  transform:translateX(-105%);visibility:hidden;transition:transform .25s ease,visibility 0s linear .25s}
+ .mn.show{transform:none;visibility:visible;transition:transform .25s ease;box-shadow:14px 0 40px -12px rgba(20,16,60,.6)}
+ .mbd{display:block;position:fixed;inset:0;background:rgba(20,16,60,.5);z-index:110;opacity:0;pointer-events:none;transition:opacity .25s}
+ .mbd.show{opacity:1;pointer-events:auto}
+ .mnh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex:none;padding:calc(12px + env(safe-area-inset-top,0px)) 14px 12px 16px;border-bottom:1px solid #eeecfa}
+ .mnx{width:44px;height:44px;border-radius:10px;border:0;background:#f1ecff;color:#4c34c0;font-size:20px;line-height:1;flex:none}
+ .mnb{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:10px 12px}
+ .mn a,.mn summary{min-height:48px}
+ .mn a.on{background:#ebe7fb;color:#4c34c0}
+ .mnf{flex:none;display:grid;gap:8px;padding:12px 16px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid #eeecfa;background:#fff}
+ .mn .mlgn{justify-content:center;background:#4c34c0;color:#fff;border-radius:12px;padding:13px 16px;font-weight:700;min-height:50px}
+ .mn .mlgn:hover{background:#3d27b5}
+ .mn .mcr{justify-content:center;border:2px solid #4c34c0;color:#4c34c0;border-radius:12px;padding:11px 16px;font-weight:700;min-height:48px}
+}
+
+
+/* ---------- about page ---------- */
+.abp .ah{background:linear-gradient(120deg,#4c34c0,#7b58eb);color:#fff;border-radius:24px;padding:44px 40px;margin:18px 0 26px;position:relative;overflow:hidden}
+.abp .ah::after{content:"";position:absolute;right:-70px;top:-70px;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.12)}
+.abp .ah span.k{display:inline-block;background:rgba(255,255,255,.18);border-radius:99px;padding:5px 14px;font-size:13px;font-weight:600;margin-bottom:12px}
+.abp .ah h1{margin:0 0 10px;font-size:36px;line-height:1.15;position:relative}
+.abp .ah p{margin:0 0 20px;max-width:640px;line-height:1.7;opacity:.95;position:relative}
+.abp .ah .bt2{display:flex;gap:10px;flex-wrap:wrap;position:relative}
+.abp .ah a{border-radius:12px;padding:12px 22px;font-weight:700;text-decoration:none;background:#fff;color:#3d27b5}
+.abp .ah a.o{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.7)}
+.abp .ast{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
+.abp .ast div{background:#fff;border-radius:16px;padding:18px;text-align:center}
+.abp .ast b{display:block;font-size:30px;color:#4c34c0}.abp .ast small{color:#6b6a95;font-size:13px}
+.abp .cg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.abp .cd{background:#fff;border-radius:18px;padding:22px}
+.abp .cd .ic{width:48px;height:48px;border-radius:14px;background:#ebe7fb;display:grid;place-items:center;font-size:24px;margin-bottom:12px}
+.abp .cd h3{margin:0 0 6px;font-size:17px;color:#2d1f8a}.abp .cd p{margin:0;color:#4a4872;font-size:14px;line-height:1.65}
+.abp .asp{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:s}
+.abp .asp .cd{position:relative;padding-top:34px}
+.abp .asp .cd::before{counter-increment:s;content:counter(s);position:absolute;top:-16px;left:20px;width:36px;height:36px;border-radius:50%;background:#5b3fd4;color:#fff;font-weight:700;display:grid;place-items:center;box-shadow:0 0 0 4px #eceafb}
+.abp .asp.s4{grid-template-columns:repeat(4,1fr)}
+.abp .apl{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.abp .apl .cd.hot{box-shadow:0 0 0 2px #7b58eb}
+.abp .apl h3{display:flex;justify-content:space-between;align-items:baseline}.abp .apl h3 span{color:#5b3fd4}
+.abp .apl ul{margin:10px 0 0;padding-left:18px;color:#4a4872;font-size:14px;line-height:1.8}
+.abp .cta{background:#fff;border-radius:22px;padding:30px;margin:30px 0 50px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.abp .cta h3{margin:0 0 4px;font-size:22px;color:#2d1f8a}.abp .cta p{margin:0;color:#4a4872}
+.abp .cta a{background:#5b3fd4;color:#fff;font-weight:700;border-radius:12px;padding:12px 22px;text-decoration:none}
+@media(max-width:900px){.abp .ast,.abp .asp.s4{grid-template-columns:1fr 1fr}.abp .cg,.abp .asp,.abp .apl{grid-template-columns:1fr 1fr}.abp .ah{padding:30px 22px}.abp .ah h1{font-size:28px}}
+@media(max-width:600px){.abp .cg,.abp .asp,.abp .apl,.abp .asp.s4{grid-template-columns:1fr}.abp .asp{gap:26px}}
+
+/* ---------- footer ---------- */
+body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+#app{flex:1 0 auto}
+.ft{position:relative;flex:none;margin-top:40px;color:#fff;background:linear-gradient(120deg,#4c34c0,#7b58eb);font-family:'Poppins',system-ui,sans-serif}
+.ft .fg2{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr 1.5fr;gap:36px;padding-top:56px;padding-bottom:44px}
+.ft .fc{min-width:0}
+.ft .fc a.brand{display:inline-flex;align-items:center;gap:10px;background:#fff;color:#1f1b4d;text-decoration:none;font-size:24px;font-weight:800;letter-spacing:-.01em;margin-bottom:14px;padding:9px 18px 9px 12px;border-radius:14px;box-shadow:0 8px 20px -10px rgba(20,10,70,.6)}
+.ft .fc a.brand:hover{transform:none;color:#1f1b4d}
+.ft .brand svg{width:38px;height:38px;flex:none}.ft .brand span{font-weight:800;color:#1f1b4d}.ft .brand b{color:#5b3fd4;font-weight:800}
+.ft .tag2{margin:0 0 10px;font-size:15px;font-weight:600;font-style:italic;color:#e4dbff}
+.ft .desc{margin:0 0 20px;font-size:14px;line-height:1.7;color:rgba(255,255,255,.86);max-width:340px}
+.ft .so{display:flex;gap:10px;flex-wrap:wrap}
+.ft .so a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;display:grid;place-items:center;transition:.15s}
+.ft .so a:hover{background:#fff;color:#4c34c0;transform:translateY(-2px)}
+.ft .so svg{width:20px;height:20px}
+.ft h4{margin:0 0 16px;font-size:16px;font-weight:700;color:#fff;letter-spacing:.02em}
+.ft .fc ul{list-style:none;margin:0;padding:0;display:grid;gap:11px}
+.ft .fc a,.ft .fc button.fl{display:inline-block;padding:0;color:rgba(255,255,255,.86);font:400 14.5px/1.4 'Poppins',sans-serif;text-decoration:none;background:none;border:0;text-align:left;cursor:pointer;transition:color .15s,transform .15s}
+.ft .fc a:hover,.ft .fc button.fl:hover{color:#fff;transform:translateX(3px)}
+.ft .ci{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.9)}
+.ft .ci svg{width:20px;height:20px;flex:none;margin-top:2px;color:#d9ccff}
+.ft .ci small{display:block;font-size:13px;color:rgba(255,255,255,.72)}
+.ft .ci a{color:inherit;word-break:break-word}
+.ft .cta2{display:inline-block;margin-top:16px;background:#fff;color:#3d27b5!important;font-weight:700!important;border-radius:12px;padding:10px 18px!important}
+.ft .cta2:hover{transform:translateY(-2px)!important}
+.ft .cp{border-top:1px solid rgba(255,255,255,.18);background:rgba(20,10,70,.28);font-size:13.5px;color:rgba(255,255,255,.85)}
+.ft .cp .in{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:60px;flex-wrap:wrap}
+.ft .cp .hr{color:#ff9db1}
+@media(max-width:1100px){.ft .fg2{grid-template-columns:1fr 1fr 1fr;gap:32px}.ft .fc.br{grid-column:1/-1}.ft .desc{max-width:520px}}
+@media(max-width:760px){
+  .ft .fg2{grid-template-columns:1fr 1fr;gap:28px 20px;padding-top:40px;padding-bottom:32px}
+  .ft .fc.ct2{grid-column:1/-1}
+  .ft .cp .in{flex-direction:column;justify-content:center;padding:14px 16px;gap:4px;text-align:center}
+}
+/* ---------- location line, sort bar, search suggestions ---------- */
+.lc{display:flex;align-items:center;gap:4px;margin-top:4px;font-size:12px;color:#6b6a95;min-width:0;line-height:1.35}
+.lc svg{width:12px;height:12px;flex:none;color:#8b6be8}
+.lc span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc b{flex:none;font-weight:600;color:#3d27b5;white-space:nowrap}
+.lc.lcd{font-size:14px;margin:8px 0 10px;gap:6px}.lc.lcd svg{width:16px;height:16px}.lc.lcd span{white-space:normal}
+.fbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px}
+.fbar .pls{margin:0}
+.sortw{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#4a4872}
+.sortw select{appearance:none;-webkit-appearance:none;border:1px solid #e1def5;border-radius:999px;padding:11px 38px 11px 18px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234c34c0' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 14px center/14px;font-weight:600;font-size:15px;font-family:inherit;color:#2d2a63;box-shadow:0 4px 12px -8px rgba(76,60,180,.5);cursor:pointer;outline:none}
+.sortw select:focus-visible{box-shadow:0 0 0 3px rgba(91,63,212,.25)}
+.sortw select:disabled{opacity:.6;cursor:wait}
+.smsg{margin-top:8px;font-size:13px;color:#6b6a95}.smsg:empty{display:none}.smsg.err{color:#c0304e}
+.sgx{position:fixed;z-index:350;display:none;background:#fff;border-radius:18px;border:1px solid #eeecfa;box-shadow:0 22px 50px -16px rgba(40,24,120,.55);padding:6px 0;max-height:min(60vh,420px);overflow:auto;overscroll-behavior:contain}
+.sgx.show{display:block}
+.sgx .sgh{padding:8px 20px 4px;font-size:12px;font-weight:600;color:#8b8aa8;letter-spacing:.04em;text-transform:uppercase}
+.sgx .sgr{display:flex;align-items:center;gap:12px;padding:11px 20px;font-size:14px;color:#2d2a63;cursor:pointer}
+.sgx .sgr:hover,.sgx .sgr.on{background:#f4f2ff}
+.sgx .sgr svg{width:16px;height:16px;flex:none;color:#9a98bd}
+.sgx .sgr .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sgx .sgr b{font-weight:700;color:#1f1b4d}
+.sgx .sgr .x{border:0;background:none;color:#9a98bd;font-size:20px;line-height:1;padding:2px 8px;border-radius:6px;cursor:pointer}
+.sgx .sgr .x:hover{background:#e9e5fb;color:#4c34c0}
+@media(max-width:760px){.fbar{align-items:stretch}.sortw{width:100%}.sortw select{flex:1;min-width:0;font-size:16px}.sgx{border-radius:14px}.sgx .sgr{padding:13px 16px}.lc{font-size:11.5px}}
+@media(pointer:coarse){.sortw select{min-height:46px}}
+.pzc{font-size:12px;font-weight:600;color:#6b6a95}
+#out{scroll-margin-top:130px}
+.stk{position:fixed;left:0;right:0;top:var(--hh,68px);z-index:49;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 10px 18px -14px rgba(76,60,180,.6);padding:8px 0;transform:translateY(-120%);opacity:0;pointer-events:none;transition:transform .2s,opacity .2s}
+.stk.show{transform:none;opacity:1;pointer-events:auto}
+.sbar2{display:flex;align-items:center;max-width:640px;margin:0 auto;border:1.5px solid #d3cef2;background:#f6f4ff;border-radius:999px;padding:3px}
+.sbar2:focus-within{border-color:#5b3fd4;background:#fff;box-shadow:0 0 0 3px rgba(91,63,212,.15)}
+.sbar2 .si{display:grid;place-items:center;padding:0 4px 0 14px;color:#4c34c0}.sbar2 .si svg{width:18px;height:18px}
+.sbar2 input{flex:1;min-width:0;border:0;background:none;outline:none;padding:9px 8px;font-size:15px;color:#1f1b4d;font-family:inherit}
+.sbar2 button{border:0;background:#3d27b5;color:#fff;border-radius:999px;padding:0 20px;min-height:36px;font-weight:700;font-size:14px;font-family:inherit;cursor:pointer}
+.sbar2 button:hover{background:#2d1f8a}
+@media(max-width:900px){#out{scroll-margin-top:118px}.sbar2 input{font-size:16px}.sbar2 button{padding:0 16px}}
+@media(prefers-reduced-motion:reduce){.stk{transition:none}}
+</style></head>
+<body>
+<header class="dh"><div class="in">
+  <a class="lg" href="discover.html"><svg width="30" height="30" viewBox="0 0 64 64" fill="none"><g stroke-width="5" fill="none"><circle cx="32" cy="18" r="12" stroke="#a33fa8"/><circle cx="46" cy="32" r="12" stroke="#3aa7dd"/><circle cx="32" cy="46" r="12" stroke="#3b5bd6"/><circle cx="18" cy="32" r="12" stroke="#7a3fb8"/></g><circle cx="32" cy="32" r="4" fill="#5b3fd4"/></svg><span>Panabo<b>One</b></span></a>
+  <nav class="nv" id="nv"></nav>
+  <a class="lgn" href="/index.html"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>Business Owner? Login</a>
+  <button class="bg2" id="burger" aria-label="Menu"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</div>
+<div class="mn" id="mn"></div>
+</header>
+<div id="app"></div>
+<footer class="ft" id="contact">
+  <div class="in fg2">
+    <div class="fc br"><a class="brand" href="https://yanyanui.github.io/PanaboOne-Promotional/index.html?fbclid=IwY2xjawVkuDxleHRuA2FlbQIxMABwZG9mBWJyaWQRMWxITHVndnowVHJDNDNGd2pzcnRjBmFwcF9pZBAyMjIwMzkxNzg4MjAwODkyAAEfJ5z8IrJIoittgcteaAasw9DOfpciKGsmZWJBztgnxBvwKKs4vCmr88jjW94_aem_SkK-3KxDL0nPyK58nJuVQQ#services" target="_blank" rel="noopener noreferrer" aria-label="PanaboOne Promotional website"><svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><g stroke-width="5" fill="none"><circle cx="32" cy="18" r="12" stroke="#a33fa8"/><circle cx="46" cy="32" r="12" stroke="#3aa7dd"/><circle cx="32" cy="46" r="12" stroke="#3b5bd6"/><circle cx="18" cy="32" r="12" stroke="#7a3fb8"/></g><circle cx="32" cy="32" r="4" fill="#5b3fd4"/></svg><span>Panabo<b>One</b></span></a>
+      <p class="tag2">Discover Local. Support Local.</p>
+      <p class="desc">Your online marketplace for Panabo City. Find fresh food, handmade goods, repair shops, salons and more, all from neighbors who run them.</p>
+      <div class="so"><a href="https://www.facebook.com/profile.php?id=61596672921674" target="_blank" rel="noopener noreferrer" aria-label="PanaboOne on Facebook"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M13.5 22v-8h2.7l.5-3.4h-3.2V8.5c0-1 .4-1.7 1.8-1.7h1.5V3.8A19 19 0 0 0 14.2 3.7c-2.6 0-4.3 1.6-4.3 4.4v2.5H7v3.4h2.9v8h3.6Z"/></svg></a><a href="#" aria-label="TikTok"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M16.6 2h-3.2v13.2a2.9 2.9 0 1 1-2.9-2.9c.3 0 .6 0 .9.1V9a6.1 6.1 0 1 0 5.2 6V8.4a7.4 7.4 0 0 0 4.3 1.4V6.6A4.3 4.3 0 0 1 16.6 2Z"/></svg></a><a href="#" aria-label="YouTube"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2C2 8.8 2 12 2 12s0 3.2.4 4.8a2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8c.4-1.6.4-4.8.4-4.8s0-3.2-.4-4.8ZM10 15V9l5.2 3L10 15Z"/></svg></a><a href="#" aria-label="Messenger"><svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.2 2 11.5c0 2.9 1.3 5.4 3.4 7.1V22l3.1-1.7c1.1.3 2.3.5 3.5.5 5.5 0 10-4.2 10-9.3S17.5 2 12 2Zm1 12.4-2.5-2.6-4.9 2.6 5.4-5.7 2.6 2.6 4.8-2.6-5.4 5.7Z"/></svg></a></div></div>
+    <div class="fc"><h4>Explore</h4><ul><li><a href="discover.html">Home</a></li><li><a href="?v=stores">Browse Stores</a></li><li><a href="?v=local">Local Businesses</a></li><li><a href="?v=posters">Posters</a></li><li><a href="?v=about">About Us</a></li></ul></div>
+    <div class="fc"><h4>Categories</h4><ul><li><a href="?t=product">Products</a></li><li><a href="?t=service">Services</a></li><li><a href="?v=stores">Shops Near You</a></li></ul>
+      <h4 style="margin-top:24px">For Businesses</h4><ul><li><a href="/CreateAccount/createAccount.html">Create Your Store</a></li><li><a href="../../index.html">Business Login</a></li></ul></div>
+    <div class="fc"><h4>Support</h4><ul><li><button type="button" class="fl" data-info="help">Help Center</button></li><li><button type="button" class="fl" data-info="contact">Contact Us</button></li><li><button type="button" class="fl" data-info="terms">Terms &amp; Conditions</button></li><li><button type="button" class="fl" data-info="privacy">Privacy Policy</button></li></ul></div>
+    <div class="fc ct2"><h4>Get in Touch</h4><ul>
+      <li class="ci"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Panabo City,<br>Davao del Norte, Philippines</span></li>
+      <li class="ci"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z"/></svg><a href="tel:+639171234567">0917 123 4567</a></li>
+      <li class="ci"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a href="mailto:hello@panaboone.com">hello@panaboone.com</a></li>
+      <li class="ci"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Mon–Sat, 8:00 AM – 5:00 PM<small>We reply within one business day</small></span></li></ul></div>
+  </div>
+  <div class="cp"><div class="in"><span>© <span id="yr">2026</span> PanaboOne. All rights reserved.</span><span>Made with <span class="hr">♥</span> in Panabo City, Davao del Norte</span></div></div>
+</footer>
+
+<script src="../shared/seed.js"></script>
+<script src="../shared/store.js"></script>
+<script>
+const $ = PO.$, esc = PO.esc;
+const params = new URLSearchParams(location.search), pid = params.get('p'), view = params.get('v'), storeName = params.get('s'), catQ = params.get('c') || 'All';
+let q = '', ty = ['product', 'service'].includes(params.get('t')) ? params.get('t') : 'All';
+try { q = sessionStorage.getItem('po_q') || ''; } catch (e) {}
+
+/* ---- icons ---- */
+const I = {
+  mega: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="9.5" width="5" height="5.5" rx="1"/><path d="M7.5 10.5 15 6v12l-7.5-3.5M12.2 8.2v7.6M8.4 15l1.1 4.5H7.1L6.3 15M18 10.4l2 1.6-2 1.6"/></svg>',
+  home: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5M5 9.5V21h14V9.5"/></svg>',
+  stores: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+  tag: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12 12 20a2 2 0 0 1-2.8 0L3 13.8V4h9.8L20 11.2a1 1 0 0 1 0 .8Z"/><circle cx="8" cy="8" r="1.5"/></svg>',
+  info: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+  chev: '<svg style="width:14px;height:14px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>',
+  pin: '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z"/></svg>',
+  search: '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>',
+  cart: '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M7 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM1 2v2h2l3.6 7.6-1.4 2.4A2 2 0 0 0 7 17h12v-2H7.4l1.1-2h7.5a2 2 0 0 0 1.7-1l3.6-6.5A1 1 0 0 0 20.4 4H5.2l-.9-2H1Z"/></svg>',
+  gear: '<svg fill="currentColor" viewBox="0 0 24 24"><path d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6a.5.5 0 0 0 .1-.6l-2-3.5a.5.5 0 0 0-.6-.2l-2.5 1a7.3 7.3 0 0 0-1.7-1l-.4-2.6a.5.5 0 0 0-.5-.4h-4a.5.5 0 0 0-.5.4l-.4 2.6a7.3 7.3 0 0 0-1.7 1l-2.5-1a.5.5 0 0 0-.6.2l-2 3.5a.5.5 0 0 0 .1.6L4.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6a.5.5 0 0 0-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c0 .2.3.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5a.5.5 0 0 0-.1-.6L19.4 13ZM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg>',
+  star: '<svg fill="currentColor" viewBox="0 0 24 24"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8L12 2Z"/></svg>',
+  arrow: '<svg style="width:16px;height:16px" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+};
+
+/* plan perks: Tier 2 = Featured Listings + Premium badge, Tier 3 = Featured Listings + Legitimacy (Verified) badge + top of search */
+const plr = p => (p.biz && p.biz.plan === 'tier3') ? 2 : (p.biz && p.biz.plan === 'tier2') ? 1 : 0;
+const paid = p => plr(p) > 0;
+const SEAL = 'M12 1.6l2.5 1.8 3-.3 1.3 2.8 2.7 1.4-.3 3 1.8 2.5-1.8 2.5.3 3-2.7 1.4-1.3 2.8-3-.3L12 22.4l-2.5-1.8-3 .3-1.3-2.8-2.7-1.4.3-3L1.2 11.2l1.8-2.5-.3-3 2.7-1.4 1.3-2.8 3 .3z';
+const sealSvg = t3 => `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${SEAL}" fill="${t3 ? '#1d8cf8' : '#f2a900'}"/>${t3 ? '<path d="m7.6 12.2 3 3 5.9-6.2" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' : '<path d="m12 6.9 1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#fff"/>'}</svg>`;
+/* one clean badge: small seal next to the business name (hover for the label); the labeled pill is used only on the store page and product page */
+const bizB = (b, full) => { const t3 = b && b.plan === 'tier3', t2 = b && b.plan === 'tier2'; if (!t3 && !t2) return '';
+  const lbl = t3 ? 'Verified Business' : 'Premium Business', tip = t3 ? 'Verified Business — legitimacy checked' : 'Premium Business';
+  return full ? `<span class="vp ${t3 ? 't3' : 't2'}" title="${tip}">${sealSvg(t3)}${lbl}</span>` : `<span class="vs" title="${tip}" aria-label="${lbl}">${sealSvg(t3)}</span>`; };
+/* ---- real businesses: listings appear automatically when Published ---- */
+const real = () => {
+  let acc = {}; try { acc = JSON.parse(localStorage.getItem('po_accounts')) || {}; } catch (e) {}
+  return Object.keys(acc).flatMap(u => {
+    let x = null; try { x = JSON.parse(localStorage.getItem('panaboone_v1_' + u)); } catch (e) {}
+    if (!x || !x.published) return [];
+    const b = x.published, biz = {name: b.name, logo: b.logo, phone: b.phone, address: b.address, hours: b.hours, lat: b.lat, lng: b.lng, pinned: b.pinned, real: true, user: u, plan: x.plan || 'tier1'};
+    return (x.products || []).filter(p => p.status === 'visible' && (x.bizType === 'both' || (x.bizType || 'product') === (p.type || 'product'))).map(p => ({...p, type: p.type || 'product', biz}));
+  }).sort((a, b) => (plr(b) - plr(a)) || ((b.created || 0) - (a.created || 0)));
+};
+
+/* mix listings so one business does not run on and on: shuffle stores, then take one listing per store in turns */
+const SEED = Math.random();   /* new random order every time the site is opened */
+const rnd = k => { let h = 2166136261 ^ Math.floor(SEED * 1e9); for (const c of String(k)) h = Math.imul(h ^ c.charCodeAt(0), 16777619); return ((h >>> 0) % 100000) / 100000; };
+const mix = list => { const g = {}; list.forEach(p => (g[p.biz.name] = g[p.biz.name] || []).push(p));
+  const q = Object.values(g).map(a => a.sort((x, y) => rnd(x.id) - rnd(y.id))).sort((a, b) => rnd(a[0].biz.name) - rnd(b[0].biz.name)), out = [];
+  for (let i = 0; q.some(a => a.length); i++) q.forEach(a => { if (a.length) out.push(a.shift()); }); return out; };
+const featOf = list => { const g = {}; return list.filter(p => { const k = p.biz.user || p.biz.name; g[k] = (g[k] || 0) + 1; return g[k] <= 3; }); };   /* max 3 featured per store */
+const all = () => real();
+const cats = () => [...new Set(all().map(p => p.category).filter(Boolean))].sort();
+
+/* ---- distance + location line (shown under the price) ---- */
+const DIST = {};   /* km from the customer, filled in when "Nearest" is used */
+const kmBetween = (a, b) => { const r = x => x * Math.PI / 180, h = Math.sin(r(b.lat - a.lat) / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(r(b.lng - a.lng) / 2) ** 2; return 12742 * Math.asin(Math.sqrt(h)); };
+const fkm = x => x < 1 ? Math.round(x * 1000) + ' m' : x.toFixed(x < 10 ? 1 : 0) + ' km';
+const locRow = (b, cls) => { if (!b || !b.address) return ''; const d = DIST[b.user || b.name];
+  return `<div class="lc ${cls || ''}" title="${esc(b.address)}">${I.pin}${d != null ? `<b>${fkm(d)} ·</b>` : ''}<span>${esc(b.address)}</span></div>`; };
+const imageSrc = src => {
+  if (!src || /^(?:data:|blob:)/i.test(src)) return src;
+  const path = src.replace(/\\/g, '/'), asset = /(?:^|\/)assets\/(.+)$/i.exec(path), absolute = /^(?:https?:|file:)/i.test(src);
+  const base = new URL('../../assets/', location.href);
+  if (asset && (!absolute || new URL(src, location.href).origin === location.origin)) return new URL(asset[1], base).href;
+  if (absolute) return src;
+  return new URL(path.replace(/^\/?(?:\.{1,2}\/)*assets\//i, ''), base).href; };
+const cardSrc = p => imageSrc(p.image || (p.images && p.images[0]));
+const mk = b => b.logo ? `<img src="${imageSrc(b.logo)}" alt="">` : `<i>${esc((b.name || 'S')[0])}</i>`;
+const card = p => `<a class="pcd" href="?p=${encodeURIComponent(p.id)}"><div class="im">${cardSrc(p) ? `<img class="bk" src="${cardSrc(p)}" alt="" aria-hidden="true"><img src="${cardSrc(p)}" alt="${esc(p.name)}" loading="lazy">` : (p.emoji || '🛍️')}${p.available ? '' : '<span class="so2">Sold out</span>'}${p.badge ? `<span class="bdg">${I.star}${p.badge}</span>` : ''}</div>
+  <div class="bd"><div class="nm">${esc(p.name)}</div><div class="by">${mk(p.biz)}<span class="bn">${esc(p.biz.name)}</span>${bizB(p.biz)}</div>${p.type === 'service' && !p.price ? '' : `<div class="p">${p.type === 'service' ? 'From ' : ''}${PO.fmt(p.price)}</div>`}${locRow(p.biz)}</div></a>`;
+
+
+/* ---- Business Posters: pulled automatically from each business's Poster page (Published only) ---- */
+const PLIM = {tier1: 3, tier2: 5, tier3: 10};   /* max published posters per plan */
+const posters = () => {
+  let acc = {}; try { acc = JSON.parse(localStorage.getItem('po_accounts')) || {}; } catch (e) {}
+  const real = Object.keys(acc).flatMap(u => {
+    let g = []; try { g = JSON.parse(localStorage.getItem('po_posters_' + u)) || []; } catch (e) {}
+    let x = null; try { x = JSON.parse(localStorage.getItem('panaboone_v1_' + u)); } catch (e) {}
+    const lim = PLIM[(x && x.plan) || 'tier1'] || 3;
+    g = g.filter(p => p && p.img && p.status !== 'hidden').sort((a, b) => (b.t || 0) - (a.t || 0)).slice(0, lim); if (!g.length) return [];
+    const b = (x && x.published) || {}, biz = {name: b.name || acc[u].business || u, logo: b.logo || '', phone: b.phone, address: b.address, hours: b.hours, real: true, user: u, plan: (x && x.plan) || 'tier1'};
+    return g.map(p => ({id: u + ':' + p.id, t: p.t || 0, title: p.title || 'Poster', img: p.img, vid: p.vid || '', biz}));
+  }).sort((a, b) => b.t - a.t);
+  return real;
+};
+/* animated posters are stored as a short looping video (IndexedDB) */
+const vurls = {};
+const pzMedia = p => p.vid ? `<video data-vid="${p.vid}" poster="${imageSrc(p.img)}" muted loop autoplay playsinline preload="metadata"></video>` : `<img src="${imageSrc(p.img)}" alt="" loading="lazy">`;
+const hydrate = root => root && root.querySelectorAll('video[data-vid]').forEach(v => { const id = v.dataset.vid;
+  (vurls[id] = vurls[id] || PO.vid.url(id)).then(u => { if (u) { v.src = u; const r = v.play(); if (r && r.catch) r.catch(() => {}); } }); });
+const visit = b => b.real ? '../StoreFront/store.html?b=' + encodeURIComponent(b.user) : '?s=' + encodeURIComponent(b.name);
+const pzCard = (p, i) => `<button class="pz" data-pz="${i}" aria-label="${esc(p.title)} — ${esc(p.biz.name)}">${pzMedia(p)}${p.vid ? '<span class="an">✨ Animated</span>' : ''}<span class="ad">Ad</span><span class="nm3">${esc(p.biz.name)}</span></button>`;
+
+const PZ_MS = 2000;   /* seconds between slides (milliseconds): change this to make it faster / slower */
+let pzTimer = 0;
+function pzHome() {
+  const H = posters().map(p => [Math.random(), p]).sort((a, b) => a[0] - b[0]).map(x => x[1]);   /* all posters, new random order on every refresh */
+  $('pz').innerHTML = `<div class="pzh"><h2>${I.mega}Business Posters</h2><div class="pzr"><div class="pza"><button id="pzp" aria-label="Previous">‹</button><button id="pzn" aria-label="Next">›</button></div><a class="vm" href="?v=posters">View All ${I.arrow}</a></div></div>
+    <div class="pzv" id="pzv"><div class="pzt" id="pzt">${H.map(pzCard).join('')}</div></div><div class="pzd" id="pzd"></div>`;
+  hydrate($('pz'));
+  const v = $('pzv'), t = $('pzt');
+  let i = 0, moved = false;
+  const step = () => { const c = t.children[0]; return (c ? c.offsetWidth : 210) + 14; };
+  const max = () => Math.max(0, H.length - Math.max(1, Math.floor((v.clientWidth + 14) / step())));
+  const go = n => {
+    const m = max(); i = n > m ? 0 : n < 0 ? m : n;
+    t.style.transform = `translateX(${-i * step()}px)`;
+    const nd = Math.min(4, m + 1), ad = m ? Math.round(i / m * (nd - 1)) : 0;   /* always max 4 dots */
+    $('pzd').innerHTML = m ? Array.from({length: nd}, (_, k) => `<i class="${k === ad ? 'on' : ''}"></i>`).join('') : '';
+  };
+  const stop = () => clearInterval(pzTimer);
+  const play = () => {
+    stop(); if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    pzTimer = setInterval(() => {
+      if (document.hidden || !$('pz') || $('pz').offsetParent === null || ($('pv') && $('pv').classList.contains('show'))) return;
+      go(i + 1);
+    }, PZ_MS);
+  };
+  v.onclick = e => { if (moved) { moved = false; return; } const b = e.target.closest('[data-pz]'); if (b) openPV(H, +b.dataset.pz); };
+  $('pzp').onclick = () => { go(i - 1); play(); }; $('pzn').onclick = () => { go(i + 1); play(); };
+  v.onmouseenter = stop; v.onmouseleave = play;
+  let x0 = 0;
+  v.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; moved = false; stop(); }, {passive: true});
+  v.addEventListener('touchend', e => { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) { moved = true; go(i + (dx < 0 ? 1 : -1)); } play(); });
+  addEventListener('resize', () => go(i));
+  go(0); play();
+}
+
+function postersPage() {
+  const L = posters();
+  $('app').innerHTML = `<div class="in"><a class="back" href="discover.html" style="margin-bottom:0">← Back to home</a>
+    <div class="sh2" style="margin-top:14px"><h2>Business Posters</h2><span class="muted">${L.length} poster${L.length === 1 ? '' : 's'}</span></div>
+    ${L.length ? `<div class="pg2">${L.map((p, i) => `<div class="pl"><button class="pz" data-pz="${i}" aria-label="Enlarge ${esc(p.title)}">${pzMedia(p)}${p.vid ? '<span class="an">✨ Animated</span>' : ''}<span class="ad">Ad</span></button>
+      <div class="bd"><div class="by">${mk(p.biz)}<span class="bn">${esc(p.biz.name)}</span>${bizB(p.biz)}</div><div class="nm">${esc(p.title)}</div><a class="btn pri" href="${visit(p.biz)}">🏪 Visit Store</a></div></div>`).join('')}</div>` : `<div class="empty2">No posters yet.</div>`}</div>`;
+  hydrate($('app'));
+  const g = document.querySelector('.pg2');
+  if (g) g.onclick = e => { const b = e.target.closest('[data-pz]'); if (b) openPV(L, +b.dataset.pz); };   /* scrollable TikTok-style viewer, same as Home */
+}
+
+/* ---- TikTok-style viewer: vertical scroll, one poster per screen ---- */
+const slide = p => `<section class="pvl"><img class="pvb" src="${imageSrc(p.img)}" alt="" aria-hidden="true"><div class="pvf"><div class="pvm">${p.vid ? `<video data-vid="${p.vid}" poster="${imageSrc(p.img)}" muted loop autoplay playsinline></video>` : `<img src="${imageSrc(p.img)}" alt="${esc(p.title)}">`}</div>
+  <div class="pvi"><div class="by2"><span class="lo2">${p.biz.logo ? `<img src="${imageSrc(p.biz.logo)}" alt="">` : esc((p.biz.name || 'S')[0])}</span>${esc(p.biz.name)}${bizB(p.biz)}</div><p>${esc(p.title)}</p>
+  <a class="btn pri" href="${visit(p.biz)}">🏪 Visit Store</a></div></div></section>`;
+let pvN = 0;
+function pvCount() { const s = $('pvs'); if (!s.clientHeight) return; $('pvc').textContent = (Math.round(s.scrollTop / s.clientHeight) + 1) + ' / ' + pvN; }
+function ensurePV() {
+  if ($('pv')) return;
+  const d = document.createElement('div'); d.className = 'pv'; d.id = 'pv'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Business posters');
+  d.innerHTML = `<button class="pvx" id="pvx" aria-label="Close">×</button><div class="pvc" id="pvc"></div>
+    <div class="pvn" id="pvn"><button id="pvu" aria-label="Previous poster">↑</button><button id="pvd" aria-label="Next poster">↓</button></div><div class="pvs" id="pvs"></div>`;
+  document.body.appendChild(d);
+  const by = k => $('pvs').scrollBy({top: k * $('pvs').clientHeight, behavior: 'smooth'});
+  $('pvx').onclick = () => closePV(); $('pvu').onclick = () => by(-1); $('pvd').onclick = () => by(1);
+  $('pvs').onscroll = pvCount;
+  addEventListener('keydown', e => { if (!$('pv').classList.contains('show')) return;
+    if (e.key === 'Escape') closePV(); else if (e.key === 'ArrowDown' || e.key === 'PageDown') { e.preventDefault(); by(1); } else if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); by(-1); } });
+  addEventListener('popstate', () => { if ($('pv').classList.contains('show')) closePV(true); });   /* Back button just closes the viewer */
+}
+function openPV(list, i) {
+  ensurePV(); pvN = list.length;
+  $('pvs').innerHTML = list.map(slide).join(''); hydrate($('pvs'));
+  const one = list.length < 2; $('pvn').style.display = one ? 'none' : ''; $('pvc').style.display = one ? 'none' : '';
+  $('pv').classList.add('show'); document.body.style.overflow = 'hidden';
+  $('pvs').scrollTop = i * $('pvs').clientHeight; pvCount();
+  history.pushState({pv: 1}, '');
+  $('pvx').focus();
+}
+function closePV(fromPop) {
+  $('pv').classList.remove('show'); document.body.style.overflow = ''; $('pvs').innerHTML = '';
+  if (!fromPop && history.state && history.state.pv) history.back();
+}
+
+/* ---- Contact Details pop up ---- */
+function contactPop(b) {
+  let m = $('ctm');
+  if (!m) { m = document.createElement('div'); m.className = 'modal'; m.id = 'ctm'; document.body.appendChild(m);
+    m.onmousedown = e => { if (e.target === m) m.classList.remove('show'); };
+    addEventListener('keydown', e => { if (e.key === 'Escape') m.classList.remove('show'); }); }
+  const tel = String(b.phone || '').replace(/[^\d+]/g, '');
+  const row = (ic, l, v) => `<div class="cdi"><span>${ic}</span><div><small>${l}</small><b>${v}</b></div></div>`;
+  m.innerHTML = `<div class="mbox" style="max-width:390px"><div class="cdh"><span class="lo">${b.logo ? `<img src="${imageSrc(b.logo)}" alt="">` : esc((b.name || 'S')[0])}</span><div><small>Contact details</small><h2>${esc(b.name)}</h2></div></div>
+    ${row('📞', 'Phone', b.phone ? `<a href="tel:${esc(tel)}">${esc(b.phone)}</a>` : '<span class="muted">Not set</span>')}
+    ${row('📍', 'Address', esc(b.address) || '<span class="muted">Not set</span>')}
+    ${row('🕒', 'Open hours', esc(b.hours) || '<span class="muted">Not set</span>')}
+    <div class="macts"><button class="btn" id="ctx">Close</button>${tel ? `<a class="btn pri" href="tel:${esc(tel)}">📞 Call now</a>` : ''}</div></div>`;
+  $('ctx').onclick = () => m.classList.remove('show');
+  m.classList.add('show');
+}
+
+
+
+/* ---- header ---- */
+function header() {
+  const cur = view === 'about' ? 'about' : view === 'posters' ? 'posters' : view === 'stores' || storeName ? 'stores' : (pid ? '' : 'home');
+  const cl = cats().map(c => `<a href="?c=${encodeURIComponent(c)}">${esc(c)}</a>`).join('');
+  $('nv').innerHTML = `<a href="discover.html" class="${cur === 'home' ? 'on' : ''}">${I.home}Home</a>
+    <a href="?v=stores" class="${cur === 'stores' ? 'on' : ''}">${I.stores}Browse Stores</a>
+    <a href="?v=posters" class="${cur === 'posters' ? 'on' : ''}">${I.mega}Posters</a>
+    <div class="dd" id="dd"><button class="ddb" id="ddb">${I.tag}Categories ${I.chev}</button><div class="dm">${cl || '<a>No categories yet</a>'}</div></div>
+    <a href="?v=about" class="${cur === 'about' ? 'on' : ''}">${I.info}About</a>`;
+  $('ddb').onclick = e => { e.stopPropagation(); $('dd').classList.toggle('open'); };
+  document.addEventListener('click', () => $('dd').classList.remove('open'));
+  const on = k => cur === k ? ' class="on"' : '';
+  const logoSvg = '<svg width="28" height="28" viewBox="0 0 64 64" fill="none"><g stroke-width="5" fill="none"><circle cx="32" cy="18" r="12" stroke="#a33fa8"/><circle cx="46" cy="32" r="12" stroke="#3aa7dd"/><circle cx="32" cy="46" r="12" stroke="#3b5bd6"/><circle cx="18" cy="32" r="12" stroke="#7a3fb8"/></g><circle cx="32" cy="32" r="4" fill="#5b3fd4"/></svg>';
+  const bag = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/></svg>';
+  $('mn').innerHTML = `<div class="mnh"><a class="lg" href="discover.html" style="padding:0;min-height:0">${logoSvg}<span>Panabo<b>One</b></span></a><button type="button" class="mnx" id="mnx" aria-label="Close menu">✕</button></div>
+    <div class="mnb"><a href="discover.html"${on('home')}>${I.home}Home</a><a href="?v=stores"${on('stores')}>${I.stores}Browse Stores</a><a href="?v=posters"${on('posters')}>${I.mega}Posters</a>
+      <details><summary>${I.tag}Categories ${I.chev}</summary>${cl || '<a>No categories yet</a>'}</details>
+      <a href="?v=about">${I.info}About</a></div>
+    <div class="mnf"><a class="mlgn" href="../../index.html">${bag}Business Owner? Login</a><a class="mcr" href="../../CreateAccount/createAccount.html">Create your store</a></div>`;
+  const bd = document.createElement('div'); bd.className = 'mbd'; bd.id = 'mbd'; $('mn').before(bd);
+  const setMn = v => { $('mn').classList.toggle('show', v); bd.classList.toggle('show', v); $('burger').setAttribute('aria-expanded', String(v)); document.body.style.overflow = v ? 'hidden' : ''; };
+  $('burger').onclick = () => setMn(!$('mn').classList.contains('show'));
+  bd.onclick = () => setMn(false); $('mnx').onclick = () => setMn(false);
+  $('mn').addEventListener('click', e => { if (e.target.closest('a[href]')) setMn(false); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && $('mn').classList.contains('show')) setMn(false); });
+  matchMedia('(min-width:901px)').addEventListener('change', e => { if (e.matches) setMn(false); });
+}
+
+/* ---- pages ---- */
+function aboutPage() {
+  const a = all(), shops = new Set(a.map(p => p.biz.name)).size, np = a.filter(p => p.type !== 'service').length, ns = a.filter(p => p.type === 'service').length;
+  const card = (ic, t, d) => `<div class="cd"><div class="ic">${ic}</div><h3>${t}</h3><p>${d}</p></div>`, step = (t, d) => `<div class="cd"><h3>${t}</h3><p>${d}</p></div>`;
+  document.title = 'About — PanaboOne';
+  $('app').innerHTML = `<div class="in abp">
+    <section class="ah"><span class="k">📍 Panabo City, Davao del Norte</span><h1>Discover Local. Support Local.</h1>
+      <p>PanaboOne is an online marketplace made for Panabo City. We put the town's shops, food makers, repair services and salons in one place, so you can find what you need from your neighbors and they can be found by you.</p>
+      <div class="bt2"><a href="?v=stores">Browse Stores</a><a class="o" href="../../CreateAccount/createAccount.html">Create your store</a></div></section>
+    <div class="ast"><div><b>${shops}</b><small>Local stores</small></div><div><b>${a.length}</b><small>Listings</small></div><div><b>${np}</b><small>Products</small></div><div><b>${ns}</b><small>Services</small></div></div>
+
+    <div class="sh2"><h2>What We Offer</h2></div>
+    <div class="cg">
+      ${card('🛍️', 'Local Products', 'Fresh food, pasalubong, handmade crafts, fashion, home needs and more, all made or sold in Panabo.')}
+      ${card('🛠️', 'Local Services', 'Salons, aircon and motor repair, laundry, printing, pet care, gym and other trusted service providers with rates and schedules.')}
+      ${card('🏪', 'Online Storefronts', 'Every business gets its own store page with a logo, banner, photos, opening hours, address and map pin.')}
+      ${card('⭐', 'Featured Listings', 'Premium and Diamond stores get featured spots on the home page, and Diamond stores appear at the top of search.')}
+      ${card('📣', 'Posters &amp; Promos', 'Stores publish posters for sales, new arrivals and special offers. Browse them all on the Posters page.')}
+      ${card('📞', 'Direct Contact', 'Call or message the owner from any listing. No middlemen, no hidden fees. You deal directly with the business.')}
+    </div>
+
+    <div class="sh2"><h2>How It Works for Shoppers</h2></div>
+    <div class="asp">
+      ${step('Search or browse', 'Type what you need, pick a category, or open Browse Stores to see who is nearby.')}
+      ${step('Check the details', 'View photos, price, availability, hours, address and the store\'s map location.')}
+      ${step('Contact and buy', 'Call or message the business to order, book or visit. Payment and delivery are agreed with the owner.')}
+    </div>
+
+    <div class="sh2"><h2>For Business Owners</h2></div>
+    <div class="asp s4">
+      ${step('Create a free account', 'Sign up with your business name and choose whether you sell products, services, or both.')}
+      ${step('Add your listings', 'Upload up to several photos or a video per item, with price, category and description.')}
+      ${step('Design your store', 'Pick a layout, colors and fonts. Add your logo, banner, contact number and open hours.')}
+      ${step('Publish and track', 'Share your store link and watch visits and product views in your Analytics page.')}
+    </div>
+    <div class="sh2"><h2>Plans</h2><span class="muted">Change anytime</span></div>
+    <div class="apl">
+      <div class="cd"><h3>Tier 1 <span>Free</span></h3><p>Best for new businesses.</p><ul><li>Default layouts and basic customization</li><li>Up to 3 posters</li><li>Store page and listings</li></ul></div>
+      <div class="cd hot"><h3>Tier 2 <span>₱300/month</span></h3><p>Our most popular plan.</p><ul><li>4 Premium layouts</li><li>Featured Listings and Premium badge</li><li>Up to 5 animated posters</li></ul></div>
+      <div class="cd"><h3>Tier 3 <span>₱500/month</span></h3><p>For growing enterprises.</p><ul><li>4 Diamond layouts and theme colors</li><li>Legitimacy badge and top of search</li><li>Up to 10 animated posters</li></ul></div>
+    </div>
+
+    <div class="sh2"><h2>Why PanaboOne</h2></div>
+    <div class="cg">
+      ${card('🤝', 'Local first', 'Every listing comes from a business in Panabo City, so your money stays in the community.')}
+      ${card('🆓', 'Free to start', 'Opening a store costs nothing. Upgrade only when you want more features.')}
+      ${card('✅', 'Verified badges', 'Tier 3 stores carry a Legitimacy badge so shoppers know who they are dealing with.')}
+    </div>
+
+    <div class="cta"><div><h3>Have questions? We're happy to help.</h3><p>Email hello@panaboone.com or call 0917 123 4567, Mon–Sat, 8:00 AM to 5:00 PM.</p></div><a href="../../CreateAccount/createAccount.html">Open your store</a></div>
+  </div>`;
+  scrollTo(0, 0);
+}
+
+/* ---- sort: price low/high + nearest ---- */
+let sort = 'rel';
+const SL = {lo: 'Price: Low to High', hi: 'Price: High to Low', near: 'Nearest first'};
+const bizKey = b => b.user || b.name;
+function sortList(list) {
+  if (sort === 'rel') return list;
+  const a = list.slice();
+  if (sort === 'near') return a.sort((x, y) => (DIST[bizKey(x.biz)] ?? 1e9) - (DIST[bizKey(y.biz)] ?? 1e9));
+  const d = sort === 'lo' ? 1 : -1;
+  return a.sort((x, y) => { const px = +x.price || 0, py = +y.price || 0; if (!px && !py) return 0; if (!px) return 1; if (!py) return -1; return (px - py) * d; });   /* no price (services) always last */
+}
+const smsg = (t, err) => { const e = $('smsg'); if (e) { e.textContent = t; e.className = 'smsg' + (err ? ' err' : ''); } };
+let ME = null; try { ME = JSON.parse(sessionStorage.getItem('po_me')); } catch (e) {}
+const GEO = {};
+async function measure() {
+  const m = new Map(); all().forEach(p => m.set(bizKey(p.biz), p.biz));
+  const todo = [...m].filter(([k]) => DIST[k] == null);
+  if (!todo.length) return;
+  smsg('📍 Finding the nearest stores…');
+  for (const [k, b] of todo) {
+    let d = b.pinned && isFinite(parseFloat(b.lat)) && isFinite(parseFloat(b.lng)) ? {lat: +b.lat, lng: +b.lng} : null;
+    if (!d && b.address) {
+      const key = b.address.trim().toLowerCase();
+      if (!(key in GEO)) { const t0 = Date.now(); try { GEO[key] = await PO.geocode(b.address); } catch (e) { GEO[key] = null; } if (Date.now() - t0 > 150) await new Promise(r => setTimeout(r, 1100)); }   /* be gentle with the free map service */
+      d = GEO[key];
+    }
+    if (d) DIST[k] = kmBetween(ME, d);
+  }
+  smsg('');
+}
+async function locate() {
+  if (!ME) {
+    smsg('📍 Getting your location… please allow location access if asked.');
+    try { ME = await PO.here(); try { sessionStorage.setItem('po_me', JSON.stringify(ME)); } catch (e) {} }
+    catch (e) { smsg(e && e.code === 1 ? 'Location is blocked. Allow location for this site in your browser, then try again.' : e && e.code === -1 ? 'Location only works on https (or localhost).' : 'Could not get your location. Try again.', true); return false; }
+  }
+  await measure();
+  if (!Object.keys(DIST).length) { smsg('Could not find the store locations right now. Check your internet connection.', true); return false; }
+  smsg(''); return true;
+}
+function initSort() {
+  const s = $('sort'); s.value = sort;
+  s.onchange = async () => { const v = s.value; smsg(''); s.disabled = true;
+    if (v === 'near' && !(await locate())) { s.disabled = false; s.value = sort; return; }
+    s.disabled = false; sort = v; draw(); };
+}
+
+/* ---- search suggestions (dropdown under the search bar) ---- */
+const RK = 'po_recent';
+const recent = () => { try { return JSON.parse(localStorage.getItem(RK)) || []; } catch (e) { return []; } };
+const saveRecent = a => { try { localStorage.setItem(RK, JSON.stringify(a.slice(0, 6))); } catch (e) {} };
+const addRecent = s => { s = (s || '').trim(); if (s) saveRecent([s, ...recent().filter(x => x.toLowerCase() !== s.toLowerCase())]); };
+const CLK = '<svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+let sgI = -1, SA = null;   /* SA = the search box being used (top one or the sticky one) */
+const sgList = v => {
+  v = v.trim().toLowerCase();
+  const rec = recent();
+  if (!v) return rec.length ? rec.map(s => ({s, r: 1})) : cats().slice(0, 8).map(s => ({s, r: 0}));
+  const tk = v.split(/\s+/), seen = new Set(), out = [], hit = s => { const l = s.toLowerCase(); return tk.every(x => l.includes(x)); };
+  const add = (s, r) => { const k = s.toLowerCase(); if (!seen.has(k) && hit(s)) { seen.add(k); out.push({s, r}); } };
+  rec.forEach(s => add(s, 1));
+  const names = new Map(); all().forEach(p => [p.name, p.category, p.biz.name].forEach(x => { x = String(x || '').trim(); if (x) names.set(x.toLowerCase(), x); }));
+  [...names.values()].filter(hit).sort((a, b) => (b.toLowerCase().startsWith(v) - a.toLowerCase().startsWith(v)) || a.length - b.length || a.localeCompare(b)).forEach(s => add(s, 0));
+  return out.slice(0, 8);
+};
+const bold = (s, v) => { v = (v || '').trim(); const i = v ? s.toLowerCase().indexOf(v.toLowerCase()) : -1;
+  return i < 0 ? esc(s) : esc(s.slice(0, i)) + '<b>' + esc(s.slice(i, i + v.length)) + '</b>' + esc(s.slice(i + v.length)); };
+const sgHide = () => { const g = $('sg'); if (g) g.classList.remove('show'); sgI = -1; };
+const sgPos = () => { const g = $('sg'), b = (SA || $('q')).closest('.sbar, .sbar2'); if (!g || !b || !g.classList.contains('show')) return;
+  const r = b.getBoundingClientRect(); if (r.bottom < 0) return sgHide(); g.style.left = r.left + 'px'; g.style.width = r.width + 'px'; g.style.top = (r.bottom + 6) + 'px'; };
+function sgRender() {
+  const g = $('sg'), inp = SA || $('q'); if (!g || !inp) return;
+  const rows = sgList(inp.value); sgI = -1;
+  if (!rows.length) return sgHide();
+  const head = inp.value.trim() ? '' : `<div class="sgh">${rows[0].r ? 'Recent searches' : 'Popular categories'}</div>`;
+  g.innerHTML = head + rows.map(r => `<div class="sgr" role="option" data-s="${esc(r.s)}">${r.r ? CLK : I.search}<span class="t">${bold(r.s, inp.value)}</span>${r.r ? '<button type="button" class="x" aria-label="Remove">×</button>' : ''}</div>`).join('');
+  g.classList.add('show'); sgPos();
+}
+const goResults = () => { sgHide(); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); draw(); $('out').scrollIntoView({behavior: 'smooth', block: 'start'}); };
+function initSearch() {
+  const old = $('sg'); if (old) old.remove();
+  const o2 = $('stk'); if (o2) o2.remove();
+  const g = document.createElement('div'); g.id = 'sg'; g.className = 'sgx'; g.setAttribute('role', 'listbox'); document.body.appendChild(g);
+  /* sticky search bar: slides in under the header once the big search bar scrolls out of view */
+  const stk = document.createElement('div'); stk.id = 'stk'; stk.className = 'stk';
+  stk.innerHTML = `<div class="in"><div class="sbar2"><span class="si">${I.search}</span><input id="q2" placeholder="Search for products or services..." autocomplete="off" enterkeyhint="search"><button id="go2" type="button"><span>Search</span></button></div></div>`;
+  document.body.appendChild(stk);
+  const setQ = v => { q = v; $('q').value = v; $('q2').value = v; };
+  setQ(q);
+  g.onmousedown = e => e.preventDefault();   /* keep the cursor in the search box */
+  g.onclick = e => { const row = e.target.closest('.sgr'); if (!row) return;
+    if (e.target.closest('.x')) { saveRecent(recent().filter(x => x !== row.dataset.s)); sgRender(); return; }
+    setQ(row.dataset.s); addRecent(q); goResults(); };
+  [$('q'), $('q2')].forEach(inp => {
+    inp.oninput = () => { SA = inp; setQ(inp.value); draw(); sgRender(); };
+    inp.onfocus = () => { SA = inp; sgRender(); };
+    inp.onkeydown = e => {
+      const rows = [...g.querySelectorAll('.sgr')], open = g.classList.contains('show');
+      if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && open && rows.length) { e.preventDefault();
+        sgI = e.key === 'ArrowDown' ? (sgI + 1) % rows.length : (sgI <= 0 ? rows.length - 1 : sgI - 1);
+        rows.forEach((r, i) => r.classList.toggle('on', i === sgI)); rows[sgI].scrollIntoView({block: 'nearest'}); }
+      else if (e.key === 'Enter') { e.preventDefault(); if (open && sgI >= 0 && rows[sgI]) setQ(rows[sgI].dataset.s); addRecent(q); goResults(); }
+      else if (e.key === 'Escape') sgHide();
+    };
+  });
+  $('go').onclick = () => { addRecent(q); goResults(); };
+  $('go2').onclick = () => { addRecent(q); goResults(); };
+  const dh = document.querySelector('.dh'), big = $('q').closest('.sbar'); let raf = 0;
+  const chk = () => { raf = 0; const hh = dh ? dh.offsetHeight : 68; stk.style.setProperty('--hh', hh + 'px');
+    const on = big.getBoundingClientRect().bottom < hh; stk.classList.toggle('show', on);
+    if (!on && document.activeElement === $('q2')) { $('q').focus({preventScroll: true}); SA = $('q'); } sgPos(); };
+  const tick = () => { if (!raf) raf = requestAnimationFrame(chk); };
+  addEventListener('scroll', tick, {passive: true}); addEventListener('resize', () => { tick(); sgPos(); }); chk();
+  document.addEventListener('pointerdown', e => { if (!e.target.closest('.sbar, .sbar2, .sgx')) sgHide(); });
+}
+
+function home() {
+  $('app').innerHTML = `
+    <section class="hero"><div class="bgi"></div><div class="ov"></div>
+      <div class="in"><span class="tag">${I.pin}Panabo City<i></i>Shop Local, Support Local</span>
+        <h1>Discover Local<span>Products &amp; Services</span></h1>
+        <p>Find what you need from trusted businesses in Panabo City — all in one place!</p>
+        <div class="sbar"><span class="si">${I.search}</span><input id="q" placeholder="Search for products or services..." autocomplete="off"><button id="go"><span>Search</span>${I.arrow}</button></div></div>
+      <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,20 C300,70 700,0 1000,30 C1200,50 1340,25 1440,5 L1440,60 L0,60 Z" fill="#eceafb"/><path d="M0,20 C300,70 700,0 1000,30 C1200,50 1340,25 1440,5" fill="none" stroke="#a77bff" stroke-width="3" opacity=".8"/></svg></section>
+    <div class="in"><div id="pz"></div><div class="fbar"><div class="pls" id="tys"></div><div class="sortw"><label for="sort">Sort by</label><select id="sort"><option value="rel">Best match</option><option value="lo">Price: Low to High</option><option value="hi">Price: High to Low</option><option value="near">Nearest to me</option></select></div></div><div class="smsg" id="smsg" role="status"></div><div id="out"></div></div>`;
+  pzHome();
+  initSearch(); initSort();
+  draw();
+  if (params.get('t')) $('out').scrollIntoView({block: 'start'});
+}
+
+/* fills the last row of a grid so there are no blank spots on the right */
+const colsOf = el => { const c = getComputedStyle(el).gridTemplateColumns; return c && c !== 'none' ? c.split(' ').length : 1; };
+let fitCols = 0;
+function fitRows(el, pool, base) {
+  el.innerHTML = card(pool[0]);                       /* one card first so the column count can be measured */
+  const c = colsOf(el); let n = Math.min(Math.ceil(base / c) * c, Math.floor(pool.length / c) * c);
+  if (n < c) n = pool.length;
+  el.innerHTML = pool.slice(0, n).map(card).join(''); return n;
+}
+let rzT = 0; addEventListener('resize', () => { clearTimeout(rzT); rzT = setTimeout(() => { const g = $('fg'); if (g && colsOf(g) !== fitCols && !pid && !storeName && !view) draw(); }, 150); });
+
+function draw() {
+  const items = all().filter(p => (ty === 'All' || p.type === ty) && (catQ === 'All' || p.category === catQ));
+  try { sessionStorage.setItem('po_q', q); } catch (e) {}
+  $('tys').innerHTML = [['All', 'All', ''], ['product', 'Products', I.cart], ['service', 'Services', I.gear]].map(t => `<button class="cc ${t[0] === ty ? 'on' : ''}" data-ty="${t[0]}">${t[2]}${t[1]}</button>`).join('');
+  $('tys').onclick = e => { const b = e.target.closest('[data-ty]'); if (b) { ty = b.dataset.ty; draw(); } };
+  const t = q.trim().toLowerCase(), lm = t || catQ !== 'All' || sort !== 'rel';
+  if ($('pz')) $('pz').style.display = lm ? 'none' : '';
+  if (lm) {
+    const list = sortList(items.filter(p => !t || [p.name, p.category, p.description, p.biz.name].some(x => String(x || '').toLowerCase().includes(t))).sort((a, b) => (plr(b) === 2) - (plr(a) === 2)));   /* Tier 3 = top of search */
+    const title = t ? `Results for "${esc(q.trim())}"` : catQ !== 'All' ? esc(catQ) : 'All Listings';
+    $('out').innerHTML = `<div class="sh2"><h2>${title}</h2><span class="muted">${list.length} listing${list.length === 1 ? '' : 's'}${sort !== 'rel' ? ' · ' + SL[sort] : ''}${catQ !== 'All' ? ' · <a class="clr" href="discover.html">Clear category</a>' : ''}</span></div>`
+      + (list.length ? `<div class="g gp">${list.map(card).join('')}</div>` : `<div class="empty2">Nothing found. Try a different search.</div>`);
+  } else {
+    const pf = items.filter(paid), feat = mix(featOf(mix(pf))), r = mix(items.filter(p => p.biz.real));   /* Tier 2 and 3 listings are Featured, shown in a fresh random mix each visit */
+    $('out').innerHTML = `<div class="sh2"><h2>Featured Listings</h2><a class="vm" id="fmore" href="?v=featured" style="display:none">View More ${I.arrow}</a></div>`
+      + (feat.length ? `<div class="g gp" id="fg"></div>` : `<div class="empty2">No listings match this filter.</div>`)
+      + (r.length ? `<div class="sh2"><h2>From Local Businesses</h2><div class="row"><span class="muted" id="lcount"></span><a class="vm" id="lmore" href="?v=local" style="display:none">View All ${I.arrow}</a></div></div><div class="gs" id="lg"></div>` : '');
+    if ($('fg')) { const n = fitRows($('fg'), feat, 8); fitCols = colsOf($('fg')); $('fmore').style.display = pf.length > n ? '' : 'none'; }
+    if ($('lg')) { const n = fitRows($('lg'), r, 10); $('lcount').textContent = `${n} of ${r.length} listing${r.length === 1 ? '' : 's'}`; $('lmore').style.display = r.length > n ? '' : 'none'; }
+  }
+}
+
+
+function localPage() {
+  ty = 'All';
+  const paint = () => {
+    const items = mix(real().filter(p => ty === 'All' || p.type === ty));
+    $('app').innerHTML = `<div class="in"><a class="back" href="discover.html" style="margin-bottom:0">← Back to home</a>
+      <div class="sh2" style="margin-top:14px"><h2>From Local Businesses</h2><span class="muted">${items.length} listing${items.length === 1 ? '' : 's'}</span></div>
+      <div class="pls" id="lty" style="margin:0 0 18px">${[['All', 'All', ''], ['product', 'Products', I.cart], ['service', 'Services', I.gear]].map(t => `<button class="cc ${t[0] === ty ? 'on' : ''}" data-ty="${t[0]}">${t[2]}${t[1]}</button>`).join('')}</div>
+      ${items.length ? `<div class="gs">${items.map(card).join('')}</div>` : `<div class="empty2">No listings yet.</div>`}</div>`;
+    $('lty').onclick = e => { const b = e.target.closest('[data-ty]'); if (b) { ty = b.dataset.ty; paint(); } };
+  };
+  paint();
+}
+
+function featuredPage() {
+  ty = 'All';
+  const paint = () => {
+    const items = mix(all().filter(p => paid(p) && (ty === 'All' || p.type === ty)));
+    $('app').innerHTML = `<div class="in"><a class="back" href="discover.html" style="margin-bottom:0">← Back to home</a>
+      <div class="sh2" style="margin-top:14px"><h2>Featured Listings</h2><span class="muted">${items.length} listing${items.length === 1 ? '' : 's'}</span></div>
+      <div class="pls" id="fty" style="margin:0 0 18px">${[['All', 'All', ''], ['product', 'Products', I.cart], ['service', 'Services', I.gear]].map(t => `<button class="cc ${t[0] === ty ? 'on' : ''}" data-ty="${t[0]}">${t[2]}${t[1]}</button>`).join('')}</div>
+      ${items.length ? `<div class="g gp">${items.map(card).join('')}</div>` : `<div class="empty2">No featured listings yet.</div>`}</div>`;
+    $('fty').onclick = e => { const b = e.target.closest('[data-ty]'); if (b) { ty = b.dataset.ty; paint(); } };
+  };
+  paint();
+}
+
+function storesList() {
+  const m = new Map();
+  all().forEach(p => { const k = p.biz.name; if (!m.has(k)) m.set(k, {b: p.biz, n: 0}); m.get(k).n++; });
+  $('app').innerHTML = `<div class="in"><div class="sh2" style="margin-top:30px"><h2>Browse Stores</h2><span class="muted">${m.size} store${m.size === 1 ? '' : 's'}</span></div>
+    <div class="g">${[...m.values()].map(e => `<a class="scd" href="${e.b.real ? '../StoreFront/store.html?b=' + encodeURIComponent(e.b.user) : '?s=' + encodeURIComponent(e.b.name)}"><span class="lo">${e.b.logo ? `<img src="${imageSrc(e.b.logo)}" alt="">` : esc((e.b.name || 'S')[0])}</span>
+      <div><b>${esc(e.b.name)}${bizB(e.b)}</b><small>📍 ${esc(e.b.address || '')}</small><small>🕒 ${esc(e.b.hours || '')}</small><div class="n">${e.n} listing${e.n === 1 ? '' : 's'}${e.b.real ? ' · Open storefront ↗' : ''}</div></div></a>`).join('')}</div></div>`;
+}
+
+function storePage() {
+  const items = all().filter(p => p.biz.name === storeName);
+  if (!items.length) { $('app').innerHTML = `<div class="in"><a class="back" href="?v=stores">← Back to stores</a><div class="empty2">This store is no longer available.</div></div>`; return; }
+  const b = items[0].biz;
+  $('app').innerHTML = `<div class="in"><a class="back" href="?v=stores" style="margin-bottom:0">← Back to stores</a>
+    <div class="shd"><span class="lo">${b.logo ? `<img src="${imageSrc(b.logo)}" alt="">` : esc((b.name || 'S')[0])}</span>
+      <div><h1>${esc(b.name)}${bizB(b, 1)}</h1><p>📍 ${esc(b.address || '')} &nbsp;·&nbsp; 🕒 ${esc(b.hours || '')}</p><p>📞 ${esc(b.phone || '')}</p></div>
+      ${b.real ? `<a class="btn pri" href="../StoreFront/store.html?b=${encodeURIComponent(b.user)}">🏪 Visit Storefront</a>` : ''}</div>
+    <div class="sh2"><h2>Listings</h2><span class="muted">${items.length}</span></div><div class="g gp">${items.map(card).join('')}</div></div>`;
+}
+
+function gallery(p) {
+  const big = $('gbig'), th = $('gth'); if (!big) return;
+  const items = [...(p.video ? [{v: 1}] : []), ...PO.imgsOf(p).map(s => ({s: cardSrc({image: s})}))];
+  const none = () => { big.textContent = p.emoji || '🛍️'; th.innerHTML = ''; };
+  if (!items.length) return none();
+  let i = 0, vurl = '';
+  const show = n => {
+    i = (n + items.length) % items.length; const it = items[i];
+    big.querySelectorAll('video').forEach(v => v.pause());
+    big.innerHTML = (items.length > 1 ? '<button class="gn l" aria-label="Previous">‹</button><button class="gn r" aria-label="Next">›</button>' : '')
+      + (it.v ? `<video src="${vurl}" controls playsinline></video>` : `<img class="bk" src="${it.s}" alt="" aria-hidden="true"><img src="${it.s}" alt="${esc(p.name)}">`);
+    th.querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
+    const l = big.querySelector('.l'); if (l) { l.onclick = () => show(i - 1); big.querySelector('.r').onclick = () => show(i + 1); }
+  };
+  const start = () => {
+    th.innerHTML = items.length > 1 ? items.map((it, k) => `<button type="button" data-g="${k}">${it.v ? '▶' : `<img src="${it.s}" alt="">`}</button>`).join('') : '';
+    th.onclick = e => { const b = e.target.closest('[data-g]'); if (b) show(+b.dataset.g); };
+    show(0);
+  };
+  if (p.video) PO.vid.url(p.video.id).then(u => { vurl = u; if (!u) items.shift(); items.length ? start() : none(); }); else start();
+}
+
+function detail(p) {
+  if (p.biz.real && !detail.done) { detail.done = 1; PO.track(s => { s.views = s.views || {}; s.views[p.id] = (s.views[p.id] || 0) + 1; }, p.biz.user); }
+  document.title = p.name + ' — PanaboOne';
+  const b = p.biz, tel = String(b.phone || '').replace(/[^\d+]/g, '');
+  $('app').innerHTML = `<div class="in"><a class="back" id="back">← Back to results</a>
+    <div class="dt"><div class="gal2"><div class="big" id="gbig"></div><div class="gth" id="gth"></div></div>
+      <div><h1>${esc(p.name)}</h1><div class="bz">${mk(b)}<span>${esc(b.name)}</span>${bizB(b, 1)}</div>
+        ${p.type === 'service' && !p.price ? '' : `<div class="price">${p.type === 'service' ? 'Starting at ' : ''}${PO.fmt(p.price)}</div>`}
+        ${locRow(b, 'lcd')}
+        <span class="tg2 ${p.available ? 'y' : 'n'}">${p.available ? '● Available' : 'Sold out'}</span>
+        <p style="margin:14px 0">${esc(p.description) || 'No description.'}</p>
+        <p class="muted">Category: ${esc(p.category)}${p.type === 'service' ? ' · Service' : ''}</p>${p.duration ? '<p class="muted">⏱ ' + esc(p.duration) + '</p>' : ''}
+        <button class="btn pri cb" id="ct">📞 Contact Details</button>
+
+        ${b.real ? `<a class="btn cb" href="../StoreFront/store.html?b=${encodeURIComponent(b.user)}">🏪 View Store</a>` : `<a class="btn cb" href="?s=${encodeURIComponent(b.name)}">🏪 View Store</a>`}
+
+      </div></div></div>`;
+  $('back').onclick = () => (history.length > 1 && document.referrer.includes('discover')) ? history.back() : (location.href = 'discover.html');
+  $('ct').onclick = () => contactPop(b);
+  gallery(p);
+
+}
+
+
+/* ---- Welcome pop-up (once per visit, home page only) ---- */
+function welcomePop() {
+  try { if (sessionStorage.getItem('po_welcome')) return; sessionStorage.setItem('po_welcome', '1'); } catch (e) {}
+  const shuf = l => { const a = l.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+  const src = all().filter(p => p.available !== false), seen = new Set(), pick = [];   /* new random mix on every visit, one listing per store, any plan */
+  [...shuf(src.filter(p => p.image)), ...shuf(src.filter(p => !p.image))].forEach(p => { if (pick.length < 6 && !seen.has(p.biz.name)) { seen.add(p.biz.name); pick.push(p); } });
+  if (!pick.length) return;
+  const d = document.createElement('div'); d.className = 'wlc'; d.id = 'wlc'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'Welcome to PanaboOne');
+  d.innerHTML = `<div class="wb"><button class="wx" id="wx" aria-label="Close">×</button>
+    <h2>WELCOME TO<span>PANABOONE</span></h2>
+    <div class="wpill"><span>🛍️ Local Products</span><i></i><span>🛎️ Local Services</span></div>
+    <div class="wprods">${pick.map(p => `<a class="wp" href="?p=${encodeURIComponent(p.id)}"><div class="wi">${cardSrc(p) ? `<img src="${cardSrc(p)}" alt="${esc(p.name)}">` : (p.emoji || '🛍️')}</div><span class="wt">${p.type === 'service' ? 'From ' : ''}${PO.fmt(p.price)}</span><span class="wn">${esc(p.name)}</span></a>`).join('')}</div>
+    <div class="wpod"></div>
+    <button class="wgo" id="wgo">SHOP NOW <b>▶</b></button></div>`;
+  document.body.appendChild(d); document.body.style.overflow = 'hidden';
+  const close = go => { d.remove(); document.body.style.overflow = ''; removeEventListener('keydown', esc2); if (go && $('out')) $('out').scrollIntoView({behavior: 'smooth', block: 'start'}); };
+  const esc2 = e => { if (e.key === 'Escape') close(); };
+  addEventListener('keydown', esc2);
+  d.onmousedown = e => { if (e.target === d) close(); };
+  $('wx').onclick = () => close(); $('wgo').onclick = () => close(true);
+  requestAnimationFrame(() => d.classList.add('show'));
+}
+
+function start() {
+  header();
+  const found = pid && all().find(x => x.id === pid);
+  if (pid) {
+    if (found) detail(found);
+    else $('app').innerHTML = `<div class="in"><a class="back" href="discover.html">← Back to results</a><div class="empty2">This listing is no longer available.</div></div>`;
+  } else if (storeName) storePage();
+  else if (view === 'posters') postersPage();
+  else if (view === 'about') aboutPage();
+  else if (view === 'local') localPage();
+  else if (view === 'featured') featuredPage();
+  else if (view === 'stores') storesList();
+  else home();
+  /* featured1..featured10 pictures: picked up automatically from assets/featured/ */
+  const isHome = !pid && !storeName && !view;
+  if (isHome) setTimeout(welcomePop, 400);
+}
+
+/* ---- footer: Contact / Help / Terms / Privacy pop ups ---- */
+$('yr').textContent = new Date().getFullYear();
+const INFO = {
+  contact: ['Contact Us', 'Email hello@panaboone.com or call 0917 123 4567, Monday to Saturday, 8:00 AM to 5:00 PM. To reach a shop, open its store page and tap Contact.'],
+  help: ['Help Center', 'Search for a product or service, or browse stores, then open a listing to see the shop\'s phone number, address and hours. Business owners can create a free store from the Login page.'],
+  terms: ['Terms & Conditions', 'PanaboOne lists local businesses in Panabo City. Prices, availability and orders are handled between you and the business.'],
+  privacy: ['Privacy Policy', 'PanaboOne only shows the business information that owners choose to publish on their store page.']
+};
+document.querySelector('.ft').addEventListener('click', e => {
+  const b = e.target.closest('[data-info]'); if (!b) return;
+  let m = $('infm');
+  if (!m) { m = document.createElement('div'); m.className = 'modal'; m.id = 'infm'; document.body.appendChild(m);
+    m.onmousedown = ev => { if (ev.target === m) m.classList.remove('show'); };
+    addEventListener('keydown', ev => { if (ev.key === 'Escape') m.classList.remove('show'); }); }
+  const [t, d] = INFO[b.dataset.info];
+  m.innerHTML = `<div class="mbox" style="max-width:420px"><h2 style="margin:0 0 8px;color:#2d1f8a">${esc(t)}</h2><p style="margin:0 0 6px;color:#4a4872;line-height:1.6">${esc(d)}</p><div class="macts"><button class="btn pri" id="infx">Close</button></div></div>`;
+  $('infx').onclick = () => m.classList.remove('show'); m.classList.add('show');
+});
+POSeed.ready.then(start);
+</script></body></html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Storefront</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css"></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Storefront</h1><p class="sub">This is how customers see your public store. <span class="badge" id="unpub" style="display:none">May unpublished changes</span></p></div>
+    <div class="row"><span class="pill" id="url"></span><button class="btn" id="copy">⧉ Copy Link</button><a class="btn pri" id="view" target="_blank">↗ View Store</a></div></div>
+  <div class="browser"><div class="bbar"><i></i><i></i><i></i><span id="burl"></span></div><div class="pvwrap"><div id="store"></div></div></div>
+</div>
+<script src="../shared/store.js"></script>
+<script>
+PO.shell('storefront');
+const D = PO.data, c = D.published;
+const link = new URL('store.html?b=' + encodeURIComponent(PO.user), location.href).href;
+const slug = PO.slugify(c.name);
+document.getElementById('url').textContent = '🔗 panaboone.com/' + slug;
+document.getElementById('burl').textContent = 'panaboone.com/' + slug;
+document.getElementById('view').href = link;
+if (JSON.stringify(D.draft) !== JSON.stringify(D.published)) document.getElementById('unpub').style.display = 'inline';
+PO.renderStore(document.getElementById('store'), c, D.products);
+document.getElementById('copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(link); } catch (e) { const t = document.createElement('input'); t.value = link; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+  PO.toast('Link copied ✓');
+};
+</script></body></html>

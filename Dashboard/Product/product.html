@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Listings</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.tp{display:flex;gap:12px;flex-wrap:wrap}
+.tpc{min-width:140px}
+.tpc{flex:1;border:2px solid #e3e0f4;border-radius:14px;background:#fff;padding:18px 10px;text-align:center;font-weight:600;color:#2d1f8a}
+.tpc:hover{border-color:#5b3fd4;background:#faf9ff}.tpc span{display:block;font-size:32px;margin-bottom:4px}
+.tpc small{display:block;font-weight:400;color:#8b8aa8;font-size:12px;margin-top:4px}
+.tb{display:inline-block;font-size:10px;font-weight:600;border-radius:99px;padding:1px 8px;margin-left:6px;vertical-align:1px}
+.tb.product{background:#ebe7fb;color:#4c34c0}.tb.service{background:#d8f5e3;color:#17703f}
+.only{display:none}.only.show{display:block}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.mt{position:relative;aspect-ratio:1;border-radius:10px;overflow:hidden;border:2px solid #e3e0f4;background:#faf9ff;cursor:pointer;padding:0}
+.mt img{width:100%;height:100%;object-fit:cover;display:block}
+.mt.cover{border-color:#5b3fd4}
+.mt .x{position:absolute;top:3px;right:3px;width:28px;height:28px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:15px;line-height:1;cursor:pointer}
+.mt .cv{position:absolute;left:0;right:0;bottom:0;background:#5b3fd4;color:#fff;font-size:10px;font-weight:600;text-align:center;padding:2px}
+.mt.add{border-style:dashed;border-color:#cfc8f3;color:#5b3fd4;font-size:26px;display:grid;place-items:center;align-content:center}
+.mt.add small{font-size:11px;color:#8b8aa8;display:block}
+.vrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.vrow video{width:130px;height:90px;border-radius:10px;background:#000;object-fit:cover;flex:none}
+.mc{font-size:11px;color:#8b8aa8;font-weight:400;margin-left:6px}
+
+/* ===== phone: compact filters (show/hide) + compact listing cards ===== */
+.fgrp{display:contents}.fbtn,.fclr,#more{display:none}
+.fbtn .n{display:none;background:#5b3fd4;color:#fff;border-radius:99px;font-size:11px;padding:1px 7px;margin-left:6px}.fbtn .n.on{display:inline-block}
+@media(max-width:760px){
+ .lst .tools{flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+ .lst .tools #q{flex:1 1 0;width:auto;min-width:0}
+ .fbtn{display:inline-flex;flex:none;align-items:center;justify-content:center;min-height:46px;white-space:nowrap}
+ .fgrp{display:none;grid-template-columns:1fr 1fr;gap:8px;flex:1 0 100%;background:#faf9ff;border:1px solid #e8e5f6;border-radius:12px;padding:10px}
+ .fgrp.open{display:grid}
+ .fgrp select{width:100%;min-height:46px}
+ .fgrp .fclr{display:inline-flex;grid-column:1/-1;justify-content:center}
+ .lst .hintp{display:none}
+ /* each listing = a compact 3-row card instead of 7 stacked rows */
+ .lst table.rt tr{display:grid;grid-template-columns:repeat(12,1fr);gap:6px 8px;padding:12px}
+ .lst table.rt td{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;gap:2px;padding:0;min-width:0;width:auto}
+ .lst table.rt td::before{font-size:10px;text-transform:uppercase;letter-spacing:.3px}
+ .lst table.rt td.first{display:block;grid-column:1/-1;padding-bottom:8px;margin-bottom:2px}
+ .lst table.rt td.empty{grid-column:1/-1}
+ .lst table.rt td[data-label="Category"]{grid-column:span 5;word-break:break-word}
+ .lst table.rt td[data-label="Price"]{grid-column:span 4}
+ .lst table.rt td[data-label="Stock"],.lst table.rt td[data-label="Duration"]{grid-column:span 3}
+ .lst table.rt td[data-label="Status"]{grid-column:span 6}
+ .lst table.rt td[data-label="Available"]{grid-column:span 3}
+ .lst table.rt td[data-label="Actions"]{grid-column:span 3;flex-direction:row;align-items:flex-end;justify-content:flex-end;gap:4px}
+ .lst table.rt td[data-label="Actions"]::before{display:none}
+ .lst table.rt td select.st{width:100%;min-height:42px}
+ .lst .pcell small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+ #more{display:flex;width:100%;justify-content:center;margin-top:10px;min-height:46px}#more[hidden]{display:none}
+}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1 id="ttl"></h1><p class="sub" id="sub"></p></div>
+    <button class="btn pri" id="add"></button></div>
+  <div class="card lst">
+    <div class="tools">
+      <input id="q" placeholder="Search...">
+      <button type="button" class="btn fbtn" id="fbtn" aria-expanded="false">⚙ Filters<span class="n" id="fn"></span></button>
+      <div class="fgrp" id="fgrp">
+        <select id="fc"><option value="">All Categories</option></select>
+        <select id="ft"><option value="">All Types</option><option value="product">Products</option><option value="service">Services</option></select>
+        <select id="fs"><option value="">All Status</option><option value="visible">Published</option><option value="hidden">Hidden</option></select>
+        <button type="button" class="btn sm fclr" id="fclr">✕ Clear filters</button>
+      </div>
+    </div>
+    <div class="tw"><table class="rt"><thead><tr><th>Listing</th><th>Category</th><th>Price</th><th id="dth">Stock</th><th>Status</th><th>Available</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <button type="button" class="btn" id="more" hidden></button>
+    <p class="muted" id="count"></p>
+    <p class="muted hintp"><b>Published</b> = visible to customers on your storefront · <b>Hidden</b> = temporarily hidden.</p>
+  </div>
+</div>
+
+<div class="modal" id="cm"><div class="mbox">
+  <h2>Add New Listing</h2><p class="muted" style="margin-top:-8px">Choose what you want to add to your store.</p>
+  <div class="tp"><button class="tpc" data-nt="product"><span>🛍️</span>Product<small>Sell physical items and goods.</small></button>
+    <button class="tpc" data-nt="service"><span>🛎️</span>Service<small>Offer professional or local services.</small></button></div>
+  <div class="macts"><button type="button" class="btn" id="ccancel">Cancel</button></div>
+</div></div>
+
+<div class="modal" id="modal"><form class="mbox" id="form">
+  <h2 id="mtitle"></h2>
+  <div class="fld"><label><span id="limg">Images</span><span class="mc" id="imgc"></span></label>
+    <div class="mg" id="mg"></div>
+    <input type="file" id="file" accept="image/*" multiple hidden>
+    <p class="muted" style="margin:6px 0 0;font-size:12px">Up to 5 pictures. The first one is the cover photo — click a picture to make it the cover.</p></div>
+  <div class="fld"><label>Video <span class="mc">(optional)</span></label>
+    <div id="vbox"></div>
+    <input type="file" id="vfile" accept="video/*" hidden>
+    <p class="muted" style="margin:6px 0 0;font-size:12px">1 video only · max 60 seconds · max 30 MB.</p></div>
+  <div class="fld"><label id="lname">Name *</label><input id="fname" required maxlength="80"></div>
+  <div class="g2">
+    <div class="fld"><label id="lprice">Price (₱) *</label><input id="fprice" type="number" min="0" step="0.01" required></div>
+    <div class="fld"><label>Category *</label><input id="fcat" list="catlist" required maxlength="30" placeholder="e.g. Cakes"><datalist id="catlist"></datalist></div>
+  </div>
+  <div class="only" id="op"><div class="fld"><label>Stock Quantity</label><input id="fstock" type="number" min="0" step="1" placeholder="0"></div></div>
+  <div class="only" id="os">
+    <div class="fld"><label>Service Duration (optional)</label><input id="fdur" maxlength="30" placeholder="e.g. 1 hour"></div>
+  </div>
+  <div class="fld"><label>Description</label><textarea id="fdesc" maxlength="400"></textarea></div>
+  <div class="g2">
+    <div class="fld"><label>Visibility</label><select id="fstatus"><option value="visible">Published</option><option value="hidden">Hidden</option></select></div>
+    <div class="fld"><label>Availability</label><label class="row" style="margin-top:6px;font-weight:400"><span class="sw"><input type="checkbox" id="favail" checked><i></i></span> <span id="avtxt"></span></label></div>
+  </div>
+  <div class="macts"><button type="button" class="btn" id="cancel">Cancel</button><button class="btn pri" type="submit" id="save">Save</button></div>
+</form></div>
+
+<script src="../shared/store.js"></script>
+<script>
+PO.shell('products');
+const D = PO.data, $ = PO.$, esc = PO.esc, L = PO.LBL(), biz = D.bizType;
+const MAXI = 5, MAXV_MB = 30, MAXV_SEC = 60;
+let editId = null, cur = 'product', imgs = [], vid = null, vfile = null, vurl = '';
+const isS = () => cur === 'service';
+const pen = '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m16 3 5 5L8 21H3v-5L16 3Z"/></svg>';
+const bin = '<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>';
+let lim = 8;
+const mob = () => matchMedia('(max-width:760px)').matches;
+const cats = () => [...new Set(PO.list().map(p => p.category).filter(Boolean))];
+
+$('ttl').textContent = L.n;
+$('sub').textContent = {product: 'Manage your products and control their visibility.', service: 'Manage your services and control their visibility.', both: 'Manage your products and services in one place.'}[biz];
+$('add').textContent = '＋ Add ' + L.one;
+$('q').placeholder = 'Search ' + L.n.toLowerCase() + '...';
+$('dth').textContent = {product: 'Stock', service: 'Duration', both: 'Stock / Duration'}[biz];
+if (biz !== 'both') $('ft').style.display = 'none';
+
+function draw() {
+  const c0 = $('fc').value;
+  $('fc').innerHTML = '<option value="">All Categories</option>' + cats().map(c => `<option ${c === c0 ? 'selected' : ''}>${esc(c)}</option>`).join('');
+  $('catlist').innerHTML = cats().map(c => `<option value="${esc(c)}">`).join('');
+  const q = $('q').value.toLowerCase(), fc = $('fc').value, ft = $('ft').value, fs = $('fs').value, all = PO.list();
+  const list = all.filter(p => (!q || p.name.toLowerCase().includes(q)) && (!fc || p.category === fc) && (!ft || p.type === ft) && (!fs || p.status === fs)).sort((a, b) => b.created - a.created);
+  const vis = mob() ? list.slice(0, lim) : list;
+  $('rows').innerHTML = list.length ? vis.map(p => { const s = p.type === 'service'; return `<tr>
+    <td class="first"><div class="pcell"><div class="th">${p.image ? `<img src="${p.image}" alt="">` : (s ? '🛎️' : '🛍️')}</div><div><b>${esc(p.name)}</b>${biz === 'both' ? `<span class="tb ${p.type}">${s ? 'Service' : 'Product'}</span>` : ''}<span class="mc">📷 ${PO.imgsOf(p).length}${p.video ? ' · 🎬' : ''}</span><small>${esc(p.description)}</small></div></div></td>
+    <td data-label="Category">${esc(p.category)}</td><td data-label="Price">${PO.priceTxt(p) || '—'}</td><td data-label="${s ? 'Duration' : 'Stock'}">${s ? esc(p.duration || '—') : (p.stock ?? '—')}</td>
+    <td data-label="Status"><select class="st ${p.status}" data-st="${p.id}"><option value="visible" ${p.status === 'visible' ? 'selected' : ''}>Published</option><option value="hidden" ${p.status === 'hidden' ? 'selected' : ''}>Hidden</option></select></td>
+    <td data-label="Available"><label class="sw"><input type="checkbox" data-av="${p.id}" ${p.available ? 'checked' : ''}><i></i></label></td>
+    <td data-label="Actions"><button class="ib" data-ed="${p.id}" title="Edit">${pen}</button><button class="ib del" data-del="${p.id}" title="Delete">${bin}</button></td></tr>`; }).join('')
+    : `<tr><td colspan="7" class="empty">No ${L.n.toLowerCase()} yet. Click “Add ${L.one}” to get started.</td></tr>`;
+  $('count').textContent = vis.length < list.length ? `Showing ${vis.length} of ${list.length} ${L.n.toLowerCase()}` : `Showing ${list.length} of ${all.length} ${L.n.toLowerCase()}`;
+  $('more').hidden = vis.length >= list.length; $('more').textContent = `Show more (${list.length - vis.length} left)`;
+  const nf = [fc, ft, fs].filter(Boolean).length; $('fn').textContent = nf; $('fn').classList.toggle('on', nf > 0);
+}
+$('rows').onchange = e => {
+  const t = e.target, p = D.products.find(x => x.id === (t.dataset.st || t.dataset.av)); if (!p) return;
+  if (t.dataset.st) { p.status = t.value; PO.toast('Status: ' + (t.value === 'visible' ? 'Published' : 'Hidden')); } else { p.available = t.checked; }
+  PO.save(); draw();
+};
+$('rows').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.ed) openModal(b.dataset.ed);
+  if (b.dataset.del) { const p = D.products.find(x => x.id === b.dataset.del); if (confirm(`Delete "${p.name}"?`)) { if (p.video) PO.vid.del(p.video.id).catch(() => {}); D.products = D.products.filter(x => x !== p); PO.log(p.type === 'service' ? 'Service Deleted' : 'Product Deleted', p.name); draw(); PO.toast('Deleted'); } }
+};
+['q', 'fc', 'ft', 'fs'].forEach(i => $(i).oninput = () => { lim = 8; draw(); });
+$('fbtn').onclick = () => { const o = $('fgrp').classList.toggle('open'); $('fbtn').setAttribute('aria-expanded', String(o)); };
+$('fclr').onclick = () => { ['fc', 'ft', 'fs'].forEach(i => $(i).value = ''); lim = 8; draw(); };
+$('more').onclick = () => { lim += 8; draw(); };
+matchMedia('(max-width:760px)').addEventListener('change', draw);
+
+const avt = () => $('avtxt').textContent = isS() ? ($('favail').checked ? 'Available' : 'Unavailable') : ($('favail').checked ? 'In stock' : 'Out of stock');
+const clearUrl = () => { if (vurl) URL.revokeObjectURL(vurl); vurl = ''; };
+function showMedia() {
+  $('mg').innerHTML = imgs.map((s, i) => `<div class="mt ${i === 0 ? 'cover' : ''}" data-mk="${i}"><img src="${s}" alt=""><button type="button" class="x" data-rm="${i}" aria-label="Remove">×</button>${i === 0 ? '<span class="cv">Cover</span>' : ''}</div>`).join('')
+    + (imgs.length < MAXI ? `<button type="button" class="mt add" id="addimg">＋<small>${imgs.length}/${MAXI}</small></button>` : '');
+  $('imgc').textContent = `${imgs.length}/${MAXI}`;
+  const has = vfile || vid;
+  $('vbox').innerHTML = has ? `<div class="vrow"><video src="${vurl}" controls muted playsinline preload="metadata"></video><div><b style="font-size:13px;word-break:break-all">${esc(vfile ? vfile.name : vid.name)}</b><br><a href="#" id="rmvid" class="muted">Remove video</a></div></div>`
+    : `<button type="button" class="btn" id="addvid">🎬 Add video</button>`;
+}
+$('mg').onclick = e => {
+  if (e.target.closest('#addimg')) return $('file').click();
+  const x = e.target.closest('[data-rm]'); if (x) { imgs.splice(+x.dataset.rm, 1); return showMedia(); }
+  const t = e.target.closest('[data-mk]'); if (t && +t.dataset.mk > 0) { imgs.unshift(imgs.splice(+t.dataset.mk, 1)[0]); showMedia(); PO.toast('Set as cover photo'); }
+};
+$('vbox').onclick = e => {
+  if (e.target.closest('#addvid')) return $('vfile').click();
+  if (e.target.closest('#rmvid')) { e.preventDefault(); vfile = null; vid = null; clearUrl(); showMedia(); }
+};
+$('file').onchange = async () => {
+  const fs = [...$('file').files]; $('file').value = ''; if (!fs.length) return;
+  const room = MAXI - imgs.length;
+  if (fs.length > room) PO.toast(`Up to ${MAXI} pictures only`, 'err');
+  for (const f of fs.slice(0, room)) { try { imgs.push(await PO.img(f, 800, .78)); } catch (e) { PO.toast('Could not read the picture', 'err'); } }
+  showMedia();
+};
+$('vfile').onchange = async () => {
+  const f = $('vfile').files[0]; $('vfile').value = ''; if (!f) return;
+  if (f.size > MAXV_MB * 1048576) return PO.toast(`Too large — max ${MAXV_MB} MB`, 'err');
+  const u = URL.createObjectURL(f);
+  const dur = await new Promise(r => { const v = document.createElement('video'); v.preload = 'metadata'; v.onloadedmetadata = () => r(v.duration); v.onerror = () => r(-1); v.src = u; });
+  if (dur < 0) { URL.revokeObjectURL(u); return PO.toast('Could not read the video', 'err'); }
+  if (dur > MAXV_SEC) { URL.revokeObjectURL(u); return PO.toast(`Video must be ${MAXV_SEC} seconds or less`, 'err'); }
+  clearUrl(); vurl = u; vfile = f; vid = null; showMedia();
+};
+function openModal(id, type) {
+  editId = id || null;
+  const p = id ? D.products.find(x => x.id === id) : null;
+  cur = p ? p.type : type; const n = isS() ? 'Service' : 'Product';
+  $('mtitle').textContent = (p ? 'Edit ' : 'Add New ') + n; $('save').textContent = 'Save ' + n;
+  $('limg').textContent = n + ' Images'; $('lname').textContent = n + ' Name *';
+  $('op').classList.toggle('show', !isS()); $('os').classList.toggle('show', isS());
+  $('fname').value = p ? p.name : ''; $('fprice').value = p ? p.price : ''; $('fcat').value = p ? p.category : '';
+  $('fstock').value = p && !isS() ? (p.stock ?? '') : ''; $('fdur').value = p ? (p.duration || '') : '';
+  $('fprice').required = !isS(); $('lprice').textContent = isS() ? 'Price (₱) (optional)' : 'Price (₱) *';
+  $('fdesc').value = p ? p.description : ''; $('fstatus').value = p ? p.status : 'visible'; $('favail').checked = p ? p.available : true;
+  avt(); imgs = p ? [...PO.imgsOf(p)] : []; vid = p && p.video ? p.video : null; vfile = null; clearUrl(); showMedia();
+  if (vid) PO.vid.url(vid.id).then(u => { if (vid && u) { vurl = u; showMedia(); } });
+  $('modal').classList.add('show'); $('fname').focus();
+}
+const close = () => { $('modal').classList.remove('show'); clearUrl(); };
+$('add').onclick = () => biz === 'both' ? $('cm').classList.add('show') : openModal(null, biz);
+$('ccancel').onclick = () => $('cm').classList.remove('show');
+$('cm').onmousedown = e => { if (e.target === $('cm')) $('cm').classList.remove('show'); };
+$('cm').onclick = e => { const b = e.target.closest('[data-nt]'); if (b) { $('cm').classList.remove('show'); openModal(null, b.dataset.nt); } };
+$('cancel').onclick = close;
+$('modal').onmousedown = e => { if (e.target === $('modal')) close(); };
+$('favail').onchange = avt;
+$('form').onsubmit = async e => {
+  e.preventDefault();
+  const data = {type: cur, name: $('fname').value.trim(), price: parseFloat($('fprice').value) || 0, category: $('fcat').value.trim(), description: $('fdesc').value.trim(),
+    status: $('fstatus').value, available: $('favail').checked, images: imgs.slice(), image: imgs[0] || '',
+    ...(isS() ? {duration: $('fdur').value.trim()} : {stock: parseInt($('fstock').value) || 0})};
+  if (!data.name || !data.category) return;
+  const old = editId ? D.products.find(x => x.id === editId).video : null;
+  let video = vid;
+  if (vfile) { const id = PO.uid(); try { await PO.vid.put(id, vfile); video = {id, name: vfile.name, size: vfile.size}; } catch (er) { return PO.toast('Could not save the video', 'err'); } }
+  data.video = video || null;
+  if (editId) Object.assign(D.products.find(x => x.id === editId), data);
+  else D.products.unshift({id: PO.uid(), created: Date.now(), ...data});
+  PO.log((isS() ? 'Service ' : 'Product ') + (editId ? 'Updated' : 'Added'), data.name);
+  if (old && (!video || old.id !== video.id)) PO.vid.del(old.id).catch(() => {});
+  if (PO.save()) { close(); draw(); PO.toast(editId ? 'Updated ✓' : 'Added ✓ — now on your storefront'); }
+};
+draw();
+</script></body></html>

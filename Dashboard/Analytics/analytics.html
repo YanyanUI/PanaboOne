@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Analytics</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.ph .row{flex-wrap:wrap}.rng,.dates{min-height:44px}
+@media(max-width:480px){.stat b{font-size:24px}.stat .ic{width:40px;height:40px}.lg2{flex-wrap:wrap;gap:8px 14px}.ch{flex-wrap:wrap;gap:6px}.bar{min-width:80px}}
+.stat{display:flex;gap:14px;align-items:center}
+.stat .ic{width:46px;height:46px;border-radius:12px;background:#ebe7fb;display:grid;place-items:center;font-size:20px;flex:none}
+.stat small{display:block;color:#6b6a95;font-size:13px}
+.stat b{font-size:30px;color:#1f1b4d;display:block;line-height:1.2}
+.chg{font-size:12px;font-weight:600}.chg.up{color:#17a34a}.chg.dn{color:#d23c5a}.chg.flat{color:#8b8aa8}
+.rng{border:1px solid #dcd8f2;background:#fff;border-radius:10px;padding:9px 12px;color:#1f1b4d;font-weight:500;outline:none}
+.dates{background:#fff;border:1px solid #dcd8f2;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:500}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ch b{color:#2d1f8a}
+.lg2{display:flex;gap:16px;font-size:12px;color:#6b6a95}
+.lg2 i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.bar{height:9px;border-radius:99px;background:#ebe7fb;overflow:hidden;min-width:140px}
+.bar i{display:block;height:100%;background:#5b3fd4;border-radius:99px}
+.pg{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:8px}
+.pgb{display:flex;gap:6px}
+.pgb button{min-width:30px;height:30px;border-radius:8px;border:1px solid #e1def5;background:#fff;color:#4a4872;font-weight:600;font-size:13px}
+.pgb button.on{background:#5b3fd4;color:#fff;border-color:#5b3fd4}
+.pgb button:disabled{opacity:.4;cursor:default}
+.note{background:#fff0cf;color:#8a5a00;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+td .nm2{font-weight:600}td small.c{display:block;color:#8b8aa8;font-size:12px}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Analytics</h1><p class="sub">See how many customers visit your store and view your products.</p></div>
+    <div class="row"><span class="dates" id="dates"></span>
+      <select class="rng" id="rng"><option value="7">Last 7 days</option><option value="14">Last 14 days</option><option value="30">Last 30 days</option></select></div></div>
+  <div id="note"></div>
+  <div class="stats">
+    <div class="card stat"><div class="ic">🏪</div><div><small>Total Store Visits</small><b id="sv">0</b><span id="sc"></span></div></div>
+    <div class="card stat"><div class="ic">👁</div><div><small id="l3">Total Product Views</small><b id="pv">0</b><span id="pc"></span></div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="ch"><b>Visits and Views Over Time</b><div class="lg2"><span><i style="background:#5b3fd4"></i>Store Visits</span><span><i style="background:#e8923a"></i>Product Views</span></div></div>
+    <div id="chart"></div>
+  </div>
+  <div class="card">
+    <div class="ch"><b id="pt">Product Performance</b><div class="row"><select class="rng" id="pty" style="display:none;padding:6px 10px"><option value="">All listings</option><option value="product">Products</option><option value="service">Services</option></select><span class="muted">Sorted by most views</span></div></div>
+    <div class="tw"><table class="rt" style="min-width:0"><thead><tr><th id="th1">Product</th><th>Views</th><th>Share of Views</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="pg"><span class="muted" id="showing"></span><div class="pgb" id="pgb"></div></div>
+  </div>
+</div>
+
+<script src="../shared/store.js"></script>
+<script>
+PO.shell('analytics');
+const D = PO.data, $ = PO.$, esc = PO.esc, L = PO.LBL(), daily = (D.stats && D.stats.daily) || {};
+const PER = 5, dk = d => PO.dayKey(d);
+let days = 7, page = 0, pty = '';
+
+const range = (n, off) => { const end = new Date(); end.setHours(0, 0, 0, 0); end.setDate(end.getDate() - off * n);
+  return Array.from({length: n}, (_, i) => { const d = new Date(end); d.setDate(end.getDate() - (n - 1 - i)); return d; }); };
+const day = d => daily[dk(d)] || {};
+const sum = (ds, f) => ds.reduce((a, d) => a + (day(d)[f] || 0), 0);
+const md = d => d.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
+const nice = x => { const e = 10 ** Math.floor(Math.log10(x)), f = x / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e; };
+const chg = (c, p) => { if (!c && !p) return `<span class="chg flat">— vs previous ${days} days</span>`;
+  const x = p ? Math.round((c - p) / p * 100) : 100; return `<span class="chg ${x >= 0 ? 'up' : 'dn'}">${x >= 0 ? '▲' : '▼'} ${Math.abs(x)}% vs previous ${days} days</span>`; };
+
+function chart(cur) {
+  const W = 900, H = 250, L = 46, R = 16, T = 14, B = 30, n = cur.length;
+  const a = cur.map(d => day(d).v || 0), b = cur.map(d => day(d).w || 0);
+  const step = Math.max(1, nice(Math.max(1, ...a, ...b) / 4)), top = step * 4, every = Math.ceil(n / 7);
+  const X = i => L + (n > 1 ? i * (W - L - R) / (n - 1) : 0), Y = v => T + (H - T - B) * (1 - v / top);
+  let g = '';
+  for (let k = 0; k <= 4; k++) { const y = Y(step * k); g += `<line x1="${L}" x2="${W - R}" y1="${y}" y2="${y}" stroke="#eeecfa"/><text x="${L - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#8b8aa8">${step * k}</text>`; }
+  cur.forEach((d, i) => { if ((n - 1 - i) % every === 0) g += `<text x="${X(i)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="#8b8aa8">${md(d)}</text>`; });
+  const line = (arr, col, lbl) => `<path d="${arr.map((v, i) => (i ? 'L' : 'M') + X(i) + ' ' + Y(v)).join(' ')}" fill="none" stroke="${col}" stroke-width="2.2"/>`
+    + arr.map((v, i) => `<circle cx="${X(i)}" cy="${Y(v)}" r="3.5" fill="#fff" stroke="${col}" stroke-width="2"><title>${md(cur[i])}: ${v} ${lbl}</title></circle>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;display:block">${g}${line(b, '#e8923a', 'product views')}${line(a, '#5b3fd4', 'store visits')}</svg>`;
+}
+
+function render() {
+  const cur = range(days, 0), prev = range(days, 1);
+  $('pt').textContent = L.one + ' Performance'; $('th1').textContent = L.one; $('l3').textContent = 'Total ' + L.one + ' Views'; $('pty').style.display = D.bizType === 'both' ? '' : 'none';
+  const v = sum(cur, 'v'), w = sum(cur, 'w');
+  $('dates').textContent = `📅 ${md(cur[0])} – ${md(cur[days - 1])}, ${cur[days - 1].getFullYear()}`;
+  $('sv').textContent = v.toLocaleString(); $('pv').textContent = w.toLocaleString();
+  $('sc').innerHTML = chg(v, sum(prev, 'v')); $('pc').innerHTML = chg(w, sum(prev, 'w'));
+  $('chart').innerHTML = chart(cur);
+
+  const rows = PO.list().filter(p => !pty || p.type === pty).map(p => ({p, v: cur.reduce((a, d) => a + ((day(d).p || {})[p.id] || 0), 0)})).sort((x, y) => y.v - x.v);
+  const tot = rows.reduce((a, r) => a + r.v, 0), mx = Math.max(1, ...rows.map(r => r.v));
+  const pages = Math.max(1, Math.ceil(rows.length / PER)); page = Math.min(page, pages - 1);
+  const slice = rows.slice(page * PER, page * PER + PER);
+  $('rows').innerHTML = slice.length ? slice.map(r => `<tr>
+    <td class="first"><div class="pcell"><div class="th">${r.p.image ? `<img src="${r.p.image}" alt="">` : '🛍️'}</div><div><span class="nm2">${esc(r.p.name)}</span><small class="c">${esc(r.p.category)}${D.bizType === 'both' ? ' · ' + (r.p.type === 'service' ? 'Service' : 'Product') : ''}</small></div></div></td>
+    <td data-label="Views"><b>${r.v.toLocaleString()}</b></td>
+    <td data-label="Share of Views"><div class="row" style="flex-wrap:nowrap"><div class="bar"><i style="width:${r.v / mx * 100}%"></i></div><b style="font-size:13px">${tot ? (r.v / tot * 100).toFixed(1) : '0.0'}%</b></div></td></tr>`).join('')
+    : `<tr><td colspan="3" class="empty">No products yet.</td></tr>`;
+  const a = rows.length ? page * PER + 1 : 0;
+  $('showing').textContent = `Showing ${a}–${page * PER + slice.length} of ${rows.length} products`;
+  $('pgb').innerHTML = `<button data-p="${page - 1}" ${page === 0 ? 'disabled' : ''}>‹</button>` + Array.from({length: pages}, (_, i) => `<button data-p="${i}" class="${i === page ? 'on' : ''}">${i + 1}</button>`).join('') + `<button data-p="${page + 1}" ${page >= pages - 1 ? 'disabled' : ''}>›</button>`;
+
+  const hasData = Object.values(daily).some(x => (x.v || 0) + (x.w || 0) > 0);
+  $('note').innerHTML = hasData ? '' : `<div class="note"><span>No data yet. This fills in once visitors browse your store and view your products.</span><button class="btn sm" id="demo">Load demo data</button></div>`;
+  if (!hasData) $('demo').onclick = demo;
+}
+
+function demo() {   /* for presentations / demos only */
+  PO.track(s => {
+    s.daily = {};
+    const ws = D.products.map((_, i) => Math.max(1, 12 - i * 2)), sw = ws.reduce((a, b) => a + b, 0);
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - i);
+      const v = Math.round(110 + (29 - i) * 3 + Math.random() * 50), w = Math.round(v * (1.9 + Math.random() * .6)), p = {};
+      D.products.forEach((pr, k) => { p[pr.id] = Math.round(w * ws[k] / sw); });
+      s.daily[PO.dayKey(d)] = {v, w: Object.values(p).reduce((a, b) => a + b, 0), p};
+    }
+  });
+  location.reload();
+}
+
+$('pty').onchange = () => { pty = $('pty').value; page = 0; render(); };
+$('rng').onchange = () => { days = +$('rng').value; page = 0; render(); };
+$('pgb').onclick = e => { const b = e.target.closest('[data-p]'); if (b && !b.disabled) { page = +b.dataset.p; render(); } };
+render();
+</script></body></html>

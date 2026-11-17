@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Store</title><link rel="stylesheet" href="../shared/app.css">
+<style>
+.gal .gm{position:relative;aspect-ratio:1;background:#f1e4d0;border-radius:12px;overflow:hidden;display:grid;place-items:center;font-size:64px}
+.gal .gm img{width:100%;height:100%;object-fit:cover}
+.gal .gm video{width:100%;height:100%;object-fit:contain;background:#000}
+.gal .gn{position:absolute;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:50%;border:0;background:rgba(0,0,0,.5);color:#fff;font-size:20px;line-height:1;cursor:pointer;z-index:2}
+.gal .gn.l{left:8px}.gal .gn.r{right:8px}
+.gal .gt{display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.gal .gt button{flex:none;width:56px;height:56px;border-radius:8px;border:2px solid transparent;padding:0;overflow:hidden;background:#222;color:#fff;font-size:20px;cursor:pointer;opacity:.7}
+.gal .gt button.on{border-color:var(--pc);opacity:1}
+.gal .gt img{width:100%;height:100%;object-fit:cover;display:block}
+/* product popup: picture touches the edges, no side gaps */
+#pmbox.mbox{padding:0!important;position:relative;overflow:auto}
+#pmbox .pm{gap:0}
+#pmbox .gal .gm{border-radius:0}
+#pmbox .gal .gt{padding:8px 12px 0}
+#pmbox .pm>div:last-child{padding:20px 22px 22px}
+#pmbox .pm>div:last-child h2{padding-right:34px}
+#pmbox .xbtn{position:absolute;top:10px;right:10px;z-index:5;float:none;width:36px;height:36px;padding:0;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 12px rgba(20,10,60,.25);display:grid;place-items:center;font-size:24px;line-height:1;color:#4a4872;cursor:pointer}
+#pmbox .pm .btn{display:flex;width:100%;justify-content:center;text-align:center;box-sizing:border-box}
+@media(max-width:700px){#pmbox .pm>div:last-child{padding:18px 18px 20px}#pmbox .xbtn{width:40px;height:40px}}
+</style></head>
+<body style="background:#fff">
+<div id="pv" style="display:none;background:#2d1f8a;color:#fff;text-align:center;padding:6px;font-size:13px">Preview mode — not published yet</div>
+<div id="store"></div>
+<div class="modal" id="pm"><div class="mbox" id="pmbox" style="max-width:720px"></div></div>
+<script src="../shared/store.js"></script>
+<script>
+const D = PO.data, preview = new URLSearchParams(location.search).has('preview');
+const c = preview ? D.draft : D.published;
+document.title = c.name + ' — PanaboOne';
+if (preview) document.getElementById('pv').style.display = 'block';
+else PO.track(s => { s.visits = (s.visits || 0) + 1; });
+const modal = document.getElementById('pm');
+let vurl = '';
+const closeM = () => { modal.classList.remove('show'); modal.querySelectorAll('video').forEach(v => v.pause()); if (vurl) { URL.revokeObjectURL(vurl); vurl = ''; } };
+modal.onmousedown = e => { if (e.target === modal) closeM(); };
+function openProduct(p) {
+  if (!preview) PO.track(s => { s.views = s.views || {}; s.views[p.id] = (s.views[p.id] || 0) + 1; });
+  const tel = String(c.phone).replace(/[^\d+]/g, '');
+  const box = document.getElementById('pmbox');
+  box.className = 'mbox sf t' + c.template; box.style.setProperty('--pc', c.color); box.style.fontFamily = PO.stack(c.font);
+  box.style.background = '#fff';
+  box.style.setProperty('--tx', '#2b2140'); box.style.setProperty('--ac', c.accent || c.color); box.style.setProperty('--card', '#fff');
+  box.innerHTML = `<button class="xbtn" id="x">×</button><div class="pm"><div class="gal"><div class="gm" id="gm"></div><div class="gt" id="gt"></div></div>
+    <div><h2>${PO.esc(p.name)}</h2>${PO.priceTxt(p) ? `<div class="pp">${PO.priceTxt(p)}</div>` : ''}
+    <span class="tag ${p.available ? 'y' : 'n'}">${p.available ? 'Available' : 'Sold out'}</span>
+    <p style="font-size:14px">${PO.esc(p.description) || 'No description.'}</p>
+    <p class="muted">Category: ${PO.esc(p.category)}${p.duration ? '<br>Duration: ' + PO.esc(p.duration) : ''}<br>Sold by <b>${PO.esc(c.name)}</b></p>
+    <a class="btn pri" style="background:${c.color};border-color:${c.color}" href="tel:${PO.esc(tel)}">Contact ${PO.esc(c.name)}</a></div></div>`;
+  document.getElementById('x').onclick = closeM;
+  modal.classList.add('show');
+  /* gallery: video first (if any), then pictures */
+  const items = [...(p.video ? [{v: 1}] : []), ...PO.imgsOf(p).map(s => ({s}))], gm = document.getElementById('gm'), gt = document.getElementById('gt');
+  let i = 0;
+  const thumbs = () => { gt.innerHTML = items.length > 1 ? items.map((it, k) => `<button type="button" data-g="${k}">${it.v ? '▶' : `<img src="${it.s}" alt="">`}</button>`).join('') : ''; };
+  const show = n => {
+    i = (n + items.length) % items.length; const it = items[i];
+    gm.querySelectorAll('video').forEach(v => v.pause());
+    gm.innerHTML = (items.length > 1 ? '<button class="gn l" aria-label="Previous">‹</button><button class="gn r" aria-label="Next">›</button>' : '')
+      + (it.v ? `<video src="${vurl}" controls playsinline></video>` : `<img src="${it.s}" alt="">`);
+    gt.querySelectorAll('button').forEach((b, k) => b.classList.toggle('on', k === i));
+    const l = gm.querySelector('.l'), r = gm.querySelector('.r'); if (l) { l.onclick = () => show(i - 1); r.onclick = () => show(i + 1); }
+  };
+  gt.onclick = e => { const b = e.target.closest('[data-g]'); if (b) show(+b.dataset.g); };
+  const start = () => { if (!items.length) { gm.textContent = ''; return; } thumbs(); show(0); };
+  if (p.video) PO.vid.url(p.video.id).then(u => { vurl = u; if (!u) items.shift(); start(); }); else start();
+}
+PO.renderStore(document.getElementById('store'), c, D.products, {onProduct: openProduct, fill: true});
+</script></body></html>

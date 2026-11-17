@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.sg{display:grid;grid-template-columns:1.2fr 1fr;gap:16px;align-items:start}
+.sg h3{margin:0 0 4px;font-size:18px;color:#1f1b4d}
+.opt{display:flex;gap:14px;align-items:center;border:2px solid #e3e0f4;border-radius:14px;padding:14px 16px;margin-bottom:12px;cursor:pointer}
+.opt.on{border-color:#5b3fd4;background:#faf9ff}
+.opt .ic{width:44px;height:44px;border-radius:12px;background:#ebe7fb;display:grid;place-items:center;font-size:22px;flex:none}
+.opt div{flex:1}.opt b{display:block;color:#2d1f8a}.opt small{color:#6b6a95;display:block}
+.cur{display:flex;justify-content:space-between;align-items:center;border:1px solid #e1def5;border-radius:12px;padding:12px 16px;margin:6px 0 12px;font-weight:600}
+.cur span{background:#ebe7fb;color:#4c34c0;font-size:13px;border-radius:99px;padding:4px 12px}
+.nt{background:#fff0cf;color:#8a5a00;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:12px}
+.btn.full{width:100%;justify-content:center;padding:12px}
+#pwc input::-ms-reveal,#pwc input::-ms-clear{display:none}
+@media(max-width:1000px){.sg{grid-template-columns:1fr}}
+@media(max-width:480px){.opt{padding:12px;gap:10px}.cur{flex-wrap:wrap;gap:6px}}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Settings</h1><p class="sub">Manage your account and business settings.</p></div></div>
+  <div class="sg">
+    <div class="card"><h3>Business Type Settings</h3><p class="muted" style="margin:0 0 14px">Choose what your business offers. You can change this anytime.</p>
+      <div id="opts"></div>
+      <div class="cur"><div>Current Business Type</div><span id="cur"></span></div>
+      <div id="note"></div>
+      <button class="btn pri full" id="savebt">Save Changes</button></div>
+    <div><div class="card"><h3>Account</h3><p class="muted" style="margin:0 0 14px">Update your account information.</p>
+      <div class="fld"><label>Username</label><input id="un" readonly></div>
+      <div class="fld"><label>Full Name</label><input id="fn" maxlength="60"></div>
+      <button class="btn pri full" id="saveacc">Save Account</button></div>
+    <div class="card" id="pwc" style="margin-top:16px"><h3>Change Password</h3><p class="muted" style="margin:0 0 14px">Use at least 6 characters.</p>
+      <div class="fld"><label for="pw0">Current Password</label><input id="pw0" type="password" autocomplete="current-password"></div>
+      <div class="fld"><label for="pw1">New Password</label><input id="pw1" type="password" autocomplete="new-password"></div>
+      <div class="fld"><label for="pw2">Confirm New Password</label><input id="pw2" type="password" autocomplete="new-password"></div>
+      <label class="muted" style="display:flex;gap:8px;align-items:center;margin:0 0 14px;cursor:pointer"><input type="checkbox" id="shw"> Show passwords</label>
+      <div class="nt" id="pwerr" style="display:none;background:#fdecef;color:#c0304e"></div>
+      <button class="btn pri full" id="savepw">Change Password</button></div></div>
+  </div>
+</div>
+<script src="../shared/store.js"></script>
+<script src="../shared/auth.js"></script>
+<script>
+PO.shell('settings');
+const D = PO.data, $ = PO.$, NM = {product: 'Product Only', service: 'Service Only', both: 'Products & Services'};
+const has = t => D.products.filter(p => (p.type || 'product') === t).length;
+let sp = D.bizType !== 'service', ss = D.bizType !== 'product';
+const nt = () => sp && ss ? 'both' : sp ? 'product' : 'service';
+const opt = (k, ic, t, d, on) => `<label class="opt ${on ? 'on' : ''}"><span class="ic">${ic}</span><div><b>${t}</b><small>${d}</small><small>${has(k)} saved listing${has(k) === 1 ? '' : 's'}</small></div><span class="sw"><input type="checkbox" data-k="${k}" ${on ? 'checked' : ''}><i></i></span></label>`;
+function draw() {
+  $('opts').innerHTML = opt('product', '🛍️', 'Products', 'Sell physical items and goods.', sp) + opt('service', '🛎️', 'Services', 'Offer professional or local services.', ss);
+  $('cur').textContent = NM[D.bizType];
+  const t = nt(), hid = D.products.filter(p => t !== 'both' && (p.type || 'product') !== t).length;
+  $('note').innerHTML = hid ? `<div class="nt">${hid} listing${hid > 1 ? 's' : ''} will be hidden from customers but not deleted. They come back when you enable that type again.</div>` : '';
+}
+$('opts').onchange = e => { const k = e.target.dataset.k; if (!k) return;
+  if (k === 'product') sp = e.target.checked; else ss = e.target.checked;
+  if (!sp && !ss) { if (k === 'product') sp = true; else ss = true; PO.toast('Choose at least one', 'err'); }
+  draw(); };
+$('savebt').onclick = () => {
+  D.bizType = nt();
+  try { const a = JSON.parse(localStorage.getItem('po_accounts')) || {}; if (a[PO.user]) { a[PO.user].bizType = D.bizType; localStorage.setItem('po_accounts', JSON.stringify(a)); } } catch (e) {}
+  PO.log('Information Updated', 'Business type: ' + NM[D.bizType]);
+  if (PO.save()) { PO.shell('settings'); draw(); PO.toast('Business type saved ✓'); }
+};
+let acc = {}; try { acc = (JSON.parse(localStorage.getItem('po_accounts')) || {})[PO.user] || {}; } catch (e) {}
+$('un').value = acc.username || PO.user; $('fn').value = acc.fullName || '';
+$('saveacc').onclick = () => {
+  const v = $('fn').value.trim(); if (!v) return PO.toast('Enter your full name', 'err');
+  try { const a = JSON.parse(localStorage.getItem('po_accounts')) || {}; if (a[PO.user]) { a[PO.user].fullName = v; localStorage.setItem('po_accounts', JSON.stringify(a)); } PO.toast('Account saved ✓'); } catch (e) { PO.toast('Could not save', 'err'); }
+};
+draw();
+
+/* change password */
+const pw = ['pw0', 'pw1', 'pw2'];
+$('shw').onchange = () => pw.forEach(i => { $(i).type = $('shw').checked ? 'text' : 'password'; });
+const pwErr = m => { const e = $('pwerr'); e.textContent = m; e.style.display = m ? 'block' : 'none'; };
+pw.forEach(i => $(i).oninput = () => pwErr(''));
+$('savepw').onclick = async () => {
+  pwErr(''); const b = $('savepw'); b.disabled = true;
+  const r = await POAuth.changePassword(PO.user, $('pw0').value, $('pw1').value, $('pw2').value);
+  b.disabled = false;
+  if (!r.ok) { pwErr(r.error); return; }
+  pw.forEach(i => { $(i).value = ''; $(i).type = 'password'; }); $('shw').checked = false;
+  PO.log('Information Updated', 'Password changed'); PO.save();
+  PO.toast('Password changed ✓');
+};
+</script></body></html>

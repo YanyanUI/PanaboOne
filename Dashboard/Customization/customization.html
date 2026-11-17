@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Customization</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared/app.css">
+<style>
+.cu{--p:#5b3fd4;--line:#dcd8f2;--mut:#6b6a95}
+.cu-grid{display:grid;grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:16px;align-items:start}
+.cu .card{margin-bottom:14px}
+.cu h2{margin:0 0 10px;font-size:15px;color:#2d1f8a}
+.cu .sf h2,.cu .sf h3{color:inherit}
+.cu .l{display:block;font-size:11px;font-weight:600;color:var(--mut);margin:12px 0 4px}
+.cu .warn2{background:#fff0cf;color:#8a5a00;border-radius:10px;padding:7px 10px;font-size:11px;margin-top:8px}
+.tps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.gl{font-size:12.5px;font-weight:700;color:#2d1f8a;margin:4px 0 8px}.gl small{font-weight:400;color:#8b8aa8;font-size:11px}.tps+.gl{margin-top:18px}
+.tp8{padding:0;border:3px solid transparent;border-radius:10px;background:#fff;overflow:hidden;text-align:center;box-shadow:0 0 0 1px var(--line);transition:.15s}
+.tp8:hover{transform:translateY(-2px)}
+.tp8{position:relative}
+.tp8.lock{opacity:.6}.tp8.lock svg{filter:grayscale(.5)}
+.tp8.lock::after{content:"🔒";position:absolute;top:4px;right:4px;font-size:11px;background:rgba(0,0,0,.6);border-radius:99px;padding:1px 4px;line-height:1.3}
+.gl .gi{width:15px;height:15px;vertical-align:-2px;margin-right:4px}
+.fxs{display:flex;flex-wrap:wrap;gap:9px;margin:4px 0 10px}
+.fxb{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #dcd8f2,0 4px 10px -4px rgba(76,60,180,.5);cursor:pointer;padding:0}
+.fxb.on{box-shadow:0 0 0 3px #5b3fd4}
+.fxb:hover{transform:scale(1.1)}
+.fxc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pprem input[type=color]{padding:2px;width:100%;height:42px;cursor:pointer}
+.pprem .l2{font-size:12px;font-weight:700;color:#2d1f8a;display:block}
+.pprem .l2 a{float:right;font-size:11px;color:#5b3fd4}
+.tp8 svg{display:block;width:100%;height:auto}
+.tp8 small{display:block;font-size:9.5px;font-weight:600;color:var(--mut);padding:3px 0 4px;background:#fff}
+.tp8.on{border-color:var(--p);box-shadow:0 0 0 3px #d9ccff}
+.tp8.on small{color:var(--p)}
+.cust{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.cust label{font-size:10px;text-align:center;font-weight:600;color:var(--mut)}
+.cust input{width:46px;height:46px;border:3px solid #fff;border-radius:50%;padding:0;background:none;display:block;margin:6px auto 0;cursor:pointer;box-shadow:0 0 0 1px var(--line),0 4px 10px -4px rgba(76,60,180,.5)}
+.cust input::-webkit-color-swatch-wrapper{padding:0}.cust input::-webkit-color-swatch{border:0;border-radius:50%}.cust input::-moz-color-swatch{border:0;border-radius:50%}
+.cols{gap:9px!important}.cols .col{width:30px;height:30px;cursor:pointer}.cols .col:hover{transform:scale(1.12)}
+.rst{float:right;font-size:11px;font-weight:600;color:#5b3fd4;text-decoration:none}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;border:2px solid #e3e0f4;background:#fff;border-radius:10px;padding:8px 4px;font-size:12px;font-weight:600;color:var(--mut)}
+.seg button.on{border-color:var(--p);color:var(--p);background:#faf9ff}
+.cu input[type=range]{width:100%;accent-color:var(--p);padding:0}
+.cu .mid{position:sticky;top:12px}
+.cu .pvwrap{max-height:calc(100vh - 170px)}
+.cu .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.cu .bar h2{margin:0 auto 0 0}
+.cu .stage{background:#ebe7fb;border-radius:14px;padding:14px}
+.adv{padding:0}
+.adv summary{list-style:none;cursor:pointer;padding:14px 18px;font-weight:600;color:#2d1f8a;font-size:15px;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.adv summary::-webkit-details-marker{display:none}
+.adv summary small{font-weight:400;color:#8b8aa8;font-size:12px;margin-left:6px}
+.adv summary::after{content:"";width:8px;height:8px;border-right:2px solid #5b3fd4;border-bottom:2px solid #5b3fd4;transform:rotate(45deg);transition:transform .2s;margin-right:4px}
+.adv[open] summary::after{transform:rotate(-135deg)}
+.advb{padding:0 18px 18px;border-top:1px solid #eeecfa}
+.advb{padding-top:14px!important}#editbtn.on{background:#5b3fd4;color:#fff;border-color:#5b3fd4}.ehint{background:#ebe7fb;color:#4c34c0;border-radius:10px;padding:8px 12px;font-size:12px;margin-bottom:10px;display:flex;gap:10px;justify-content:space-between;flex-wrap:wrap}.ehint a{font-weight:600;color:#5b3fd4}
+.advb h3{margin:18px 0 8px;font-size:13px;color:#2d1f8a}
+@media(max-width:480px){.tps{grid-template-columns:repeat(2,1fr)}.cust{grid-template-columns:repeat(2,1fr)}.cu .bar .btn{flex:1}.ehint{font-size:11px}.cu .stage{padding:6px}.cu .pvwrap{max-height:65vh}}
+@media(max-width:1000px){.cu-grid{grid-template-columns:minmax(0,1fr)}.cu-grid>*,.cu .stage,.cu .browser,.cu .pvwrap{min-width:0;max-width:100%}.cu .mid{order:-1;position:static}.cu .pvwrap{max-height:70vh}}
+@media(pointer:coarse){.tp8 small{font-size:11px;padding:5px 0}.cust input{width:52px;height:52px}.seg button{min-height:46px}.cu input[type=range]{height:32px}.adv summary{min-height:52px}}
+
+/* ===== phone / tablet editing: tools pop up from the bottom, big touch-friendly buttons ===== */
+.ehint .hm{display:none}
+@media(max-width:1000px),(hover:none){
+ .ehint .hd{display:none}.ehint .hm{display:inline}
+ .cu .pvwrap:has(.sf.edit){max-height:none;overflow:visible}
+ body.etb-open .main{padding-bottom:calc(250px + env(safe-area-inset-bottom,0px))}
+ body.etb-open .toast{bottom:calc(260px + env(safe-area-inset-bottom,0px))}
+ /* small floating toolbars are replaced by one popup for the selected section */
+ .cu .sf.edit [data-blk]:not(.sel)>.etb{display:none!important}
+ .cu .sf.edit [data-blk].sel{outline:2px dashed #7b58eb;outline-offset:-2px}
+ .cu .sf.edit [data-blk].sel>.etb{display:flex!important;position:fixed;left:0;right:0;top:auto;bottom:0;max-width:none;z-index:70;
+  flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;max-height:46dvh;overflow-y:auto;overscroll-behavior:contain;
+  padding:12px 16px calc(14px + env(safe-area-inset-bottom,0px));background:#fff;border-radius:18px 18px 0 0;
+  box-shadow:0 -12px 34px -10px rgba(36,21,70,.5);border:1px solid #e1def5;font-size:12px;animation:cusheet .22s ease}
+ .cu .sf.edit.typing [data-blk].sel>.etb{display:none!important}
+ .cu .sf .etl{display:block;order:-3;flex:1 1 calc(100% - 130px);text-align:left;font-size:15px;color:#2d1f8a}
+ .cu .sf .edn{display:inline-flex;align-items:center;justify-content:center;order:-2;flex:0 0 110px;background:#5b3fd4!important;color:#fff!important}
+ .cu .sf .etsp{display:block;order:-1;flex:1 0 100%;height:0}
+ .cu .sf .etb button{min-height:48px;min-width:52px;font-size:16px;padding:8px 14px;border-radius:12px;border:0;font-weight:600}
+ .cu .sf .etb label{flex-direction:column;gap:4px;font-size:12px;align-items:center;color:#4a4872}
+ .cu .sf .etb input[type=color]{width:52px;height:46px;border-radius:12px;border:2px solid #e1def5;padding:2px;background:#fff}
+ .cu .sf .pmv button{width:42px;height:42px;font-size:16px}
+ .cu .sf .rz{height:28px;width:110px}
+ .cu .sf .eh{padding:6px 12px;font-size:12px}
+}
+@media(max-width:760px){
+ .cu input:not([type=range]):not([type=checkbox]):not([type=color]):not([type=file]),.cu select,.cu textarea{font-size:16px;min-height:46px}
+ .cols .col{width:38px;height:38px}.cols{gap:11px!important}
+ .cu .tg{min-height:48px}
+ .cu .bar .btn{min-height:46px}
+}
+@keyframes cusheet{from{transform:translateY(100%)}to{transform:none}}
+
+/* ===== MOBILE: one section at a time + bottom tab bar (no long scrolling) ===== */
+.mtabs,.mpub,.mobonly{display:none}
+@media(max-width:1000px){
+ .mobonly{display:inline-flex}
+ body.cu-m .ph .row{display:none}
+ body.cu-m .ph{margin-bottom:8px}
+ body.cu-m:not(.etb-open) .main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+ body.cu-m .cu .left,body.cu-m .cu .mid{display:none}
+ body.cu-m[data-mt="preview"] .cu .mid{display:block}
+ body.cu-m:not([data-mt="preview"]) .cu .left{display:block}
+ body.cu-m .cu .left>details{display:none}
+ body.cu-m[data-mt="tpl"] #d_tpl,body.cu-m[data-mt="brand"] #d_brand,body.cu-m[data-mt="info"] #d_info,body.cu-m[data-mt="sty"] #d_sty{display:block}
+ body.cu-m .adv summary{display:none}
+ body.cu-m .advb{border-top:0;padding:16px 16px 18px!important}
+ body.cu-m .cu .pvwrap{max-height:none;overflow:visible}
+ body.cu-m .cu .stage{padding:8px}
+ body.cu-m .tps{grid-template-columns:repeat(2,1fr);gap:12px}
+ body.cu-m .tp8 small{font-size:12px;padding:6px 0}
+ body.cu-m .brow .btn{min-height:44px}
+ .mtabs{position:fixed;left:0;right:0;bottom:0;z-index:60;display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-top:1px solid #e1def5;
+  box-shadow:0 -8px 24px -14px rgba(36,21,70,.45);padding-bottom:env(safe-area-inset-bottom,0px)}
+ .mtabs button{border:0;background:none;min-height:58px;padding:6px 2px;font:600 11px 'Poppins',system-ui,sans-serif;color:#6b6a95;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-top:3px solid transparent}
+ .mtabs button i{font-style:normal;font-size:21px;line-height:1}
+ .mtabs button.on{color:#5b3fd4;border-top-color:#5b3fd4;background:#faf9ff}
+ body.cu-m .mpub{display:inline-flex;align-items:center;gap:6px;position:fixed;right:14px;bottom:calc(70px + env(safe-area-inset-bottom,0px));z-index:61;min-height:48px;padding:0 20px;border:0;border-radius:999px;
+  background:#5b3fd4;color:#fff;font:600 15px 'Poppins',system-ui,sans-serif;box-shadow:0 12px 24px -8px rgba(91,63,212,.8)}
+ .mpub.un::after{content:"";width:9px;height:9px;border-radius:50%;background:#ffb020;box-shadow:0 0 0 2px #fff}
+ body.etb-open .mtabs,body.etb-open .mpub,body.kb .mtabs,body.kb .mpub{display:none!important}
+}
+
+/* phone: the site menu is now a slide-in drawer (no bottom bar), so the tab bar sits at the very bottom */
+@media(max-width:760px){
+ body.cu-m .mtabs{bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+ body.cu-m .mpub{bottom:calc(70px + env(safe-area-inset-bottom,0px))}
+ body.cu-m:not(.etb-open) .main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+ /* Template panel: fluid, responsive grid */
+ body.cu-m .tps{grid-template-columns:repeat(auto-fill,minmax(min(100%,132px),1fr))}
+ body.cu-m .gl{line-height:1.4}
+ body.cu-m .gl small{display:block;margin-top:2px}
+}
+@media(max-width:340px){body.cu-m .tps{grid-template-columns:1fr 1fr}}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main" style="--mw:1640px">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Customization</h1><p class="sub">Choose a template and customize your public store. <span class="badge" id="unpub" style="display:none">Unpublished changes</span></p></div>
+    <div class="row"><a class="btn" id="prevbtn" target="_blank">👁 Preview</a><button class="btn pri" id="pub">➤ Publish</button></div></div>
+
+  <nav class="mtabs" id="mtabs" aria-label="Customization sections">
+  <button type="button" data-mt="preview" class="on"><i>👁</i>Preview</button>
+  <button type="button" data-mt="tpl"><i>🎨</i>Template</button>
+  <button type="button" data-mt="brand"><i>🏷️</i>Logo</button>
+  <button type="button" data-mt="info"><i>📝</i>Info</button>
+  <button type="button" data-mt="sty"><i>🎛️</i>Style</button>
+</nav>
+<button type="button" class="mpub" id="mpub">➤ Publish</button>
+<div class="cu"><div class="cu-grid">
+    <div class="left">
+      <details class="card adv" id="d_tpl" open><summary><span>🎨 Choose Template</span></summary><div class="advb"><div id="tpls"></div></div></details>
+      <details class="card adv" id="d_brand" open><summary><span>🏷️ Logo &amp; Banner</span></summary><div class="advb">
+        <div class="brow"><div class="th" id="logoth"></div><span>Store Logo</span><button class="btn sm" id="logobtn">Change</button></div>
+        <div class="brow"><div class="th" id="banth"></div><span>Banner Image</span><button class="btn sm" id="banbtn">Change</button></div>
+        <input type="file" id="logofile" accept="image/*" hidden><input type="file" id="banfile" accept="image/*" hidden><input type="file" id="workfile" accept="image/*" multiple hidden>
+        <a href="#" class="muted" id="rmlogo">Remove logo</a> · <a href="#" class="muted" id="rmban">Remove banner</a></div></details>
+      <details class="card adv" id="d_info" open><summary><span>📝 Store Information</span></summary><div class="advb">
+        <div class="fld"><label>Store Name</label><input id="name" maxlength="40"></div>
+        <div class="fld"><label>Banner Headline</label><input id="headline" maxlength="70"></div>
+        <div class="fld"><label>Banner Text</label><textarea id="sub"></textarea></div>
+        <div class="fld"><label>About Us</label><textarea id="about"></textarea></div>
+        <div class="fld"><label>Address (shown on the Location tab)</label><input id="address"></div>
+        <div class="fld"><label>Map Pin <span class="muted">(shows the map and distance to customers)</span></label>
+          <div class="row"><button type="button" class="btn sm" id="pinhere">📍 I'm at my store now</button><button type="button" class="btn sm" id="pinaddr">🔎 Find from address</button><a href="#" class="muted" id="pinrm">Clear pin</a></div>
+          <p class="muted" id="pinst" style="margin:6px 0 0;font-size:12px"></p></div>
+        <div class="g2"><div class="fld"><label>Phone</label><input id="phone"></div><div class="fld"><label>Open Hours</label><input id="hours"></div></div>
+        <div class="fld"><label>Messaging Link</label><input id="messaging" placeholder="m.me/yourbusiness"></div></div></details>
+      <details class="card adv" id="d_sty"><summary><span>🎛️ Customize style <small>(optional)</small></span></summary>
+        <div class="advb">
+          <h3>Colors <a href="#" class="rst" id="rstcol">↺ Reset colors</a></h3>
+          <div class="cols" id="cols"></div>
+          <span class="l">Adjust color <span style="font-weight:400">(Primary = main theme · Accent = buttons &amp; highlights)</span></span>
+          <div class="cust" id="cust"></div>
+          <div id="warn"></div>
+          <h3>Font</h3><div class="fld" style="margin:0"><select id="font"></select></div>
+          <h3>Corners</h3>
+          <div class="seg" id="seg"><button data-r="sharp">Sharp</button><button data-r="md">Rounded</button><button data-r="soft">Soft</button></div>
+          <span class="l">Banner darkness: <b id="ovv"></b>%</span>
+          <input type="range" id="overlay" min="0" max="80">
+          <h3>Layout</h3>
+          <div class="tg">Show Banner<label class="sw"><input type="checkbox" id="showBanner"><i></i></label></div>
+          <div class="tg">Show Contact Bar (at the top)<label class="sw"><input type="checkbox" id="showContactBar"><i></i></label></div>
+          <div class="tg">Show Category Filters<label class="sw"><input type="checkbox" id="showFilters"><i></i></label></div>
+          <div class="tg">Show About page<label class="sw"><input type="checkbox" id="showAbout"><i></i></label></div>
+          <div class="tg">Show Contact page<label class="sw"><input type="checkbox" id="showContact"><i></i></label></div>
+          <div class="tg">Show Location page<label class="sw"><input type="checkbox" id="showLocation"><i></i></label></div>
+          <button type="button" class="btn full" id="rstall" style="width:100%;justify-content:center;margin-top:16px">↺ Reset customization</button>
+        </div>
+      </details>
+    </div>
+
+    <div class="mid">
+      <section class="card">
+        <div class="bar"><h2>⚡ Live Preview</h2><a class="btn sm mobonly" id="prevbtn2" target="_blank">↗ Full view</a><button class="btn sm" id="editbtn">✎ Edit</button></div>
+        <div class="ehint" id="ehint" style="display:none"><span class="hm">✎ Tap a section to select it · tap text to type · the tools (move ▲▼, text size, colors) pop up at the bottom · press <b>✓ Done</b> to close them.</span><span class="hd">✎ Tap or click text to edit · Drag <b>⠿</b> (or use ▲▼) to move a section · Drag products (or use ◀▶) to reorder them · <b>A− A+</b> change text size · Drag the purple bar under the banner to resize it · Select a section to change its colors · Tap the logo to replace it · Use the tabs (About / Contact / Location) at the top.</span><a href="#" id="resetlay">↺ Reset layout &amp; colors</a></div>
+        <div class="stage"><div class="browser"><div class="bbar"><i></i><i></i><i></i><span id="burl"></span></div><div class="pvwrap"><div id="store"></div></div></div></div>
+      </section>
+    </div>
+  </div></div>
+</div>
+<script src="../shared/store.js"></script>
+<script>
+PO.shell('custom');
+const D = PO.data, d = D.draft, $ = PO.$;
+
+const NAMES = ['Classic', 'Centered', 'Split', 'List', 'Marquee', 'Floating', 'Reveal', 'Spotlight', 'Showcase', 'Portfolio', 'Menu', 'Single Showcase'];
+const CK = [['color', 'Primary'], ['accent', 'Accent'], ['bg', 'Background'], ['text', 'Text']];
+const PAL = ['#111111', '#6b3410', '#c8642a', '#ea580c', '#ca8a04', '#65a30d', '#16a34a', '#2f7d4f', '#0d9488', '#0891b2', '#0284c7', '#2563eb', '#1f3b73', '#5b3fd4', '#7c3aed', '#c026d3', '#db2777', '#e11d48', '#b83a3a', '#334155', '#111827'];
+const DEF = {font: 'Inter', radius: 'md', overlay: 55, showBanner: true, showContactBar: false, showFilters: true};
+const fields = ['name', 'headline', 'sub', 'about', 'address', 'phone', 'hours', 'messaging'], toggles = ['showBanner', 'showContactBar', 'showFilters'];
+
+/* ---- mini wireframe of each template (follows the current colors) ---- */
+function wire(n, t) {
+  const {pc, ac, bg, tx, card} = t;
+  const R = (x, y, w, h, f, r = 2, o = 1) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${r}" fill="${f}" opacity="${o}"/>`;
+  const prod = (x, y, w, h, r = 2) => R(x, y, w, h, card, r) + R(x + 1.5, y + 1.5, w - 3, h * .58, tx, r, .13) + R(x + 2, y + h * .58 + 4, w * .55, 2.4, tx, 1, .55) + R(x + 2, y + h * .58 + 8.5, w * .32, 2, pc, 1);
+  const row = (y, h, c = 3, gap = 3, r = 2) => { const w = (72 - gap * (c - 1)) / c; return Array.from({length: c}, (_, i) => prod(4 + i * (w + gap), y, w, h, r)).join(''); };
+  const nav = R(0, 0, 80, 9, card, 0) + R(4, 3, 14, 3, pc) + R(46, 3.5, 6, 2, tx, 1, .4) + R(55, 3.5, 6, 2, tx, 1, .4) + R(64, 2.5, 12, 4, pc, 2);
+  let s = R(0, 0, 80, 100, bg, 0);
+  const play = (x, y) => `<circle cx="${x}" cy="${y}" r="4.2" fill="#fff" opacity=".92"/><path d="M${x - 1.4} ${y - 2.3}L${x + 2.5} ${y}L${x - 1.4} ${y + 2.3}Z" fill="${pc}"/>`;
+  const thumbs = (y, n, w, g = 2) => Array.from({length: n}, (_, i) => R(4 + i * ((72 + g) / n), y, (72 + g) / n - g, w, tx, 2, .17)).join('');
+  switch (n) {
+    case 1: s += nav + R(0, 9, 80, 30, pc, 0) + R(6, 17, 34, 4.5, '#fff', 2, .95) + R(6, 24, 24, 2.5, '#fff', 1, .6) + R(6, 30, 14, 4.5, ac, 2) + row(44, 26) + row(74, 22); break;
+    case 2: s += R(0, 0, 80, 15, card, 0) + R(30, 3, 20, 4, pc) + R(16, 10, 48, 2, tx, 1, .3) + R(0, 15, 80, 30, pc, 0)
+      + R(18, 24, 44, 5, '#fff', 2, .95) + R(26, 32, 28, 2.5, '#fff', 1, .6) + R(33, 37, 14, 4, ac, 2) + row(50, 24) + row(78, 18); break;
+    case 3: s += nav + R(0, 9, 80, 32, card, 0) + R(5, 17, 30, 4.5, tx, 2, .85) + R(5, 24, 22, 2.5, tx, 1, .4) + R(5, 30, 14, 4.5, pc, 2)
+      + R(40, 9, 40, 32, pc, 0) + R(48, 18, 24, 14, '#fff', 4, .25) + row(46, 26) + row(76, 20); break;
+    case 4: s += R(0, 0, 80, 9, pc, 0) + R(4, 3, 14, 3, '#fff') + R(64, 2.5, 12, 4, '#fff', 2) + R(0, 9, 80, 16, pc, 0, .75) + R(6, 14, 32, 4, '#fff', 2)
+      + [0, 1, 2, 3].map(i => { const y = 30 + i * 17; return R(4, y, 72, 14, card, 3) + R(6, y + 2, 10, 10, tx, 2, .13) + R(20, y + 3.5, 28, 3, tx, 1, .6) + R(20, y + 8.5, 14, 2.4, pc, 1); }).join(''); break;
+    case 5: s += nav + R(0, 9, 80, 28, pc, 0) + R(6, 16, 34, 4.5, '#fff', 2, .95) + R(6, 23, 24, 2.5, '#fff', 1, .6) + R(6, 28, 14, 4, ac, 2)
+      + R(4, 42, 24, 3.5, tx, 1, .8) + [-10, 17, 44, 71].map(x => prod(x, 50, 24, 36)).join('')
+      + `<path d="M50 93h12M58 90.5l3.5 2.5-3.5 2.5" stroke="${pc}" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` + R(4, 92.5, 30, 2.4, tx, 1, .15); break;
+    case 6: s += nav + R(0, 9, 80, 26, pc, 0) + R(18, 16, 44, 4.5, '#fff', 2, .95) + R(26, 23, 28, 2.5, '#fff', 1, .6)
+      + [[6, 44], [6, 72], [42, 38], [42, 66]].map(([x, y]) => prod(x, y, 32, 22) + `<ellipse cx="${x + 16}" cy="${y + 25}" rx="11" ry="1.6" fill="${tx}" opacity=".18"/>`).join('')
+      + `<path d="M74 52v-5M72 49l2-2.5 2 2.5" stroke="${ac}" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`; break;
+    case 7: s += nav + R(0, 9, 80, 24, pc, 0) + R(6, 15, 34, 4.5, '#fff', 2, .95) + R(6, 22, 22, 2.5, '#fff', 1, .6)
+      + `<g transform="rotate(-4 20 56)">${prod(4, 40, 32, 28)}</g><g transform="rotate(4 60 62)">${prod(44, 46, 32, 28)}</g><g transform="rotate(-3 20 86)">${prod(4, 72, 32, 22)}</g>`
+      + `<path d="M40 82h8M45 79.5l3 2.5-3 2.5" stroke="${ac}" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>` + R(48, 80, 28, 2.4, tx, 1, .18); break;
+    case 8: s += nav + R(0, 9, 80, 24, pc, 0) + R(6, 15, 34, 4.5, '#fff', 2, .95) + R(6, 22, 22, 2.5, '#fff', 1, .6)
+      + prod(4, 48, 20, 30) + prod(56, 48, 20, 30) + prod(28, 42, 24, 40)
+      + `<rect x="26.5" y="40.5" width="27" height="43" rx="4" fill="none" stroke="${ac}" stroke-width="1.8"/>`
+      + [0, 1, 2].map(i => `<circle cx="${34 + i * 6}" cy="92" r="1.8" fill="${i === 1 ? pc : tx}" opacity="${i === 1 ? 1 : .3}"/>`).join(''); break;
+    case 9: s += nav + R(0, 9, 80, 34, card, 0) + R(5, 17, 28, 4.5, tx, 2, .85) + R(5, 24, 20, 2.5, tx, 1, .4) + R(5, 30, 13, 4.5, pc, 2)
+      + R(40, 12, 36, 28, pc, 3) + play(58, 26) + thumbs(47, 5, 13) + row(66, 28); break;
+    case 10: s += nav + R(0, 9, 80, 24, pc, 0) + R(18, 15, 44, 4.5, '#fff', 2, .95) + R(26, 22, 28, 2.5, '#fff', 1, .6)
+      + [[4, [20, 16]], [29, [14, 22]], [54, [22, 14]]].map(([x, hs]) => { let y = 37; return hs.map(h => { const r = R(x, y, 22, h, tx, 3, .17); y += h + 3; return r; }).join(''); }).join('')
+      + [0, 1].map(i => R(4, 80 + i * 10, 72, 8, card, 3) + R(6, 81.5 + i * 10, 5, 5, tx, 1.5, .15) + R(14, 82.5 + i * 10, 22, 2.6, tx, 1, .55)).join(''); break;
+    case 11: s += nav + R(0, 9, 80, 20, pc, 0) + R(6, 15, 30, 4.5, '#fff', 2, .95) + R(6, 22, 20, 2.5, '#fff', 1, .6)
+      + [0, 1, 2, 3].map(i => { const y = 34 + i * 16; return R(4, y, 46, 13, card, 3) + R(6, y + 2, 9, 9, tx, 2, .13) + R(18, y + 3, 20, 3, tx, 1, .6) + R(18, y + 8, 10, 2.4, pc, 1); }).join('')
+      + R(54, 34, 22, 17, pc, 3) + play(65, 42.5) + [0, 1].map(r => [0, 1].map(c => R(54 + c * 11.5, 54 + r * 11.5, 10.5, 10.5, tx, 2, .17)).join('')).join(''); break;
+    case 12: s += nav + R(0, 9, 80, 18, pc, 0) + R(18, 14, 44, 4, '#fff', 2, .95) + R(26, 20, 28, 2.4, '#fff', 1, .6)
+      + R(6, 31, 68, 30, card, 4) + R(9, 34, 30, 24, tx, 3, .15) + R(43, 37, 26, 3.4, tx, 1, .6) + R(43, 43, 20, 2.4, tx, 1, .35) + R(43, 48, 14, 2.4, tx, 1, .35) + R(43, 53, 16, 5, pc, 2.5)
+      + [0, 1, 2].map(i => `<circle cx="${34 + i * 6}" cy="65" r="1.6" fill="${i ? tx : pc}" opacity="${i ? .3 : 1}"/>`).join('')
+      + R(4, 71, 30, 2.6, tx, 1, .55) + Array.from({length: 4}, (_, i) => R(4 + i * 18.3, 76, 17, 17, tx, 2, .17)).join(''); break;
+  }
+  return s;
+}
+
+/* ---- colors: picking Primary changes everything ---- */
+const h2r = h => { const n = parseInt(h.slice(1), 16); return [n >> 16, (n >> 8) & 255, n & 255]; };
+const toHsl = ([r, g, b]) => { r /= 255; g /= 255; b /= 255; const mx = Math.max(r, g, b), mn = Math.min(r, g, b); let h = 0, s = 0; const l = (mx + mn) / 2;
+  if (mx !== mn) { const dd = mx - mn; s = l > .5 ? dd / (2 - mx - mn) : dd / (mx + mn); h = mx === r ? (g - b) / dd + (g < b ? 6 : 0) : mx === g ? (b - r) / dd + 2 : (r - g) / dd + 4; h *= 60; } return [h, s * 100, l * 100]; };
+const hex = (h, s, l) => { h = ((h % 360) + 360) % 360; s /= 100; l /= 100; const a = s * Math.min(l, 1 - l), f = n => { const k = (n + h / 30) % 12; return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1)); };
+  return '#' + [f(0), f(8), f(4)].map(x => Math.round(x * 255).toString(16).padStart(2, '0')).join(''); };
+const derive = c => { const [h, s] = toHsl(h2r(c)), sat = Math.max(10, s);
+  return {color: c, accent: hex(h + 32, 85, 58), bg: hex(h, Math.min(60, sat * .6), 96), text: hex(h, Math.min(55, sat * .7), 14)}; };
+/* Primary / palette change the theme; a hand-picked Accent is kept */
+const applyPrimary = c => { const n = derive(c); if (d.accentCustom) delete n.accent; Object.assign(d, n); };
+const rl = h => h2r(h).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }).reduce((a, v, i) => a + v * [.2126, .7152, .0722][i], 0);
+const cr = (a, b) => { const x = rl(a), y = rl(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+
+const TIER = () => D.plan === 'tier3' ? 3 : D.plan === 'tier2' ? 2 : 1;
+const GEMS = PO.GEMS, GEMKEYS = Object.keys(GEMS), HXR = /^#[0-9a-f]{6}$/i;
+const GEMSVG = '<svg class="gi" viewBox="0 0 24 24"><polygon points="6,3 18,3 23,9 1,9" fill="#f5c451"/><polygon points="1,9 23,9 12,22" fill="#c98a1a"/><polygon points="6,3 9,9 12,3" fill="#ffe9a8"/><polygon points="12,3 15,9 18,3" fill="#ffe9a8" opacity=".8"/></svg>';
+const gemOf = P => GEMS[P.dm] ? GEMS[P.dm][1] : (HXR.test(P.dm || '') ? P.dm : GEMS.gold[1]);
+/* Animation color presets: [name, background, glow] */
+const FXP = [['Midnight', '#05050a', '#7b58eb'], ['Noir', '#000000', '#e8e8f0'], ['Ocean', '#03111c', '#18c8ff'], ['Forest', '#04140c', '#2ee59d'], ['Crimson', '#16040a', '#ff3b5c'], ['Sunset', '#160a04', '#ff8a3d'], ['Royal', '#0b0620', '#c9a2ff'], ['Rose', '#170612', '#ff7eb6']];
+const opt = (v, l, cur) => `<option value="${v}" ${String(cur) === String(v) ? 'selected' : ''}>${l}</option>`;
+const chk = (f, l, on) => `<label class="chk"><input type="checkbox" data-pf="${f}" ${on ? 'checked' : ''}> ${l}</label>`;
+const titleF = (P) => `<label>Collection title<input data-pf="title" maxlength="60" value="${PO.esc(P.title || (d.name + ' / Collection'))}"></label>`;
+
+/* thumbnails (follow the chosen animation / diamond color) */
+const tbtn = (n, nm, bg, inner, locked) => `<button class="tp8 ${locked ? 'lock' : ''} ${d.template === n ? 'on' : ''}" data-t="${n}" title="${nm}"><svg viewBox="0 0 80 100"><rect width="80" height="100" fill="${bg}"/>${inner}</svg><small>${nm}</small></button>`;
+function premiumLane() {
+  const t = PO.theme(d), P = d.prem || {}, bg = HXR.test(P.fx || '') ? P.fx : '#0a0a10', gl = HXR.test(P.fg || '') ? P.fg : t.ac, lk = TIER() < 2;
+  const n = d.template, on = n >= 13 && n <= 16;
+  let h = `<div class="gl">👑 Premium <small>— animated layouts with a color you choose. Tier 2 and Tier 3.</small></div><div class="tps">`
+    + tbtn(13, 'Glass', bg, `<rect y="10" width="80" height="42" fill="${gl}" opacity=".85"/><rect x="8" y="38" width="38" height="6" fill="#fff"/><rect y="56" width="80" height="5" fill="${gl}"/><rect x="6" y="66" width="21" height="28" fill="#fff" opacity=".3"/><rect x="29" y="66" width="21" height="28" fill="#fff" opacity=".3"/><rect x="52" y="66" width="21" height="28" fill="#fff" opacity=".3"/>`, lk)
+    + tbtn(14, 'Neon Noir', bg, `<rect x="6" y="12" width="68" height="26" fill="none" stroke="${gl}" stroke-width="1.5"/><rect x="6" y="48" width="20" height="40" fill="none" stroke="${gl}"/><rect x="30" y="48" width="20" height="40" fill="none" stroke="${gl}"/><rect x="54" y="48" width="20" height="40" fill="none" stroke="${gl}"/>`, lk)
+    + tbtn(15, 'Film Strip', bg, `<rect x="-14" y="22" width="40" height="56" fill="#fff" opacity=".85"/><rect x="30" y="16" width="44" height="68" fill="#fff"/><rect x="78" y="22" width="40" height="56" fill="#fff" opacity=".85"/><rect x="6" y="92" width="40" height="3" fill="${gl}"/>`, lk)
+    + tbtn(16, 'Orbit', bg, `<ellipse cx="40" cy="55" rx="34" ry="12" fill="none" stroke="${gl}" opacity=".7"/><rect x="28" y="28" width="24" height="34" fill="#fff"/><rect x="8" y="34" width="16" height="24" fill="#fff" opacity=".5"/><rect x="56" y="34" width="16" height="24" fill="#fff" opacity=".5"/>`, lk)
+    + `</div>`;
+  if (lk) h += `<p class="muted" style="font-size:12px;margin:8px 0 0">🔒 Premium layouts unlock with <b>Tier 2</b> or <b>Tier 3</b>. The Free plan uses the standard templates.</p>`;
+  if (on) {
+    h += `<div class="pprem">${titleF(P)}`
+      + (n === 13 ? `<label>Scrolling text<input data-pf="marquee" maxlength="60" value="${PO.esc(P.marquee == null ? d.name : P.marquee)}"></label>` : '')
+      + (n <= 14 ? `<label>Products per row<select data-pf="cols">${[2, 3, 4].map(k => opt(k, k, P.cols || 3)).join('')}</select></label>` : '')
+      + (n === 13 ? `<label>Hover effect<select data-pf="hover">${opt('swap', 'Show 2nd photo', P.hover || 'swap')}${opt('zoom', 'Zoom only', P.hover || 'swap')}</select></label>${chk('cover', '3D product carousel', P.cover !== false)}${chk('flip', '3D flip tiles on scroll', P.flip !== false)}` : '')
+      + chk('anim', 'Animations on', P.anim !== false)
+      + `<span class="l2">Animation color <a href="#" data-fxreset>↺ Default</a></span>`
+      + `<div class="fxs">${FXP.map(([nm, b, g]) => `<button type="button" class="fxb ${P.fx === b && P.fg === g ? 'on' : ''}" data-fx="${b}" data-fg="${g}" title="${nm}" style="background:linear-gradient(135deg,${b} 50%,${g} 50%)"></button>`).join('')}</div>`
+      + `<div class="fxc"><label>Background<input type="color" data-pf="fx" value="${HXR.test(P.fx || '') ? P.fx : '#050505'}"></label><label>Glow<input type="color" data-pf="fg" value="${HXR.test(P.fg || '') ? P.fg : t.ac}"></label></div></div>`;
+  }
+  return h;
+}
+function diamondLane() {
+  const P = d.prem || {}, g = gemOf(P), L = PO.mix(g, '#ffffff', .58), Dk = PO.mix(g, '#000000', .45), bg = HXR.test(P.fx || '') ? P.fx : '#07060c', lk = TIER() < 3, n = d.template, on = n >= 17;
+  let h = `<div class="gl">${GEMSVG}Diamond <small>— Tier 3 only. The most animated layouts, in your own diamond color.</small></div><div class="tps">`
+    + tbtn(17, 'Prism', bg, `<circle cx="18" cy="18" r="24" fill="${g}" opacity=".35"/><circle cx="66" cy="22" r="20" fill="${Dk}" opacity=".6"/><polygon points="40,10 50,22 40,36 30,22" fill="${L}" opacity=".9"/><rect x="18" y="42" width="44" height="5" fill="${L}"/><rect x="6" y="56" width="20" height="36" rx="3" fill="${g}" opacity=".35" stroke="${L}" stroke-width=".8"/><rect x="30" y="56" width="20" height="36" rx="3" fill="${g}" opacity=".35" stroke="${L}" stroke-width=".8"/><rect x="54" y="56" width="20" height="36" rx="3" fill="${g}" opacity=".35" stroke="${L}" stroke-width=".8"/>`, lk)
+    + tbtn(18, 'Warp', bg, [70, 50, 32, 18].map((w, i) => `<rect x="${40 - w / 2}" y="${50 - w * .62}" width="${w}" height="${w * 1.24}" rx="2" fill="none" stroke="${i % 2 ? g : L}" stroke-width="${1 + i * .4}" opacity="${.35 + i * .2}"/>`).join('') + [[0, 0], [80, 0], [0, 100], [80, 100], [40, 0], [40, 100]].map(([x, y]) => `<line x1="40" y1="50" x2="${x}" y2="${y}" stroke="${g}" opacity=".35"/>`).join(''), lk)
+    + tbtn(19, 'Crown', bg, `<ellipse cx="40" cy="38" rx="34" ry="30" fill="none" stroke="${g}" stroke-dasharray="2 3" opacity=".7"/><polygon points="40,12 64,38 40,64 16,38" fill="${g}"/><polygon points="40,12 52,38 40,64 28,38" fill="${L}" opacity=".7"/><polygon points="16,38 40,38 40,64" fill="${Dk}" opacity=".6"/>${[0, 1, 2, 3].map(i => `<polygon points="${12 + i * 17},80 ${19 + i * 17},87 ${12 + i * 17},94 ${5 + i * 17},87" fill="${i === 1 ? L : g}" opacity="${i === 1 ? 1 : .5}"/>`).join('')}`, lk)
+    + tbtn(20, 'Single Showcase', bg, `<circle cx="40" cy="14" r="22" fill="${g}" opacity=".25"/><rect x="6" y="28" width="68" height="40" rx="6" fill="${g}"/><rect x="9" y="31" width="62" height="34" rx="4" fill="${L}" opacity=".35"/><polygon points="40,38 50,48 40,58 30,48" fill="${Dk}" opacity=".7"/>${[0, 1, 2].map(i => `<polygon points="${33 + i * 7},76 ${36 + i * 7},79 ${33 + i * 7},82 ${30 + i * 7},79" fill="${i ? Dk : L}" opacity="${i ? .6 : 1}"/>`).join('')}${[0, 1, 2, 3].map(i => `<rect x="${6 + i * 17.5}" y="86" width="16" height="9" rx="2" fill="${g}" opacity=".5" stroke="${L}" stroke-width=".8"/>`).join('')}`, lk)
+    + `</div>`;
+  if (TIER() === 2) h += `<p class="muted" style="font-size:12px;margin:8px 0 0">🔒 Diamond layouts are exclusive to <b>Tier 3</b>. Open <b>Subscription</b> to upgrade.</p>`;
+  else if (TIER() < 2) h += `<p class="muted" style="font-size:12px;margin:8px 0 0">🔒 Diamond layouts unlock with <b>Tier 3</b>.</p>`;
+  if (on) {
+    h += `<div class="pprem">${titleF(P)}`
+      + (n === 17 ? `<label>Scrolling text<input data-pf="marquee" maxlength="60" value="${PO.esc(P.marquee == null ? d.name : P.marquee)}"></label>` : '')
+      + chk('sparkle', '✦ Sparkles &amp; mouse trail', P.sparkle !== false) + chk('anim', 'Animations on', P.anim !== false)
+      + `<span class="l2">Diamond color</span><div class="fxs">${GEMKEYS.map(k => `<button type="button" class="fxb ${P.dm === k || (!P.dm && k === 'gold') ? 'on' : ''}" data-dm="${k}" title="${GEMS[k][0]}" style="background:radial-gradient(circle at 30% 28%,${PO.mix(GEMS[k][1], '#ffffff', .7)},${GEMS[k][1]} 45%,${PO.mix(GEMS[k][1], '#000000', .5)})"></button>`).join('')}</div>`
+      + `<div class="fxc"><label>Custom diamond color<input type="color" data-pf="dm" value="${g}"></label><label>Background<input type="color" data-pf="fx" value="${HXR.test(P.fx || '') ? P.fx : '#07060c'}"></label></div>`
+      + `<a href="#" class="muted" data-fxreset style="font-size:11px">↺ Default background</a></div>`;
+  }
+  return h;
+}
+
+function draw() {
+  const t = PO.theme(d);
+  const tp = i => `<button class="tp8 ${d.template === i ? 'on' : ''}" data-t="${i}" title="${NAMES[i - 1]}"><svg viewBox="0 0 80 100">${wire(i, t)}</svg><small>${NAMES[i - 1]}</small></button>`;
+  $('tpls').innerHTML = `<div class="gl">🛍️ Product Style <small>— for sellers of items</small></div><div class="tps">${[1, 2, 3, 4].map(tp).join('')}</div>`
+    + `<div class="gl">✨ Animated Style <small>— products that move: scrolling, floating, sliding in and spotlight</small></div><div class="tps">${[5, 6, 7, 8].map(tp).join('')}</div>`
+    + `<div class="gl">🛎️ Service Style <small>— for salon, repair, photographer, etc. Add your own pictures under “Our Work” (tap ✎ Edit, then ＋ Add picture). Single Showcase shows one big picture at a time and slides when you have many services; tap it to see the details.</small></div><div class="tps">${[9, 10, 11, 12].map(tp).join('')}</div>`
+    + premiumLane() + diamondLane();
+  $('cols').innerHTML = PAL.map(x => `<button type="button" class="col ${d.color.toLowerCase() === x ? 'on' : ''}" data-c="${x}" title="${x}" style="background:${x}"></button>`).join('');
+  CK.forEach(([k]) => { if ($('k_' + k).value !== d[k]) $('k_' + k).value = d[k]; });
+  $('warn').innerHTML = cr(d.text, d.bg) < 4.5 ? '<div class="warn2">⚠ Text and Background contrast is low — hard to read.</div>' : '';
+  [...$('seg').children].forEach(b => b.classList.toggle('on', b.dataset.r === d.radius));
+  $('overlay').value = d.overlay; $('ovv').textContent = d.overlay;
+}
+CK.forEach(([k, n]) => { const l = document.createElement('label'), i = document.createElement('input'); i.type = 'color'; i.id = 'k_' + k; l.append(n, i);
+  i.oninput = () => { if (k === 'color') applyPrimary(i.value); else { d[k] = i.value; if (k === 'accent') d.accentCustom = 1; } change(); }; $('cust').appendChild(l); });
+
+let editing = false, st;
+function pickFile(k) { $(k === 'logo' ? 'logofile' : k === 'work' ? 'workfile' : 'banfile').click(); }
+const saveSoon = () => { clearTimeout(st); st = setTimeout(PO.save, 250); };
+const rs = () => PO.renderStore($('store'), d, D.products, {edit: editing, onPick: pickFile,
+  onChange: (k, f) => { if (k === 'text' && fields.includes(f)) $(f).value = d[f]; if (f === 'name') $('burl').textContent = 'panaboone.com/' + PO.slugify(d.name); saveSoon(); flag(); if (k === 'order') brand(); } });
+function change() { PO.save(); draw(); rs(); $('burl').textContent = 'panaboone.com/' + PO.slugify(d.name); flag(); }
+function flag() { const u = JSON.stringify(D.draft) !== JSON.stringify(D.published); $('unpub').style.display = u ? 'inline' : 'none'; $('mpub').classList.toggle('un', u); }
+
+$('tpls').onclick = e => {
+  const fb = e.target.closest('[data-fx]'); if (fb) { d.prem = d.prem || {}; d.prem.fx = fb.dataset.fx; d.prem.fg = fb.dataset.fg; return change(); }
+  const db = e.target.closest('[data-dm]'); if (db) { d.prem = d.prem || {}; d.prem.dm = db.dataset.dm; return change(); }
+  if (e.target.closest('[data-fxreset]')) { e.preventDefault(); if (d.prem) { delete d.prem.fx; delete d.prem.fg; } return change(); }
+  const b = e.target.closest('[data-t]'); if (!b) return;
+  const n = +b.dataset.t;
+  if (n >= 17 && TIER() < 3) return PO.toast('Diamond layouts are exclusive to Tier 3. See Subscription.', 'err');
+  if (n >= 13 && TIER() < 2) return PO.toast('Premium layouts unlock with Tier 2 or Tier 3. See Subscription.', 'err');
+  d.template = n; change(); };
+$('tpls').addEventListener('input', e => { const f = e.target.dataset.pf; if (!f) return; d.prem = d.prem || {};
+  d.prem[f] = e.target.type === 'checkbox' ? e.target.checked : f === 'cols' ? +e.target.value : e.target.value; PO.save(); rs(); flag(); });
+const syncToggles = () => { toggles.forEach(f => $(f).checked = !!d[f]); ['showAbout', 'showContact', 'showLocation'].forEach(f => $(f).checked = d[f] !== false); $('font').value = d.font; };
+$('rstcol').onclick = e => { e.preventDefault(); Object.assign(d, PO.THEME0); delete d.accentCustom; change(); PO.toast('Colors reset'); };
+$('rstall').onclick = () => { if (!confirm('Reset colors, font, corners and layout? (Your store info, logo, banner and products are kept.)')) return;
+  Object.assign(d, PO.THEME0, DEF); ['showAbout', 'showContact', 'showLocation', 'order', 'blockStyle', 'productOrder', 'accentCustom'].forEach(k => delete d[k]);
+  syncToggles(); change(); PO.toast('Customization reset ✓'); };
+$('cols').onclick = e => { const b = e.target.closest('[data-c]'); if (b) { applyPrimary(b.dataset.c); change(); } };
+$('font').innerHTML = Object.entries(PO.FONTS).map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+$('font').value = d.font; $('font').onchange = () => { d.font = $('font').value; change(); };
+$('seg').onclick = e => { const b = e.target.closest('[data-r]'); if (b) { d.radius = b.dataset.r; change(); } };
+$('overlay').oninput = () => { d.overlay = +$('overlay').value; change(); };
+fields.forEach(f => { $(f).value = d[f] || ''; $(f).oninput = () => { d[f] = $(f).value; change(); }; });
+toggles.forEach(f => { $(f).checked = !!d[f]; $(f).onchange = () => { d[f] = $(f).checked; change(); }; });
+
+const thumb = (el, src, ph) => el.innerHTML = src ? `<img src="${src}" alt="">` : ph;
+const brand = () => { thumb($('logoth'), d.logo, '🏷️'); thumb($('banth'), d.banner, '🖼️'); };
+function upload(btn, file, key, max) {
+  $(btn).onclick = () => $(file).click();
+  $(file).onchange = async () => { const f = $(file).files[0]; if (!f) return;
+    try { d[key] = await PO.img(f, max, .8); brand(); change(); } catch (e) { PO.toast('Could not read the picture', 'err'); } $(file).value = ''; };
+}
+$('workfile').onchange = async () => { const fs = [...$('workfile').files]; if (!fs.length) return; d.works = d.works || []; let bad = 0;
+  for (const f of fs) { if (d.works.length >= 10) { PO.toast('Maximum of 10 pictures in Our Work', 'err'); break; }
+    try { d.works.push({id: PO.uid(), src: await PO.img(f, 800, .72)}); } catch (e) { bad++; } }
+  if (bad) PO.toast('Could not read ' + bad + ' picture' + (bad > 1 ? 's' : ''), 'err');
+  $('workfile').value = ''; change(); };
+upload('logobtn', 'logofile', 'logo', 300); upload('banbtn', 'banfile', 'banner', 1600);
+$('rmlogo').onclick = e => { e.preventDefault(); d.logo = ''; brand(); change(); };
+$('rmban').onclick = e => { e.preventDefault(); d.banner = ''; brand(); change(); };
+$('prevbtn').href = '../StoreFront/store.html?preview=1';
+$('pub').onclick = () => { D.published = JSON.parse(JSON.stringify(d)); if (PO.save()) { flag(); PO.toast('Published ✓ — your storefront is live'); } };
+['showAbout', 'showContact', 'showLocation'].forEach(f => { $(f).checked = d[f] !== false; $(f).onchange = () => { d[f] = $(f).checked; change(); }; });
+$('editbtn').onclick = () => { editing = !editing; $('editbtn').classList.toggle('on', editing); $('editbtn').textContent = editing ? '✓ Done' : '✎ Edit'; $('ehint').style.display = editing ? 'flex' : 'none'; rs(); };
+$('resetlay').onclick = e => { e.preventDefault(); delete d.order; delete d.blockStyle; delete d.productOrder; change(); };
+const mq = matchMedia('(max-width:1000px)'), OK = 'po_cu_open'; let ost = {}; try { ost = JSON.parse(localStorage.getItem(OK)) || {}; } catch (e) {}
+document.querySelectorAll('details.adv').forEach(x => { if (x.id in ost) x.open = ost[x.id]; x.ontoggle = () => { if (mq.matches) return; ost[x.id] = x.open; try { localStorage.setItem(OK, JSON.stringify(ost)); } catch (e) {} }; });
+
+/* ---- map pin ---- */
+const pinTxt = () => $('pinst').textContent = d.pinned ? `Pinned ✓ (${(+d.lat).toFixed(5)}, ${(+d.lng).toFixed(5)})` : 'No exact pin yet. The map will guess from your address.';
+$('pinhere').onclick = async () => { const b = $('pinhere'); b.disabled = true;
+  try { const p = await PO.here(); d.lat = p.lat; d.lng = p.lng; d.pinned = true; pinTxt(); change(); PO.toast('Pin set to your current location ✓'); }
+  catch (e) { PO.toast(e && e.code === -1 ? 'Location needs https or localhost' : 'Could not get your location. Allow location access.', 'err'); }
+  b.disabled = false; };
+$('pinaddr').onclick = async () => { const a = (d.address || '').trim(); if (!a) return PO.toast('Type your address first', 'err');
+  const b = $('pinaddr'); b.disabled = true; const r = await PO.geocode(a); b.disabled = false;
+  if (!r || r.approx) return PO.toast('Address not found exactly. Use "I\'m at my store now" instead.', 'err');
+  d.lat = r.lat; d.lng = r.lng; d.pinned = true; pinTxt(); change(); PO.toast('Pin found from address ✓'); };
+$('pinrm').onclick = e => { e.preventDefault(); d.lat = ''; d.lng = ''; d.pinned = false; pinTxt(); change(); };
+
+/* ---- phone / tablet: one section at a time, bottom tab bar ---- */
+const TAB = {tpl: 'd_tpl', brand: 'd_brand', info: 'd_info', sty: 'd_sty'}, DEFOPEN = {d_tpl: true, d_brand: true, d_info: true, d_sty: false};
+function setTab(t) {
+  if (t !== 'preview' && editing) $('editbtn').click();   /* leave edit mode so the pop-up tools never get stuck */
+  document.body.dataset.mt = t;
+  [...$('mtabs').children].forEach(b => b.classList.toggle('on', b.dataset.mt === t));
+  if (TAB[t]) $(TAB[t]).open = true;
+  try { sessionStorage.setItem('po_cu_tab', t); } catch (e) {}
+  scrollTo({top: 0});
+}
+function layout() {
+  document.body.classList.toggle('cu-m', mq.matches);
+  if (mq.matches) { let t = 'preview'; try { t = sessionStorage.getItem('po_cu_tab') || 'preview'; } catch (e) {} setTab(t); }
+  else { delete document.body.dataset.mt; document.querySelectorAll('details.adv').forEach(x => x.open = x.id in ost ? ost[x.id] : DEFOPEN[x.id]); }
+}
+$('mtabs').onclick = e => { const b = e.target.closest('[data-mt]'); if (b) setTab(b.dataset.mt); };
+$('mpub').onclick = () => $('pub').click();
+$('prevbtn2').href = '../StoreFront/store.html?preview=1';
+document.addEventListener('focusin', e => { if (mq.matches && e.target.matches('input:not([type=range]):not([type=checkbox]):not([type=file]),textarea,select')) document.body.classList.add('kb'); });
+document.addEventListener('focusout', () => document.body.classList.remove('kb'));
+mq.addEventListener ? mq.addEventListener('change', layout) : mq.addListener(layout);
+window.addEventListener('beforeunload', () => PO.save());
+pinTxt(); brand(); change(); layout();
+</script></body></html>

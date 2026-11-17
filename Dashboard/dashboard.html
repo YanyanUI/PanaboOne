@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PanaboOne — Business Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared/app.css">
+<style>
+.hero3{display:flex;align-items:center;gap:18px;flex-wrap:wrap;background:#efeafd;border:1px solid #e1def5;border-radius:18px;padding:18px 22px;margin-bottom:16px}
+.hero3 .lg3{width:72px;height:72px;border-radius:14px;background:#5b3fd4;color:#fff;display:grid;place-items:center;font-size:30px;font-weight:700;overflow:hidden;flex:none}
+.hero3 .lg3 img{width:100%;height:100%;object-fit:cover}
+.hero3 .inf{flex:1;min-width:180px}.hero3 h2{margin:0;font-size:22px;color:#1f1b4d}.hero3 p{margin:2px 0 0;color:#6b6a95}
+.stats3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.st3{display:flex;gap:14px;align-items:center}
+.st3 .ic{width:48px;height:48px;border-radius:50%;background:#ebe7fb;display:grid;place-items:center;font-size:20px;flex:none}
+.st3 small{color:#6b6a95;font-size:13px;display:block}.st3 b{font-size:30px;line-height:1.1;display:block}
+.chg{font-size:12px;font-weight:600}.chg.up{color:#17a34a}.chg.dn{color:#d23c5a}.chg.flat{color:#8b8aa8}
+.dg{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
+.dg h3{margin:0;font-size:18px;color:#1f1b4d}
+.dh3{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.dh3 a{color:#5b3fd4;font-weight:600;font-size:13px;cursor:pointer;text-decoration:none}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:-2px}
+.ii{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #f1f0fb}.ii:last-child{border:0}
+.ii span{font-size:18px;width:24px;flex:none;text-align:center}.ii small{display:block;color:#8b8aa8;font-size:12px}.ii b{font-size:14px;word-break:break-word}
+.warn{background:#fff0cf;color:#8a5a00;border-radius:12px;padding:10px 14px;font-size:13px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.acw{position:relative}
+.aclist{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;background:#fff;border:1px solid #dcd8f2;border-radius:12px;box-shadow:0 18px 36px -14px rgba(36,21,90,.45);max-height:270px;overflow:auto;overscroll-behavior:contain}
+.aclist[hidden]{display:none}
+.aclist .ach{position:sticky;top:0;background:#f5f3ff;color:#4c34c0;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:7px 12px}
+.aclist button{display:block;width:100%;text-align:left;border:0;background:none;padding:10px 12px;font:600 14px 'Poppins',sans-serif;color:#1f1b4d;cursor:pointer;border-bottom:1px solid #f1f0fb}
+.aclist button:hover,.aclist button:focus{background:#faf9ff;outline:none}
+.aclist button small{display:block;font-weight:400;font-size:12px;color:#8b8aa8;margin-top:1px}
+.aclist .acm{padding:10px 12px;font-size:13px;color:#8b8aa8}
+@media(max-width:1000px){.dg{grid-template-columns:1fr}}
+@media(max-width:900px){.stats3{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.stats3{grid-template-columns:1fr}.hero3{padding:14px}.hero3 .row{width:100%}.hero3 .row .btn{flex:1;justify-content:center}.st3 b{font-size:26px}}
+</style></head>
+<body>
+<nav class="side" id="side"></nav>
+<div class="main">
+  <div id="top" class="top"></div>
+  <div class="ph"><div><h1>Business Dashboard</h1><p class="sub" id="wel"></p></div></div>
+  <div id="warn"></div>
+  <div class="hero3">
+    <div class="lg3" id="lg"></div>
+    <div class="inf"><h2 id="bn"></h2><p id="bh"></p></div>
+    <div class="row" style="flex:none"><a class="btn" href="StoreFront/store.html" target="_blank">View Store</a><button class="btn pri" id="setinfo">✎ Set Information</button></div>
+  </div>
+  <div class="stats3">
+    <div class="card st3"><div class="ic">📦</div><div><small id="l1">Total Products</small><b id="s1"></b><span id="c1"></span></div></div>
+    <div class="card st3"><div class="ic">🏪</div><div><small>Store Visits</small><b id="s2"></b><span id="c2"></span></div></div>
+    <div class="card st3"><div class="ic">👁</div><div><small id="l3">Product Views</small><b id="s3"></b><span id="c3"></span></div></div>
+  </div>
+  <div class="dg">
+    <div class="card"><div class="dh3"><h3>Recent Activity</h3><a id="all">View All</a></div>
+      <div class="tw"><table class="rt" style="min-width:0"><thead><tr><th>Date</th><th>Activity</th><th>Details</th></tr></thead><tbody id="act"></tbody></table></div></div>
+    <div class="card"><div class="dh3"><h3>Store Information</h3></div><div id="info"></div></div>
+  </div>
+</div>
+
+<div class="modal" id="modal"><form class="mbox" id="form">
+  <h2>Set Information</h2>
+  <div class="fld"><label>Store Logo</label>
+    <div class="row"><div class="th" id="lth"></div><button type="button" class="btn sm" id="lbtn">Change</button><a href="#" class="muted" id="lrm">Remove</a></div>
+    <input type="file" id="lfile" accept="image/*" hidden></div>
+  <div class="fld"><label>Business Name *</label><input id="f_name" required maxlength="40"></div>
+  <div class="fld"><label>Tagline</label><input id="f_headline" maxlength="70" placeholder="e.g. Freshly baked, locally made."></div>
+  <div class="fld"><label>Location <span class="muted">(Panabo City only)</span></label>
+    <div class="acw"><input id="f_loc" autocomplete="off" placeholder="Tap to choose your barangay, or type a street"><div class="aclist" id="aclist" hidden></div></div>
+    <p class="muted" id="locst" style="margin:6px 0 0;font-size:12px"></p></div>
+  <div class="fld"><label>House no. / Purok / Landmark <span class="muted">(optional)</span></label><input id="f_detail" maxlength="60" placeholder="e.g. Purok 4, beside the church"></div>
+  <div class="fld"><label>Map Pin <span class="muted">(so customers can see the map and distance)</span></label>
+    <div class="row"><button type="button" class="btn sm" id="pinhere">📍 I'm at my store now</button><a href="#" class="muted" id="pinrm">Clear pin</a></div>
+    <p class="muted" id="pinst" style="margin:6px 0 0;font-size:12px"></p></div>
+  <div class="g2"><div class="fld"><label>Contact Number</label><input id="f_phone" placeholder="0912 345 6789"></div>
+    <div class="fld"><label>Open Hours</label><input id="f_hours" placeholder="Open Daily: 7:00 AM - 7:00 PM"></div></div>
+  <div class="fld"><label>Messaging Link</label><input id="f_messaging" placeholder="m.me/yourbusiness"></div>
+  <div class="macts"><button type="button" class="btn" id="cancel">Cancel</button><button class="btn pri" type="submit">Save Information</button></div>
+</form></div>
+
+<script src="shared/store.js"></script>
+<script>
+PO.shell('home', true);
+const D = PO.data, $ = PO.$, esc = PO.esc, d = D.draft, L = PO.LBL(), daily = (D.stats && D.stats.daily) || {};
+let logo = '', showAll = false, pin = {lat: '', lng: '', pinned: false, approx: false};
+const dayN = n => { const x = new Date(); x.setHours(0, 0, 0, 0); x.setDate(x.getDate() - n); return daily[PO.dayKey(x)] || {}; };
+const sumR = (a, b, f) => { let s = 0; for (let i = a; i < b; i++) s += dayN(i)[f] || 0; return s; };
+const chg = (txt, cls) => `<span class="chg ${cls}">${txt}</span>`;
+const pct = f => { const c = sumR(0, 7, f), p = sumR(7, 14, f);
+  if (!c && !p) return chg('— no change', 'flat');
+  const x = p ? Math.round((c - p) / p * 100) : 100; return chg(`${x >= 0 ? '↑ +' : '↓ '}${x}% vs last week`, x >= 0 ? 'up' : 'dn'); };
+const link = v => /^https?:/i.test(v) ? v : 'https://' + v;
+const COL = {'Product Added': '#c8f3dc', 'Product Updated': '#fbd0e0', 'Store Visit': '#ddd6fb', 'Product Deleted': '#ffd9d9', 'Service Added': '#c8f3dc', 'Service Updated': '#fbd0e0', 'Service Deleted': '#ffd9d9', 'Information Updated': '#fff0cf'};
+
+function render() {
+  $('wel').textContent = `Welcome back, ${d.name}!`; $('l1').textContent = 'Total ' + L.n; $('l3').textContent = L.one + ' Views';
+  $('bn').textContent = d.name; $('bh').textContent = d.headline || '';
+  $('lg').innerHTML = d.logo ? `<img src="${d.logo}" alt="">` : esc((d.name || 'S')[0].toUpperCase());
+  $('warn').innerHTML = (!d.phone || !d.address) ? `<div class="warn"><span>Complete your store information (address and contact number) so customers can find you.</span><button class="btn sm" id="w">Set Information</button></div>` : '';
+  if ($('w')) $('w').onclick = openModal;
+
+  const wk = PO.list().filter(p => Date.now() - p.created < 7 * 864e5).length;
+  $('s1').textContent = PO.list().length;
+  $('c1').innerHTML = wk ? chg(`↑ +${wk} this week`, 'up') : chg('— nothing new this week', 'flat');
+  $('s2').textContent = (D.stats.visits || 0).toLocaleString(); $('c2').innerHTML = pct('v');
+  $('s3').textContent = PO.list().reduce((a, p) => a + ((D.stats.views || {})[p.id] || 0), 0).toLocaleString(); $('c3').innerHTML = pct('w');
+
+  const acts = [...(D.activity || []).map(a => ({t: a.t, type: a.type, det: a.detail})),
+    ...Object.keys(daily).filter(k => daily[k].v > 0).map(k => { const [y, m, dd] = k.split('-');
+      return {t: new Date(y, m - 1, dd, 12).getTime(), type: 'Store Visit', det: `${daily[k].v} new visit${daily[k].v > 1 ? 's' : ''}`, dateOnly: true}; })
+  ].sort((a, b) => b.t - a.t);
+  const list = acts.slice(0, showAll ? 20 : 5);
+  const ft = a => new Date(a.t).toLocaleString('en-US', a.dateOnly ? {month: 'short', day: 'numeric', year: 'numeric'} : {month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit'});
+  $('act').innerHTML = list.length ? list.map(a => `<tr><td data-label="Date">${ft(a)}</td><td data-label="Activity"><span><span class="dot" style="background:${COL[a.type] || '#ddd6fb'}"></span>${esc(a.type)}</span></td><td data-label="Details">${esc(a.det)}</td></tr>`).join('')
+    : `<tr><td colspan="3" class="empty">No activity yet. Add a listing to get started.</td></tr>`;
+  $('all').style.display = acts.length > 5 ? '' : 'none'; $('all').textContent = showAll ? 'Show Less' : 'View All';
+
+  const row = (ic, l, v) => `<div class="ii"><span>${ic}</span><div><small>${l}</small><b>${v}</b></div></div>`;
+  $('info').innerHTML = row('🏪', 'Business Name', esc(d.name)) + row('🧩', 'Business Type', {product: 'Product Only', service: 'Service Only', both: 'Products & Services'}[D.bizType]) + row('📍', 'Location', esc(d.address) || '<span class="muted">Not set</span>')
+    + row('📞', 'Contact Number', esc(d.phone) || '<span class="muted">Not set</span>') + row('🕒', 'Open Hours', esc(d.hours) || '<span class="muted">Not set</span>')
+    + row('💬', 'Messaging Link', d.messaging ? `<a href="${esc(link(d.messaging))}" target="_blank" rel="noopener" style="color:#5b3fd4">${esc(d.messaging)}</a>` : '<span class="muted">Not set</span>');
+}
+$('all').onclick = () => { showAll = !showAll; render(); };
+
+const F = ['name', 'headline', 'phone', 'hours', 'messaging'];
+const thumb = () => $('lth').innerHTML = logo ? `<img src="${logo}" alt="">` : '🏷️';
+const pinTxt = () => $('pinst').textContent = pin.pinned ? `Pinned ✓ (${(+pin.lat).toFixed(5)}, ${(+pin.lng).toFixed(5)})${pin.approx ? ' · middle of the barangay. Press “I’m at my store now” when you are at the store for the exact spot.' : ''}` : 'No map pin yet. Choose a place from the list, or press “I’m at my store now”.';
+
+/* ---------- Location picker: Panabo City only ---------- */
+const BR = ['A. O. Floirendo', 'Buenavista', 'Cacao', 'Cagangohan', 'Consolacion', 'Dapco', 'Datu Abdul Dadia', 'Gredu (Poblacion)', 'J.P. Laurel', 'Kasilak', 'Katipunan', 'Katualan', 'Kauswagan', 'Kiotoy', 'Little Panay', 'Lower Panaga', 'Mabunao', 'Maduao', 'Malativas', 'Manay', 'Nanyo', 'New Malaga (Dalisay)', 'New Malitbog', 'New Pandan (Poblacion)', 'New Visayas', 'Quezon', 'Salvacion', 'San Francisco (Poblacion)', 'San Nicolas', 'San Pedro', 'San Roque', 'San Vicente', 'Santa Cruz', 'Santo Niño (Poblacion)', 'Sindaton', 'Southern Davao', 'Tagpore', 'Tibungol', 'Upper Licanan', 'Waterfall'];
+const KNOWN = {'Consolacion': [7.3169, 125.5538], 'Southern Davao': [7.3323, 125.6577], 'Lower Panaga': [7.4320, 125.5640], 'Maduao': [7.2796, 125.6433], 'Mabunao': [7.2543, 125.5745], 'San Francisco (Poblacion)': [7.3068, 125.6803], 'J.P. Laurel': [7.2759, 125.6700], 'Dapco': [7.3921, 125.5983]};   /* barangay centers (PhilAtlas) */
+const BOX = {s: 7.18, n: 7.50, w: 125.45, e: 125.74};   /* rough outline of Panabo City */
+const inPanabo = (la, ln) => la >= BOX.s && la <= BOX.n && ln >= BOX.w && ln <= BOX.e;
+const brLabel = n => `Brgy. ${n.replace(/\s*\(.*\)/, '')}, Panabo City, Davao del Norte`;
+let picked = false, locBase = '', osmRes = [], acT = 0, acAbort = null;
+const acEl = $('aclist');
+const locTxt = () => $('locst').textContent = picked ? '✓ Location chosen from Panabo City.' : ($('f_loc').value.trim() ? 'Please choose your place from the list below (Panabo City only).' : '');
+function acRender(q, loading, err) {
+  const t = q.trim().toLowerCase(), bl = BR.filter(n => !t || n.toLowerCase().includes(t)).slice(0, t ? 8 : 40);
+  let h = bl.length ? `<div class="ach">Barangays in Panabo City</div>` + bl.map(n => `<button type="button" data-b="${esc(n)}">🏘️ ${esc(n)}<small>${esc(brLabel(n))}</small></button>`).join('') : '';
+  if (t.length >= 2) {
+    h += `<div class="ach">Streets &amp; places</div>`;
+    if (loading) h += `<div class="acm">Searching…</div>`;
+    else if (err) h += `<div class="acm">Street search needs an internet connection. You can still pick a barangay above.</div>`;
+    else if (osmRes.length) h += osmRes.map((r, i) => `<button type="button" data-o="${i}">📍 ${esc(r.title)}<small>${esc(r.sub)}</small></button>`).join('');
+    else h += `<div class="acm">No street found for “${esc(q.trim())}”. Pick a barangay, then add your Purok or landmark below.</div>`;
+  }
+  acEl.innerHTML = h || `<div class="acm">No match in Panabo City.</div>`; acEl.hidden = false;
+}
+async function osmSearch(q) {
+  if (acAbort) acAbort.abort(); acAbort = new AbortController();
+  try {
+    const r = await fetch('https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=10&accept-language=en&countrycodes=ph&bounded=1&viewbox=' + [BOX.w, BOX.n, BOX.e, BOX.s].join(',') + '&q=' + encodeURIComponent(q + ' Panabo'), {signal: acAbort.signal, headers: {Accept: 'application/json'}});
+    const j = await r.json(), seen = new Set(), out = [];
+    j.filter(x => /panabo/i.test(x.display_name) && inPanabo(+x.lat, +x.lon)).forEach(x => {
+      const a = x.address || {}, road = a.road || a.pedestrian || '', nm = x.name && x.name !== road ? x.name : '';
+      const br = (a.suburb || a.neighbourhood || a.village || a.quarter || '').replace(/^(Barangay|Brgy\.?)\s*/i, '');
+      const title = [nm, road].filter(Boolean).join(', ') || x.display_name.split(',')[0];
+      const full = [title, br ? 'Brgy. ' + br : '', 'Panabo City', 'Davao del Norte'].filter(Boolean).join(', ');
+      if (!seen.has(full)) { seen.add(full); out.push({title, sub: [br ? 'Brgy. ' + br : '', 'Panabo City'].filter(Boolean).join(', '), full, lat: +x.lat, lng: +x.lon}); } });
+    return out;
+  } catch (e) { return e.name === 'AbortError' ? null : 'err'; }
+}
+async function brgyPin(n) {
+  if (KNOWN[n]) return {lat: KNOWN[n][0], lng: KNOWN[n][1]};
+  const r = await osmSearch('Barangay ' + n.replace(/\s*\(.*\)/, ''));
+  return Array.isArray(r) && r[0] ? {lat: r[0].lat, lng: r[0].lng} : null;
+}
+$('f_loc').onfocus = () => acRender(picked ? '' : $('f_loc').value);
+$('f_loc').oninput = () => {
+  picked = false; locTxt(); const q = $('f_loc').value; clearTimeout(acT);
+  if (q.trim().length < 2) { osmRes = []; acRender(q); return; }
+  acRender(q, true);
+  acT = setTimeout(async () => { const r = await osmSearch(q); if (r === null || $('f_loc').value !== q) return; osmRes = r === 'err' ? [] : r; acRender(q, false, r === 'err'); }, 450);
+};
+$('f_loc').onblur = () => setTimeout(() => { acEl.hidden = true; }, 180);
+$('f_loc').onkeydown = e => { if (e.key === 'Escape') { acEl.hidden = true; e.stopPropagation(); } };
+acEl.onmousedown = async e => {
+  const b = e.target.closest('button'); if (!b) return; e.preventDefault();
+  if (b.dataset.o != null) { const r = osmRes[+b.dataset.o]; $('f_loc').value = r.full; picked = true; pin = {lat: r.lat, lng: r.lng, pinned: true, approx: false}; pinTxt(); }
+  else { const n = b.dataset.b; $('f_loc').value = brLabel(n); picked = true; pin = {lat: '', lng: '', pinned: false, approx: false}; pinTxt();
+    const p = await brgyPin(n); if (p && $('f_loc').value === brLabel(n)) { pin = {lat: p.lat, lng: p.lng, pinned: true, approx: true}; pinTxt(); } }
+  acEl.hidden = true; locTxt();
+};
+
+function openModal() { F.forEach(f => $('f_' + f).value = d[f] || ''); logo = d.logo || '';
+  $('f_loc').value = d.addrBase != null ? d.addrBase : (d.address || ''); $('f_detail').value = d.addrDetail || ''; locBase = $('f_loc').value; picked = !!locBase; acEl.hidden = true; locTxt();
+  pin = {lat: d.lat || '', lng: d.lng || '', pinned: !!d.pinned, approx: !!d.pinApprox}; pinTxt(); thumb(); $('modal').classList.add('show'); $('f_name').focus(); }
+const close = () => $('modal').classList.remove('show');
+$('setinfo').onclick = openModal; $('cancel').onclick = close;
+$('modal').onmousedown = e => { if (e.target === $('modal')) close(); };
+$('pinhere').onclick = async () => { const b = $('pinhere'); b.disabled = true;
+  try { const p = await PO.here(); if (!inPanabo(p.lat, p.lng)) { PO.toast('You seem to be outside Panabo City. Choose your place from the Location list instead.', 'err'); b.disabled = false; return; }
+    pin = {lat: p.lat, lng: p.lng, pinned: true, approx: false}; pinTxt(); PO.toast('Pin set to your current location ✓'); }
+  catch (e) { PO.toast(e && e.code === -1 ? 'Location needs https or localhost' : 'Could not get your location. Allow location access.', 'err'); }
+  b.disabled = false; };
+$('pinrm').onclick = e => { e.preventDefault(); pin = {lat: '', lng: '', pinned: false, approx: false}; pinTxt(); };
+$('lbtn').onclick = () => $('lfile').click();
+$('lrm').onclick = e => { e.preventDefault(); logo = ''; thumb(); };
+$('lfile').onchange = async () => { const f = $('lfile').files[0]; if (!f) return;
+  try { logo = await PO.img(f, 300, .8); thumb(); } catch (e) { PO.toast('Could not read the picture', 'err'); } $('lfile').value = ''; };
+$('form').onsubmit = e => {
+  e.preventDefault();
+  if (!$('f_name').value.trim()) return;
+  const loc = $('f_loc').value.trim(), det = $('f_detail').value.trim();
+  if ((loc && loc !== locBase && !picked) || (!loc && det)) { PO.toast('Choose your location from the list (Panabo City only)', 'err'); $('f_loc').focus(); return; }
+  const addr = loc ? (det ? det + ', ' + loc : loc) : '';
+  [d, D.published].forEach(t => { F.forEach(f => t[f] = $('f_' + f).value.trim()); t.address = addr; t.addrBase = loc; t.addrDetail = det; t.logo = logo; t.lat = pin.lat; t.lng = pin.lng; t.pinned = pin.pinned; t.pinApprox = pin.approx; });  /* keep in sync with the storefront */
+  PO.log('Information Updated', 'Store information');
+  if (PO.save()) { close(); PO.shell('home', true); render(); PO.toast('Information saved ✓'); }
+};
+render();
+</script></body></html>
